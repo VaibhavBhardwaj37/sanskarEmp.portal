@@ -1,0 +1,6 @@
+framework module Pods_SanskarEPTests {
+  umbrella header "Pods-SanskarEPTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
