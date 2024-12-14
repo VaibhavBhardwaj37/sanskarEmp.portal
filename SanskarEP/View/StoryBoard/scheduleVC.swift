@@ -32,6 +32,8 @@ class scheduleVC: UIViewController {
         playerview.isHidden = true
         tableview.register(UINib(nibName: "NewEventListCell" , bundle: nil), forCellReuseIdentifier: "NewEventListCell")
         
+        
+        print(kathaId)
         if  let roleID = Int(currentUser.booking_role_id), roleID == 7 {
             actionbtn.isHidden = false
         } else {
@@ -66,11 +68,12 @@ class scheduleVC: UIViewController {
     @IBAction func clearbtn(_ sender: UIButton) {
         playerview.isHidden = true
     }
-    
+      
     func ScheduleAPi() {
         var dict = Dictionary<String, Any>()
         dict["EmpCode"] = currentUser.EmpCode
-        dict["Katha_Id"] = "64"
+        dict["Katha_Id"] = kathaId
+        print( dict["Katha_Id"])
         DispatchQueue.main.async(execute: { Loader.showLoader() })
         APIManager.apiCall(postData: dict as NSDictionary, url: scheduleApi) { result, response, error, data in
             DispatchQueue.main.async(execute: { Loader.hideLoader() })

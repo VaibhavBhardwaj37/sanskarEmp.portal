@@ -51,6 +51,9 @@
 		077E863E278BEF32002BF76B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 077E863C278BEF32002BF76B /* Main.storyboard */; };
 		077E8640278BEF33002BF76B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 077E863F278BEF33002BF76B /* Assets.xcassets */; };
 		077E8643278BEF33002BF76B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 077E8641278BEF33002BF76B /* LaunchScreen.storyboard */; };
+		077E864E278BEF33002BF76B /* SanskarEPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077E864D278BEF33002BF76B /* SanskarEPTests.swift */; };
+		077E8658278BEF33002BF76B /* SanskarEPUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077E8657278BEF33002BF76B /* SanskarEPUITests.swift */; };
+		077E865A278BEF33002BF76B /* SanskarEPUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077E8659278BEF33002BF76B /* SanskarEPUITestsLaunchTests.swift */; };
 		0788269B2796E98E0047ED4A /* ApprovalVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0788269A2796E98E0047ED4A /* ApprovalVc.swift */; };
 		0788269E2796EA210047ED4A /* ApprovalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0788269C2796EA210047ED4A /* ApprovalCell.swift */; };
 		0788269F2796EA210047ED4A /* ApprovalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0788269D2796EA210047ED4A /* ApprovalCell.xib */; };
@@ -118,6 +121,10 @@
 		C7AFF85E2A5597900043B186 /* mywishbdayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFF85D2A5597900043B186 /* mywishbdayTableViewCell.swift */; };
 		C7BA6A5E2A8756580074F9B6 /* CustomDialogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BA6A5C2A8756580074F9B6 /* CustomDialogVC.swift */; };
 		C7BA6A5F2A8756580074F9B6 /* CustomDialogVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7BA6A5D2A8756580074F9B6 /* CustomDialogVC.xib */; };
+		C7C7403E2C7C771400EE27C1 /* inventoryhome.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C7403D2C7C771400EE27C1 /* inventoryhome.swift */; };
+		C7C7405A2C7C77A400EE27C1 /* Submitchallanpages in Resources */ = {isa = PBXBuildFile; fileRef = C7C740592C7C77A400EE27C1 /* Submitchallanpages */; };
+		C7C740642C7C7FD800EE27C1 /* submitchallanvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C740632C7C7FD800EE27C1 /* submitchallanvc.swift */; };
+		C7C740812C7C819800EE27C1 /* misscealaneousmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C7407E2C7C819700EE27C1 /* misscealaneousmodel.swift */; };
 		C7CDB89229EA89120094848C /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7CDB89129EA89120094848C /* Storyboard.storyboard */; };
 		C7DB78512A61228000B61339 /* tpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DB78502A61228000B61339 /* tpViewController.swift */; };
 		C7DB78532A6183E200B61339 /* TourBillApprovalVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DB78522A6183E200B61339 /* TourBillApprovalVc.swift */; };
@@ -151,6 +158,17 @@
 		D5587EAB2AB9B3BF00E03A68 /* TourfullDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5587EA92AB9B3BF00E03A68 /* TourfullDetailsCell.swift */; };
 		D5587EAC2AB9B3BF00E03A68 /* TourfullDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5587EAA2AB9B3BF00E03A68 /* TourfullDetailsCell.xib */; };
 		D5587EAE2AB9BC4600E03A68 /* TourAllDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5587EAD2AB9BC4600E03A68 /* TourAllDetailsVC.swift */; };
+		D55B05D92D0D6B0900406455 /* createchallanvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05D82D0D6B0900406455 /* createchallanvc.swift */; };
+		D55B05DB2D0D6B1500406455 /* Returnchallanvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05DA2D0D6B1500406455 /* Returnchallanvc.swift */; };
+		D55B05DD2D0D6B2100406455 /* Requestvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05DC2D0D6B2100406455 /* Requestvc.swift */; };
+		D55B05DF2D0D6B2B00406455 /* Savedchallanvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05DE2D0D6B2B00406455 /* Savedchallanvc.swift */; };
+		D55B05E12D0D6B3600406455 /* openpdfvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05E02D0D6B3600406455 /* openpdfvc.swift */; };
+		D55B05E32D0D6B4100406455 /* Additemvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05E22D0D6B4100406455 /* Additemvc.swift */; };
+		D55B05E52D0D6B5000406455 /* requestdatamodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05E42D0D6B5000406455 /* requestdatamodel.swift */; };
+		D55B05E72D0D6B5C00406455 /* dropdownfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05E62D0D6B5C00406455 /* dropdownfile.swift */; };
+		D55B05E92D0D6B6600406455 /* Addinventordetailvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05E82D0D6B6600406455 /* Addinventordetailvc.swift */; };
+		D55B05EB2D0D6B8000406455 /* submittedmdeldata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05EA2D0D6B8000406455 /* submittedmdeldata.swift */; };
+		D55B05ED2D0D6B8900406455 /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05EC2D0D6B8900406455 /* QRCodeScannerViewController.swift */; };
 		D55D44822AE3FFC3007D4248 /* HodDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D44802AE3FFC3007D4248 /* HodDetailCell.swift */; };
 		D55D44832AE3FFC3007D4248 /* HodDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D55D44812AE3FFC3007D4248 /* HodDetailCell.xib */; };
 		D55D44852AE40A80007D4248 /* HODAllDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D44842AE40A80007D4248 /* HODAllDetailVC.swift */; };
@@ -229,6 +247,12 @@
 		D5E5A34B2B85DA910051D025 /* LeaveFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E5A34A2B85DA910051D025 /* LeaveFilterVC.swift */; };
 		D5E608F02CDCF57900978854 /* apptourCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E608EE2CDCF57900978854 /* apptourCell.swift */; };
 		D5E608F12CDCF57900978854 /* apptourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5E608EF2CDCF57900978854 /* apptourCell.xib */; };
+		D5E744CE2C7EF3E500C1F542 /* SavedDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E744CC2C7EF3E500C1F542 /* SavedDataCell.swift */; };
+		D5E744CF2C7EF3E500C1F542 /* SavedDataCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5E744CD2C7EF3E500C1F542 /* SavedDataCell.xib */; };
+		D5E744D22C7EF89300C1F542 /* MisscealaneousDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E744D02C7EF89300C1F542 /* MisscealaneousDataCell.swift */; };
+		D5E744D32C7EF89300C1F542 /* MisscealaneousDataCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5E744D12C7EF89300C1F542 /* MisscealaneousDataCell.xib */; };
+		D5E744DA2C7F007A00C1F542 /* InventoryitemDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E744D82C7F007A00C1F542 /* InventoryitemDataCell.swift */; };
+		D5E744DB2C7F007A00C1F542 /* InventoryitemDataCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5E744D92C7F007A00C1F542 /* InventoryitemDataCell.xib */; };
 		D5E763022CEEF7300031BBB4 /* videoplayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E763012CEEF7300031BBB4 /* videoplayerVC.swift */; };
 		D5E763072CEF48000031BBB4 /* PrivacyPolictVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E763062CEF48000031BBB4 /* PrivacyPolictVc.swift */; };
 		D5E800712CF990260049DAF8 /* BookingPageVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5971F582BE219A5004FB8FA /* BookingPageVc.swift */; };
@@ -325,7 +349,10 @@
 		077E8642278BEF33002BF76B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		077E8644278BEF33002BF76B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		077E8649278BEF33002BF76B /* SanskarEPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SanskarEPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		077E864D278BEF33002BF76B /* SanskarEPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SanskarEPTests.swift; sourceTree = "<group>"; };
 		077E8653278BEF33002BF76B /* SanskarEPUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SanskarEPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		077E8657278BEF33002BF76B /* SanskarEPUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SanskarEPUITests.swift; sourceTree = "<group>"; };
+		077E8659278BEF33002BF76B /* SanskarEPUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SanskarEPUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		0788269A2796E98E0047ED4A /* ApprovalVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalVc.swift; sourceTree = "<group>"; };
 		0788269C2796EA210047ED4A /* ApprovalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalCell.swift; sourceTree = "<group>"; };
 		0788269D2796EA210047ED4A /* ApprovalCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ApprovalCell.xib; sourceTree = "<group>"; };
@@ -401,6 +428,10 @@
 		C7AFF85D2A5597900043B186 /* mywishbdayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mywishbdayTableViewCell.swift; sourceTree = "<group>"; };
 		C7BA6A5C2A8756580074F9B6 /* CustomDialogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialogVC.swift; sourceTree = "<group>"; };
 		C7BA6A5D2A8756580074F9B6 /* CustomDialogVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomDialogVC.xib; sourceTree = "<group>"; };
+		C7C7403D2C7C771400EE27C1 /* inventoryhome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = inventoryhome.swift; sourceTree = "<group>"; };
+		C7C740592C7C77A400EE27C1 /* Submitchallanpages */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Submitchallanpages; path = ../Submitchallanpages; sourceTree = "<group>"; };
+		C7C740632C7C7FD800EE27C1 /* submitchallanvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = submitchallanvc.swift; sourceTree = "<group>"; };
+		C7C7407E2C7C819700EE27C1 /* misscealaneousmodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = misscealaneousmodel.swift; sourceTree = "<group>"; };
 		C7CDB89129EA89120094848C /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		C7DB78502A61228000B61339 /* tpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tpViewController.swift; sourceTree = "<group>"; };
 		C7DB78522A6183E200B61339 /* TourBillApprovalVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourBillApprovalVc.swift; sourceTree = "<group>"; };
@@ -433,6 +464,17 @@
 		D5587EA92AB9B3BF00E03A68 /* TourfullDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourfullDetailsCell.swift; sourceTree = "<group>"; };
 		D5587EAA2AB9B3BF00E03A68 /* TourfullDetailsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TourfullDetailsCell.xib; sourceTree = "<group>"; };
 		D5587EAD2AB9BC4600E03A68 /* TourAllDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourAllDetailsVC.swift; sourceTree = "<group>"; };
+		D55B05D82D0D6B0900406455 /* createchallanvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = createchallanvc.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/createchallanvc.swift; sourceTree = "<group>"; };
+		D55B05DA2D0D6B1500406455 /* Returnchallanvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Returnchallanvc.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/Returnchallanvc.swift; sourceTree = "<group>"; };
+		D55B05DC2D0D6B2100406455 /* Requestvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Requestvc.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/Requestvc.swift; sourceTree = "<group>"; };
+		D55B05DE2D0D6B2B00406455 /* Savedchallanvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Savedchallanvc.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/Savedchallanvc.swift; sourceTree = "<group>"; };
+		D55B05E02D0D6B3600406455 /* openpdfvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = openpdfvc.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/openpdfvc.swift; sourceTree = "<group>"; };
+		D55B05E22D0D6B4100406455 /* Additemvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Additemvc.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/Additemvc.swift; sourceTree = "<group>"; };
+		D55B05E42D0D6B5000406455 /* requestdatamodel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = requestdatamodel.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/requestdatamodel.swift; sourceTree = "<group>"; };
+		D55B05E62D0D6B5C00406455 /* dropdownfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = dropdownfile.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/dropdownfile.swift; sourceTree = "<group>"; };
+		D55B05E82D0D6B6600406455 /* Addinventordetailvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Addinventordetailvc.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/Addinventordetailvc.swift; sourceTree = "<group>"; };
+		D55B05EA2D0D6B8000406455 /* submittedmdeldata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = submittedmdeldata.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/submittedmdeldata.swift; sourceTree = "<group>"; };
+		D55B05EC2D0D6B8900406455 /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QRCodeScannerViewController.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/QRCodeScannerViewController.swift; sourceTree = "<group>"; };
 		D55D44802AE3FFC3007D4248 /* HodDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HodDetailCell.swift; sourceTree = "<group>"; };
 		D55D44812AE3FFC3007D4248 /* HodDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HodDetailCell.xib; sourceTree = "<group>"; };
 		D55D44842AE40A80007D4248 /* HODAllDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HODAllDetailVC.swift; sourceTree = "<group>"; };
@@ -512,6 +554,12 @@
 		D5E5A34A2B85DA910051D025 /* LeaveFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveFilterVC.swift; sourceTree = "<group>"; };
 		D5E608EE2CDCF57900978854 /* apptourCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = apptourCell.swift; sourceTree = "<group>"; };
 		D5E608EF2CDCF57900978854 /* apptourCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = apptourCell.xib; sourceTree = "<group>"; };
+		D5E744CC2C7EF3E500C1F542 /* SavedDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedDataCell.swift; sourceTree = "<group>"; };
+		D5E744CD2C7EF3E500C1F542 /* SavedDataCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SavedDataCell.xib; sourceTree = "<group>"; };
+		D5E744D02C7EF89300C1F542 /* MisscealaneousDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MisscealaneousDataCell.swift; sourceTree = "<group>"; };
+		D5E744D12C7EF89300C1F542 /* MisscealaneousDataCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MisscealaneousDataCell.xib; sourceTree = "<group>"; };
+		D5E744D82C7F007A00C1F542 /* InventoryitemDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryitemDataCell.swift; sourceTree = "<group>"; };
+		D5E744D92C7F007A00C1F542 /* InventoryitemDataCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InventoryitemDataCell.xib; sourceTree = "<group>"; };
 		D5E763012CEEF7300031BBB4 /* videoplayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = videoplayerVC.swift; sourceTree = "<group>"; };
 		D5E763062CEF48000031BBB4 /* PrivacyPolictVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolictVc.swift; sourceTree = "<group>"; };
 		D5E90FC12ADA7CCA00A9708E /* ImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageController.swift; sourceTree = "<group>"; };
@@ -834,6 +882,9 @@
 			isa = PBXGroup;
 			children = (
 				077E8635278BEF32002BF76B /* SanskarEP */,
+				C7C740292C7C764100EE27C1 /* inventoryapp */,
+				077E864C278BEF33002BF76B /* SanskarEPTests */,
+				077E8656278BEF33002BF76B /* SanskarEPUITests */,
 				077E8634278BEF32002BF76B /* Products */,
 				CE3C6F3071A3569D3B8C8400 /* Pods */,
 				FFB8D0BEBB464EC822520666 /* Frameworks */,
@@ -872,6 +923,23 @@
 				D5F153E32B6B9AEE00E12BAB /* searchCell.xib */,
 			);
 			path = SanskarEP;
+			sourceTree = "<group>";
+		};
+		077E864C278BEF33002BF76B /* SanskarEPTests */ = {
+			isa = PBXGroup;
+			children = (
+				077E864D278BEF33002BF76B /* SanskarEPTests.swift */,
+			);
+			path = SanskarEPTests;
+			sourceTree = "<group>";
+		};
+		077E8656278BEF33002BF76B /* SanskarEPUITests */ = {
+			isa = PBXGroup;
+			children = (
+				077E8657278BEF33002BF76B /* SanskarEPUITests.swift */,
+				077E8659278BEF33002BF76B /* SanskarEPUITestsLaunchTests.swift */,
+			);
+			path = SanskarEPUITests;
 			sourceTree = "<group>";
 		};
 		079B921927C4B0A1000FA510 /* Booking */ = {
@@ -928,6 +996,34 @@
 				07A5595F2813E4D0006CEDDD /* VistorCell.xib */,
 			);
 			path = "CellXib&Class";
+			sourceTree = "<group>";
+		};
+		C7C740292C7C764100EE27C1 /* inventoryapp */ = {
+			isa = PBXGroup;
+			children = (
+				C7C740592C7C77A400EE27C1 /* Submitchallanpages */,
+				C7C7403D2C7C771400EE27C1 /* inventoryhome.swift */,
+				D55B05D82D0D6B0900406455 /* createchallanvc.swift */,
+				C7C740632C7C7FD800EE27C1 /* submitchallanvc.swift */,
+				D55B05DA2D0D6B1500406455 /* Returnchallanvc.swift */,
+				D55B05DC2D0D6B2100406455 /* Requestvc.swift */,
+				D5E744CC2C7EF3E500C1F542 /* SavedDataCell.swift */,
+				D5E744CD2C7EF3E500C1F542 /* SavedDataCell.xib */,
+				D55B05DE2D0D6B2B00406455 /* Savedchallanvc.swift */,
+				D55B05E02D0D6B3600406455 /* openpdfvc.swift */,
+				D55B05EC2D0D6B8900406455 /* QRCodeScannerViewController.swift */,
+				D55B05EA2D0D6B8000406455 /* submittedmdeldata.swift */,
+				D55B05E22D0D6B4100406455 /* Additemvc.swift */,
+				D55B05E82D0D6B6600406455 /* Addinventordetailvc.swift */,
+				D55B05E42D0D6B5000406455 /* requestdatamodel.swift */,
+				D55B05E62D0D6B5C00406455 /* dropdownfile.swift */,
+				D5E744D82C7F007A00C1F542 /* InventoryitemDataCell.swift */,
+				D5E744D92C7F007A00C1F542 /* InventoryitemDataCell.xib */,
+				D5E744D02C7EF89300C1F542 /* MisscealaneousDataCell.swift */,
+				D5E744D12C7EF89300C1F542 /* MisscealaneousDataCell.xib */,
+				C7C7407E2C7C819700EE27C1 /* misscealaneousmodel.swift */,
+			);
+			path = inventoryapp;
 			sourceTree = "<group>";
 		};
 		CE3C6F3071A3569D3B8C8400 /* Pods */ = {
@@ -1102,7 +1198,6 @@
 			);
 			mainGroup = 077E862A278BEF32002BF76B;
 			packageReferences = (
-				C7D521542A3AE85D008E1A3D /* XCRemoteSwiftPackageReference "JXMarqueeView" */,
 			);
 			productRefGroup = 077E8634278BEF32002BF76B /* Products */;
 			projectDirPath = "";
@@ -1150,6 +1245,7 @@
 				D5D9BE3B2C2A904600FF9CF0 /* NewReqCell.xib in Resources */,
 				D5D9BE412C2AA1DE00FF9CF0 /* otherCell.xib in Resources */,
 				C70CE9F52A83C080001DC970 /* GuestManageCell.xib in Resources */,
+				D5E744DB2C7F007A00C1F542 /* InventoryitemDataCell.xib in Resources */,
 				D52477562AA1F2F800214D2F /* bdayviewcell.xib in Resources */,
 				D5C3595E2C6A08F70069E784 /* NewApprovalTourCell.xib in Resources */,
 				07BE3100278FF35200BDF230 /* RequestMgCell.xib in Resources */,
@@ -1173,7 +1269,10 @@
 				C7BA6A5F2A8756580074F9B6 /* CustomDialogVC.xib in Resources */,
 				D5E98E982AB5A6C300AFDD2A /* TourDetailsCell.xib in Resources */,
 				0735434A278D7ED600D984D7 /* HomeCell.xib in Resources */,
+				D5E744CF2C7EF3E500C1F542 /* SavedDataCell.xib in Resources */,
+				C7C7405A2C7C77A400EE27C1 /* Submitchallanpages in Resources */,
 				D5D372522B1082C00003334F /* statusTableViewCell.xib in Resources */,
+				D5E744D32C7EF89300C1F542 /* MisscealaneousDataCell.xib in Resources */,
 				07A3FDBE279174CB0053B16C /* LeaveReqCell.xib in Resources */,
 				075E4B382812A50E003B54E8 /* CustomAlert.xib in Resources */,
 				0723BF9B27C3ADEB0001A4DC /* BookingCell.xib in Resources */,
@@ -1312,11 +1411,13 @@
 				074038A0278BF4AC007C70CC /* SwiftLoader.swift in Sources */,
 				07BE3102278FF5FC00BDF230 /* RequestMgVc.swift in Sources */,
 				0740389A278BF3F5007C70CC /* CustomExtension.swift in Sources */,
+				D55B05E92D0D6B6600406455 /* Addinventordetailvc.swift in Sources */,
 				075E4B372812A50E003B54E8 /* CustomAlert.swift in Sources */,
 				D5DE95202B15FE17005DA0FC /* TourStatusVc.swift in Sources */,
 				D5345B792C75F5080038065A /* LeaveViewController.swift in Sources */,
 				D5DB6CF12B207DD0007AE9A7 /* rejcell.swift in Sources */,
 				07AA116928293BA4000E904E /* BookingFilterVC.swift in Sources */,
+				D55B05E72D0D6B5C00406455 /* dropdownfile.swift in Sources */,
 				C7AE09492A1BA21800782476 /* BirthPViewController.swift in Sources */,
 				074038A2278BF4FF007C70CC /* APIConstant.swift in Sources */,
 				078826A22796FA3C0047ED4A /* AcceptCell.swift in Sources */,
@@ -1325,6 +1426,7 @@
 				D5CBA4462B2B0F6900830E51 /* NewHealthVc.swift in Sources */,
 				07A3FDBD279174CB0053B16C /* LeaveReqCell.swift in Sources */,
 				C7A536B22A41B35100D6D0EF /* AddNewEmployeeVc.swift in Sources */,
+				D55B05DF2D0D6B2B00406455 /* Savedchallanvc.swift in Sources */,
 				D5F7284A2C99870600488850 /* EventbookingCell.swift in Sources */,
 				073161FA27969D12000BDCB0 /* PaySlipVc.swift in Sources */,
 				D53F96EA2CBE81B0002E4B6F /* KathaFilterCell.swift in Sources */,
@@ -1343,6 +1445,7 @@
 				07403895278BF32C007C70CC /* APIManager.swift in Sources */,
 				D5D9BE3D2C2A9FDE00FF9CF0 /* OthersVC.swift in Sources */,
 				D5F3FCDD2CA68FC600C9D4CA /* AssignListCell.swift in Sources */,
+				D5E744D22C7EF89300C1F542 /* MisscealaneousDataCell.swift in Sources */,
 				070244F827DCCBA900D31C05 /* StatCell.swift in Sources */,
 				0742EC6C2792A9CA00E97D2E /* LeaveCancel.swift in Sources */,
 				0723BF9A27C3ADEB0001A4DC /* BookingCell.swift in Sources */,
@@ -1352,6 +1455,7 @@
 				D58FCC022C8ADC8E00F22125 /* EventDetailVc.swift in Sources */,
 				C773C2DA29FBE2E300C5AC22 /* MyTableViewCell.swift in Sources */,
 				D5602C742CA812640023DC5E /* SecondAssignedVC.swift in Sources */,
+				D5E744CE2C7EF3E500C1F542 /* SavedDataCell.swift in Sources */,
 				D5871B422A8A241B0056ED9C /* headerCell2.swift in Sources */,
 				D5A6F29B2BE11FBB00C9A79F /* BookingDetailsVc.swift in Sources */,
 				07A3FDC0279179F20053B16C /* leaveReport.swift in Sources */,
@@ -1365,6 +1469,7 @@
 				D5E763022CEEF7300031BBB4 /* videoplayerVC.swift in Sources */,
 				D5E90FC22ADA7CCA00A9708E /* ImageController.swift in Sources */,
 				D55D44822AE3FFC3007D4248 /* HodDetailCell.swift in Sources */,
+				C7C740642C7C7FD800EE27C1 /* submitchallanvc.swift in Sources */,
 				0788269E2796EA210047ED4A /* ApprovalCell.swift in Sources */,
 				D50C2D702BB2E84400C5C25E /* TableBookCell.swift in Sources */,
 				077E863B278BEF32002BF76B /* LoginVc.swift in Sources */,
@@ -1373,6 +1478,7 @@
 				D5587EAE2AB9BC4600E03A68 /* TourAllDetailsVC.swift in Sources */,
 				D5D9BE372C2A890D00FF9CF0 /* NewRequestVc.swift in Sources */,
 				D52CD0122B0B32BF009985DB /* RejectedTourVC.swift in Sources */,
+				D55B05E32D0D6B4100406455 /* Additemvc.swift in Sources */,
 				077E4B52278D83AA008F837F /* HomeModel.swift in Sources */,
 				D5D372512B1082C00003334F /* statusTableViewCell.swift in Sources */,
 				D5C986192ADFC1DE0094888B /* TourAppVC.swift in Sources */,
@@ -1396,11 +1502,13 @@
 				D5DE951C2B15CE37005DA0FC /* halfdayStatusVc.swift in Sources */,
 				D562054D2CB3DC7000E502D6 /* BookingKathaVc.swift in Sources */,
 				079B921827C4AEFB000FA510 /* NewBookVc.swift in Sources */,
+				D55B05EB2D0D6B8000406455 /* submittedmdeldata.swift in Sources */,
 				D504991C2C64D5CC00F228C0 /* ApprovalLitNewVc.swift in Sources */,
 				D59372112BE4C6890003B48F /* clientCell.swift in Sources */,
 				07D7DB89278EE86A00DFF1C8 /* RoundUIView.swift in Sources */,
 				D5ED4DCC2A8760F800870640 /* NewHomeVC.swift in Sources */,
 				0795353127D5E24900941FAC /* ToolBarPicker.swift in Sources */,
+				D55B05D92D0D6B0900406455 /* createchallanvc.swift in Sources */,
 				078C364627DE2976006EE678 /* MyWebServiceOperation.swift in Sources */,
 				079E8C4527FB030800D00271 /* NotifyCell.swift in Sources */,
 				D5F8A6FA2B231F1A00BE696F /* TourDetail'sVc.swift in Sources */,
@@ -1439,16 +1547,21 @@
 				07A3FDC2279183B70053B16C /* LeaveReport.swift in Sources */,
 				074F3E54280AED60004C9413 /* GuestHistoryVc.swift in Sources */,
 				D5D15F182C32AFF9008F15FD /* previewTableViewCell.swift in Sources */,
+				D55B05E12D0D6B3600406455 /* openpdfvc.swift in Sources */,
 				0742EC792792E46600E97D2E /* PLVc.swift in Sources */,
 				07BE310427900F4500BDF230 /* LeaveRequestVc.swift in Sources */,
+				D55B05DB2D0D6B1500406455 /* Returnchallanvc.swift in Sources */,
+				D55B05ED2D0D6B8900406455 /* QRCodeScannerViewController.swift in Sources */,
 				D5AA5C152BBAF092003C4045 /* ApprovedListCell.swift in Sources */,
 				D5345B6B2C75CE190038065A /* CalenderOnClick.swift in Sources */,
+				C7C7403E2C7C771400EE27C1 /* inventoryhome.swift in Sources */,
 				D5FF2E142AE1306E00262CBC /* tourdetCell.swift in Sources */,
 				07D7DB84278EC34500DFF1C8 /* leaveMgCell.swift in Sources */,
 				D530D1372C787009009D6F53 /* NewAllLeaveReqVc.swift in Sources */,
 				7DF7DA8829EE958C00D59552 /* approveCollectionViewCell.swift in Sources */,
 				D55046B42BBEB9060089EBB5 /* KathaVC.swift in Sources */,
 				C79EB1C82A4C5D7F00151259 /* droptourTableViewCell.swift in Sources */,
+				D5E744DA2C7F007A00C1F542 /* InventoryitemDataCell.swift in Sources */,
 				D5F0DE5D2CA5667100B0DDAB /* ReceptionListCell.swift in Sources */,
 				07BC62A52790605500D03DB7 /* GuestVc.swift in Sources */,
 				D5FC9CC72AD5310600E6C198 /* ApprCell.swift in Sources */,
@@ -1473,6 +1586,7 @@
 				D5D7C6F02AED1EA80018C449 /* NewProfileVC.swift in Sources */,
 				0740389D278BF458007C70CC /* Loader.swift in Sources */,
 				D5E4BE732AE64B3200A743AD /* HODAllDetail2VC.swift in Sources */,
+				D55B05DD2D0D6B2100406455 /* Requestvc.swift in Sources */,
 				D5E98E972AB5A6C300AFDD2A /* TourDetailsCell.swift in Sources */,
 				C7AFF85E2A5597900043B186 /* mywishbdayTableViewCell.swift in Sources */,
 				D5E18D5A2D06C5F600E5762A /* scheduleVC.swift in Sources */,
@@ -1480,6 +1594,7 @@
 				07A559592813CF42006CEDDD /* GuestResponse.swift in Sources */,
 				079CD48E27952E3400C584EC /* OTPModel.swift in Sources */,
 				07D47B6427996FC9000490E5 /* workFromHome.swift in Sources */,
+				D55B05E52D0D6B5000406455 /* requestdatamodel.swift in Sources */,
 				D50C2D732BB2EE4C00C5C25E /* SaveListVc.swift in Sources */,
 				D5FF605A2B3463B100466705 /* NotificationCell.swift in Sources */,
 				D5971F5C2BE21A36004FB8FA /* BookingPageCell.swift in Sources */,
@@ -1489,6 +1604,7 @@
 				078C364827DE298C006EE678 /* WebServiceOperation.swift in Sources */,
 				075D79C127DB611500D95978 /* HttpRequest.swift in Sources */,
 				D50A4FC22C83470B00A13496 /* EventCell.swift in Sources */,
+				C7C740812C7C819800EE27C1 /* misscealaneousmodel.swift in Sources */,
 				D5C359592C69E0D90069E784 /* NewApprovalBookingCell.swift in Sources */,
 				C7DB78512A61228000B61339 /* tpViewController.swift in Sources */,
 				D5FC9CCD2AD5536100E6C198 /* HTourCell.swift in Sources */,
@@ -1502,6 +1618,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				077E864E278BEF33002BF76B /* SanskarEPTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1509,6 +1626,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				077E8658278BEF33002BF76B /* SanskarEPUITests.swift in Sources */,
+				077E865A278BEF33002BF76B /* SanskarEPUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1863,17 +1982,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		C7D521542A3AE85D008E1A3D /* XCRemoteSwiftPackageReference "JXMarqueeView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pujiaxin33/JXMarqueeView.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.9;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 077E862B278BEF32002BF76B /* Project object */;
 }
