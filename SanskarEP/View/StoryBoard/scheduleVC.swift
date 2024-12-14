@@ -68,7 +68,7 @@ class scheduleVC: UIViewController {
     @IBAction func clearbtn(_ sender: UIButton) {
         playerview.isHidden = true
     }
-    
+      
     func ScheduleAPi() {
         var dict = Dictionary<String, Any>()
         dict["EmpCode"] = currentUser.EmpCode
