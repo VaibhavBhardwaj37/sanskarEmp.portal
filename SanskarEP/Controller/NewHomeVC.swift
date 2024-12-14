@@ -250,24 +250,24 @@ class NewHomeVC: UIViewController  {
     }
     
     @IBAction func inventorybtn(_ sender: UIButton) {
-//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "inventoryhome") as! inventoryhome
-//        if #available(iOS 15.0, *) {
-//        if let sheet = vc.sheetPresentationController {
-//        var customDetent: UISheetPresentationController.Detent?
-//        if #available(iOS 16.0, *) {
-//        customDetent = UISheetPresentationController.Detent.custom { context in
-//        return 580
-//        
-//        }
-//       sheet.detents = [customDetent!]
-//       sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
-//    }
-//       sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-//       sheet.prefersGrabberVisible = true
-//       sheet.preferredCornerRadius = 12
-//    }
-//   }
-//    present(vc, animated: true)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "inventoryhome") as! inventoryhome
+        if #available(iOS 15.0, *) {
+        if let sheet = vc.sheetPresentationController {
+        var customDetent: UISheetPresentationController.Detent?
+        if #available(iOS 16.0, *) {
+        customDetent = UISheetPresentationController.Detent.custom { context in
+        return 580
+        
+        }
+       sheet.detents = [customDetent!]
+       sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
+    }
+       sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+       sheet.prefersGrabberVisible = true
+       sheet.preferredCornerRadius = 12
+    }
+   }
+    present(vc, animated: true)
     }
    
     func setCellView() {
