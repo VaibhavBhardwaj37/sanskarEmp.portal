@@ -16,12 +16,18 @@ class bdayviewcell: UITableViewCell {
     @IBOutlet weak var message: UILabel!
     @IBOutlet weak var msgbtn: UIButton!
     @IBOutlet weak var mylbl3: UILabel!
+    @IBOutlet weak var terminatedbtn: UIButton!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         message.layer.cornerRadius = 5
         message.clipsToBounds = true
+        
+        terminatedbtn.layer.cornerRadius = 5
+        terminatedbtn.clipsToBounds = true
+        
         MyImage.layer.borderWidth = 1.0
         MyImage.layer.borderColor = UIColor.black.cgColor
         MyImage.layer.cornerRadius = 5.0 // Optional: If you want rounded corners

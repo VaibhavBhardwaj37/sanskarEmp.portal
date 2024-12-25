@@ -31,15 +31,17 @@ class scheduleVC: UIViewController {
         ScheduleAPi()
         playerview.isHidden = true
         tableview.register(UINib(nibName: "NewEventListCell" , bundle: nil), forCellReuseIdentifier: "NewEventListCell")
+        handleQCAction(status: "1")
         
-        
-        print(kathaId)
-        if  let roleID = Int(currentUser.booking_role_id), roleID == 7 {
-            actionbtn.isHidden = false
-        } else {
-            actionbtn.isHidden = true
-           
+   
+        if let roleID = Int(currentUser.booking_role_id) {
+            if roleID == 7 {
+                actionbtn.isHidden = false
+            }  else {
+                actionbtn.isHidden = true
+            }
         }
+
         approvebtn.layer.cornerRadius = 8
         Rejectbtn.layer.cornerRadius = 8
         actionview.layer.cornerRadius = 8
@@ -68,16 +70,50 @@ class scheduleVC: UIViewController {
     @IBAction func clearbtn(_ sender: UIButton) {
         playerview.isHidden = true
     }
+    
       
+    @IBAction func approvebtn(_ sender: UIButton) {
+        handleQCAction(status: "1")
+        actionview.isHidden = true
+    }
+    
+    @IBAction func rejectbtn(_ sender: UIButton) {
+        handleQCAction(status: "2")
+        actionview.isHidden = true
+    }
+    
     func ScheduleAPi() {
         var dict = Dictionary<String, Any>()
         dict["EmpCode"] = currentUser.EmpCode
-        dict["Katha_Id"] = kathaId
-        print( dict["Katha_Id"])
+        dict["Katha_Id"] = "\(kathaId)"
+   
         DispatchQueue.main.async(execute: { Loader.showLoader() })
         APIManager.apiCall(postData: dict as NSDictionary, url: scheduleApi) { result, response, error, data in
             DispatchQueue.main.async(execute: { Loader.hideLoader() })
             if let data = data, let responseData = response, responseData["status"] as? Bool == true {
+                if let dataArray = responseData["data"] as? [[String: Any]] {
+                    self.DataList = dataArray
+                    self.tableview.reloadData()
+                }
+            } else {
+                print(response?["error"] as Any)
+            }
+        }
+    }
+    
+    func handleQCAction(status: String) {
+        var dict = Dictionary<String, Any>()
+        dict["EmpCode"] = currentUser.EmpCode
+        dict["Katha_Id"] = "\(kathaId)"
+        dict["Status"] = status
+        dict["Remarks"] = remarkstext.text
+        dict["PromoId"] = "1"
+        
+        DispatchQueue.main.async(execute: { Loader.showLoader() })
+        APIManager.apiCall(postData: dict as NSDictionary, url: qcactionApi) { result, response, error, data in
+            DispatchQueue.main.async(execute: { Loader.hideLoader() })
+            if let data = data, let responseData = response, responseData["status"] as? Bool == true {
+                AlertController.alert(message: (response?.validatedValue("message"))!)
                 if let dataArray = responseData["data"] as? [[String: Any]] {
                     self.DataList = dataArray
                     self.tableview.reloadData()

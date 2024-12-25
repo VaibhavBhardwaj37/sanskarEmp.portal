@@ -115,6 +115,7 @@ extension BdayViewController:UITableViewDelegate,UITableViewDataSource
         print(EmpData)
         cell.MyLbl.text = nameData
         cell.mylbl3.isHidden = true
+        cell.terminatedbtn.isHidden = true
         
         if imageData.isEmpty {
                cell.MyImage.image = UIImage(named: "download")

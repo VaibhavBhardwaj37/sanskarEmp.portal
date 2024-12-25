@@ -306,7 +306,7 @@ class NewHomeVC: UIViewController  {
     
     @IBAction func SearchBarBtn(_ sender: UIButton) {
  //      let vc = self.storyboard?.instantiateViewController(withIdentifier: "PieChartVC") as! PieChartVC
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "PieChartVC") as! PieChartVC
         if #available(iOS 15.0, *) {
         if let sheet = vc.sheetPresentationController {
         var customDetent: UISheetPresentationController.Detent?
@@ -918,6 +918,7 @@ extension NewHomeVC: UITableViewDelegate, UITableViewDataSource {
             cell.MyLbl2.text = cellData["BDay"] as? String ?? ""
             cell.MyLbl.text = cellData["Name"] as? String ?? ""
             cell.mylbl3.isHidden = true
+            cell.terminatedbtn.isHidden = true
             
             EmpData = cellData["EmpCode"] as? String ?? ""
             if let imageUrl = cellData["PImg"] as? String {

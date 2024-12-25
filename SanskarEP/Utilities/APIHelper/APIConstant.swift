@@ -95,6 +95,11 @@ let ContentsubmitApi        = "api_panel/promo_approval"
 let PrivacyPolicyApi        = "api_panel/Privacy_Policy"
 let EmployeeListApi         = "api_panel/employee"
 let scheduleApi             = "api_panel/promolist"
+let qcactionApi             = "api_panel/qcapproval"
+let CreateMetaApi           = "api_panel/createMetaId" 
+let deleteaccountAPi        = "api_panel/delete_emp"
+let EmployeeDetailApi       = "api_panel/detailofemp"
+
 
 // inventory api
 let submitedlistapi        = "api_panel/get_inventory_detail"

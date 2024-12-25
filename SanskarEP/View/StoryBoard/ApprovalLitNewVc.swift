@@ -51,7 +51,7 @@ class ApprovalLitNewVc: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getDetails()
+      //  getDetails()
         bookingdetailapi()
         HODdetail()
         
@@ -187,14 +187,17 @@ class ApprovalLitNewVc: UIViewController {
 //        Leavetableview.reloadData()
         Deselectview.isHidden = false
            
-           // Select/Deselect LeaveTableview rows
-           if selectedRows.count == approveM.count {
-               selectedRows.removeAll()
-           } else {
-               selectedRows = Set(0..<approveM.count)
-           }
-           Leavetableview.reloadData()
-           
+        if selectedRows.count == approveM.count {
+                   selectedRows.removeAll()
+            // Deselect all rows
+           sender.setTitle("Select All", for: .normal)
+               } else {
+                   selectedRows = Set(0..<approveM.count)
+                   // Change title to "Deselect All"
+                   sender.setTitle("Deselect All", for: .normal)
+               }
+              Leavetableview.reloadData()
+        
            // Select/Deselect BookingTableview rows
            if selectedBookingRows.count == Datalist.count {
                selectedBookingRows.removeAll()
@@ -254,7 +257,6 @@ class ApprovalLitNewVc: UIViewController {
     }
 
     
-    
     @objc func checkboxTapped(_ sender: UIButton) {
            let rowIndex = sender.tag
            if selectedRows.contains(rowIndex) {
@@ -308,7 +310,7 @@ class ApprovalLitNewVc: UIViewController {
         }
     }
     @objc
-    func AcceptOnClick(_ sender: UIButton ) {
+    func LeaveAcceptOnClick(_ sender: UIButton ) {
         print(sender.tag)
         let index = approveM[sender.tag]
         getGrant(index["ID"] as? String ?? "", "granted")
@@ -318,13 +320,23 @@ class ApprovalLitNewVc: UIViewController {
     }
     
     @objc
-    func rejectOnClick(_ sender: UIButton ) {
+    func LeaverejectOnClick(_ sender: UIButton ) {
         print(sender.tag)
         let index = approveM[sender.tag]
         getGrant(index["ID"] as? String ?? "", "declined")
         approveM.remove(at: sender.tag)
         Leavetableview.reloadData()
       
+    }
+    
+    func updateApproveAllButtonTitle() {
+        if selectedRows.count == approveM.count {
+            AllApprovebtn.setTitle("Approve All", for: .normal)
+            RejectAllbtn.setTitle("Reject All", for: .normal)
+        } else {
+            AllApprovebtn.setTitle("Approve Selected", for: .normal)
+            RejectAllbtn.setTitle("Reject Selected", for: .normal)
+        }
     }
     
     private func showConfirmationPopup(action: String, bookingIds: [String], indexPath: IndexPath) {
@@ -347,6 +359,7 @@ class ApprovalLitNewVc: UIViewController {
         
         present(alertController, animated: true, completion: nil)
     }
+    
     func approveBooking(bookingIds: [String], status: String) {
         var dict = Dictionary<String, Any>()
            dict["kathaid"] = bookingIds
@@ -392,7 +405,7 @@ class ApprovalLitNewVc: UIViewController {
           }
        }
     @objc
-    func AcceptonClick(_ sender: UIButton) {
+    func BookingAcceptonClick(_ sender: UIButton) {
         let indexPath = IndexPath(row: sender.tag, section: 0)
         let bookingId = Datalist[indexPath.row]["Katha_id"] as? String ?? ""
         BookingTableview.reloadData()
@@ -402,7 +415,7 @@ class ApprovalLitNewVc: UIViewController {
 
     
     @objc
-    func rejectonClick(_ sender: UIButton ) {
+    func BookingrejectonClick(_ sender: UIButton ) {
         let index = sender.tag
         let bookingId = Datalist[index]["Katha_id"] as? String ?? ""
         BookingTableview.reloadData()
@@ -411,30 +424,33 @@ class ApprovalLitNewVc: UIViewController {
     }
     
     @objc
-    func acceptonClick(_ sender: UIButton ) {
+    func TouracceptonClick(_ sender: UIButton ) {
         print(sender.tag)
-        let index = approveM[sender.tag]
+        let index = datalist[sender.tag]
         getGrant(index["ID"] as? String ?? "", "granted")
-        approveM.remove(at: sender.tag)
+        datalist.remove(at: sender.tag)
         TourTableview.reloadData()
        
     }
     
     @objc
-    func RejectonClick(_ sender: UIButton ) {
+    func TourRejectonClick(_ sender: UIButton ) {
         print(sender.tag)
-        let index = approveM[sender.tag]
+        let index = datalist[sender.tag]
         getGrant(index["ID"] as? String ?? "", "declined")
-        approveM.remove(at: sender.tag)
+        datalist.remove(at: sender.tag)
         TourTableview.reloadData()
       
     }
     
+
     @IBAction func AllApproveBtn(_ sender: UIButton) {
+        
         for index in selectedRows {
                let data = approveM[index]
                getGrant(data["ID"] as? String ?? "", "granted")
            }
+        
            // Remove the selected rows from the table
            approveM = approveM.enumerated().filter { !selectedRows.contains($0.offset) }.map { $0.element }
            selectedRows.removeAll()
@@ -516,7 +532,7 @@ extension ApprovalLitNewVc: UITableViewDelegate,UITableViewDataSource {
         if tableView == Leavetableview {
             let item = approveM[indexPath.row]
                let leaveType = item["leave_type"] as? String ?? ""
-               if leaveType == "full" || leaveType == "half" || leaveType == "tour" {
+               if leaveType == "full" || leaveType == "half" || leaveType == "tour" || leaveType == "WFH" {
                    guard let cell = tableView.dequeueReusableCell(withIdentifier: "apptourCell", for: indexPath) as? apptourCell else {
                        return UITableViewCell()
                    }
@@ -541,9 +557,12 @@ extension ApprovalLitNewVc: UITableViewDelegate,UITableViewDataSource {
                    }
                    cell.checkbtn.tag = indexPath.row
                    cell.checkbtn.addTarget(self, action: #selector(checkboxTapped(_:)), for: .touchUpInside)
-                cell.approvebtn.addTarget(self, action: #selector(AcceptOnClick(_:)), for: .touchUpInside)
-                cell.rejectbtn.addTarget(self, action: #selector(rejectOnClick(_:)), for: .touchUpInside)
+                   cell.approvebtn.tag = indexPath.row
+                cell.approvebtn.addTarget(self, action: #selector(LeaveAcceptOnClick(_:)), for: .touchUpInside)
+                   cell.rejectbtn.tag = indexPath.row
+                cell.rejectbtn.addTarget(self, action: #selector(LeaverejectOnClick(_:)), for: .touchUpInside)
                   cell.selectionStyle = .none
+                   updateApproveAllButtonTitle()
                    return cell
                }
             
@@ -576,10 +595,12 @@ extension ApprovalLitNewVc: UITableViewDelegate,UITableViewDataSource {
               }
             cell.checkbutton.tag = indexPath.row
             cell.checkbutton.addTarget(self, action: #selector(CheckboxTapped(_:)), for: .touchUpInside)
-            
-            cell.Approvebtn.addTarget(self, action: #selector(AcceptonClick(_:)), for: .touchUpInside)
-            cell.rejectbtn.addTarget(self, action: #selector(rejectonClick(_:)), for: .touchUpInside)
+            cell.Approvebtn.tag = indexPath.row
+            cell.Approvebtn.addTarget(self, action: #selector(BookingAcceptonClick(_:)), for: .touchUpInside)
+            cell.rejectbtn.tag = indexPath.row
+            cell.rejectbtn.addTarget(self, action: #selector(BookingrejectonClick(_:)), for: .touchUpInside)
             cell.selectionStyle = .none
+      //      updateApproveAllButtonTitle()
             return cell
             
         } else if tableView == TourTableview {
@@ -622,9 +643,13 @@ extension ApprovalLitNewVc: UITableViewDelegate,UITableViewDataSource {
               }
             cell.Checkbutn.tag = indexPath.row
             cell.Checkbutn.addTarget(self, action: #selector(Checkboxtapped(_:)), for: .touchUpInside)
-            cell.Approvebtn.addTarget(self, action: #selector(acceptonClick(_:)), for: .touchUpInside)
-            cell.Rejectbtn.addTarget(self, action: #selector(RejectonClick(_:)), for: .touchUpInside)
+            cell.Approvebtn.tag = indexPath.row
+            cell.Approvebtn.addTarget(self, action: #selector(TouracceptonClick(_:)), for: .touchUpInside)
+            cell.Approvebtn.tag = indexPath.row
+            cell.Rejectbtn.addTarget(self, action: #selector(TourRejectonClick(_:)), for: .touchUpInside)
+         
             cell.selectionStyle = .none
+        //    updateApproveAllButtonTitle()
             return cell
         }
        
@@ -650,7 +675,7 @@ extension ApprovalLitNewVc: UITableViewDelegate,UITableViewDataSource {
             
             BookingTableview.reloadRows(at: [indexPath], with: .none)
             
-        } else if tableView == TourTableview{
+        } else if tableView == TourTableview {
             if selectedTourRows.contains(indexPath.row) {
                 selectedTourRows.remove(indexPath.row)
             } else {
@@ -665,7 +690,7 @@ extension ApprovalLitNewVc: UITableViewDelegate,UITableViewDataSource {
         if tableView == Leavetableview {
             let item = approveM[indexPath.row]
             let leaveType = item["leave_type"] as? String ?? ""
-            if leaveType == "full" || leaveType == "half" || leaveType == "tour" {
+            if leaveType == "full" || leaveType == "half" || leaveType == "tour" || leaveType == "WFH"{
                 return 200
 //            } else if leaveType == "tour_request" {
 //                return 200

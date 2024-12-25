@@ -69,6 +69,7 @@ extension OthersVC: UITableViewDataSource{
         cell.assignlbl.text = "\(index["sales_person"] as? String ?? "")"
         cell.remarkslbl.text = "\(index["remarks"] as? String ?? "")"
         cell.contactlbl.text = "\(index["caller_mobile"] as? String ?? "")"
+        
      //   cell.contactlbl.text = "+911234567890"
            
             return cell

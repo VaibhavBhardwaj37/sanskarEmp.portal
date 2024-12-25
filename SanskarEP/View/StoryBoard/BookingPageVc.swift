@@ -10,6 +10,10 @@
 //roleID == 4 reception, permission 4
 //roleID == 5 HOD  , permission 5
 //roleID == 6 employees
+//roleID == 7 qc employee
+//roleID == 8 Qc hod
+//roleID == 9 Qc team by channel
+//roleID == 10 Library
 
 import UIKit
 
@@ -68,7 +72,10 @@ class BookingPageVc: UIViewController {
     @IBOutlet weak var secondtable: UITableView!
     @IBOutlet weak var playerview: UIView!
     @IBOutlet weak var playerimageview: UIImageView!
-   
+    @IBOutlet weak var metaview: UIView!
+    @IBOutlet weak var metaremarks: UITextView!
+    @IBOutlet weak var metasubmitbtn: UIButton!
+    @IBOutlet weak var mtacancel: UIButton!
     
     
     var datalist  = [[String:Any]]()
@@ -87,6 +94,7 @@ class BookingPageVc: UIViewController {
     var promotype =  String()
     var status = String()
     var empCode: String?
+    var kathaID = Int()
 //    var PromoUrl: String?
     var filterData = [[String:Any]]()
     fileprivate let timePicker = UIDatePicker()
@@ -94,6 +102,7 @@ class BookingPageVc: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         boookingApi()
         receptionbookAPi()
         timePickerSetup()
@@ -111,10 +120,15 @@ class BookingPageVc: UIViewController {
         secondtable.dataSource = self
         tableview.register(UINib(nibName: "BookingPageCell", bundle: nil), forCellReuseIdentifier: "BookingPageCell")
         tableview.register(UINib(nibName: "ReceptionListCell", bundle: nil), forCellReuseIdentifier: "ReceptionListCell")
+        tableview.register(UINib(nibName: "QcMetaCell", bundle: nil), forCellReuseIdentifier: "QcMetaCell")
         secondtable.register(UINib(nibName: "DetailsEmployCell", bundle: nil), forCellReuseIdentifier: "cell")
+        
         btn.layer.cornerRadius = 8
+        metasubmitbtn.layer.cornerRadius = 8
+        mtacancel.layer.cornerRadius = 8
         btn.clipsToBounds = true
         Assignview.isHidden = true
+        metaview.isHidden = true
         playerview.isHidden = true
         eyesview.isHidden = true
         secondeyeview.isHidden = true
@@ -124,14 +138,13 @@ class BookingPageVc: UIViewController {
         switchview.isHidden = true
         filterCollView.isHidden = true
         secondtable.isHidden = true
-      
         switchpermisssion.addTarget(self, action: #selector(switchToggled(_:)), for: .valueChanged)
         
         //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideDetailView))
         //            tapGesture.cancelsTouchesInView = false
         //            self.view.addGestureRecognizer(tapGesture)
         
-        if  let roleID = Int(currentUser.booking_role_id), roleID == 2  || roleID == 5 || roleID == 6 || roleID == 8 || roleID == 7 {
+        if  let roleID = Int(currentUser.booking_role_id), roleID == 2  || roleID == 5 || roleID == 6 || roleID == 8 || roleID == 7 || roleID == 9 || roleID == 10 {
             btn.isHidden = true
             searchbtn.isHidden = true
             labelbtn.isHidden = true
@@ -149,7 +162,7 @@ class BookingPageVc: UIViewController {
             approvedview.isHidden = true
             allselectbtn.isHidden = true
         }
-        if  let roleID = Int(currentUser.booking_role_id), roleID == 2 || roleID == 3 || roleID == 4 || roleID == 5 || roleID == 6 || roleID == 8 || roleID == 7 {
+        if  let roleID = Int(currentUser.booking_role_id), roleID == 2 || roleID == 3 || roleID == 4 || roleID == 5 || roleID == 6 || roleID == 8 || roleID == 7 || roleID == 9 || roleID == 10 {
             searchbtn.isHidden = true
         } else {
             searchbtn.isHidden = false
@@ -158,6 +171,14 @@ class BookingPageVc: UIViewController {
         layout.scrollDirection = .vertical
         filterCollView.collectionViewLayout = layout
         filterCollView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        
+        metaremarks.delegate = self
+        metaremarks.layer.cornerRadius = 10
+        metaremarks.clipsToBounds = true
+        metaremarks.text = "Remark ..."
+        metaremarks.layer.borderWidth = 1.0
+        metaremarks.layer.borderColor = UIColor.lightGray.cgColor
+        metaremarks.textColor = UIColor.lightGray
     }
     
     func removeData() {
@@ -315,7 +336,6 @@ class BookingPageVc: UIViewController {
         }
         tableview.reloadData()
     }
-    
     @objc
     func doneBtnClicK() {
         let formatter = DateFormatter()
@@ -812,6 +832,9 @@ class BookingPageVc: UIViewController {
     }
     
     @objc func eyeviewcheckboxTapped(_ sender: UIButton) {
+        let index = sender.tag
+        let selectedRowData = datalist[index] 
+        let kathaid = selectedRowData["Katha_id"] as? Int ?? 0
         let vc = storyboard?.instantiateViewController(withIdentifier: "scheduleVC") as! scheduleVC
         vc.kathaId = kathaid
         if #available(iOS 15.0, *) {
@@ -894,6 +917,67 @@ class BookingPageVc: UIViewController {
     @objc func CheckboxTapped(_ sender: UIButton) {
         editview.isHidden = false
     }
+    @objc func metatncheckboxTapped(_ sender: UIButton) {
+        metaview.isHidden = false
+    }
+    
+    
+    @IBAction func metasubmitbtn(_ sender: UIButton) {
+          let rowIndex = sender.tag
+          let rowData = datalist[rowIndex]
+          kathaID = rowData["kathaId"] as? Int ?? 0
+          metaidApi()
+    }
+    
+    @IBAction func metacancelbtn(_ sender: UIButton) {
+        metaview.isHidden = true
+    }
+    
+    func metaidApi() {
+        var dict = Dictionary<String,Any>()
+        dict["Katha_Id"] = "\(kathaID)"
+        dict["EmpCode"] = currentUser.EmpCode
+        dict["metaId"] = metaremarks.text!
+       
+        DispatchQueue.main.async(execute: {Loader.showLoader()})
+        APIManager.apiCall(postData: dict as NSDictionary, url: CreateMetaApi) { result, response, error, data in
+            DispatchQueue.main.async(execute: {Loader.hideLoader()})
+            if let _ = data, (response?["status"] as? Bool == true), response != nil {
+                AlertController.alert(message: (response?.validatedValue("message"))!)
+                self.removeData()
+            }else{
+                print(response?["error"] as Any)
+                AlertController.alert(message: (response?.validatedValue("message"))!)
+            }
+            
+        }
+    }
+    
+    @objc func QceyebtncheckboxTapped(_ sender: UIButton) {
+        let buttonIndex = sender.tag
+        guard let rowData = datalist[buttonIndex] as? [String: Any] else { return }
+        let PromoUrl = rowData["url"] as? String ?? ""
+        let promoType = rowData["promo_type"] as? String ?? ""
+    
+            let vc = storyboard!.instantiateViewController(withIdentifier: "videoplayerVC") as! videoplayerVC
+            if #available(iOS 15.0, *) {
+                if let sheet = vc.sheetPresentationController {
+                    if #available(iOS 16.0, *) {
+                        let customDetent = UISheetPresentationController.Detent.custom { context in
+                            return 540
+                        }
+                        sheet.detents = [customDetent]
+                        sheet.largestUndimmedDetentIdentifier = customDetent.identifier
+                    }
+                    sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+                    sheet.prefersGrabberVisible = true
+                    sheet.preferredCornerRadius = 12
+                }
+            }
+            vc.promo = PromoUrl
+            self.present(vc, animated: true)
+    }
+    
     
     @objc func rejectCheckboxTapped(_ sender: UIButton) {
         let indexPath = IndexPath(row: sender.tag, section: 0)
@@ -974,7 +1058,7 @@ extension BookingPageVc: UITableViewDataSource , UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == tableview {
             if let roleID = Int(currentUser.booking_role_id) {
-                if roleID == 1 || roleID == 2 || roleID == 3 || roleID == 5 || roleID == 8 || roleID == 7 {
+                if roleID == 1 || roleID == 2 || roleID == 3 || roleID == 5 || roleID == 8 || roleID == 7 || roleID == 9 || roleID == 10 {
                     return self.datalist.count
                 } else if roleID == 4 {
                     return datalist.count
@@ -1003,16 +1087,25 @@ extension BookingPageVc: UITableViewDataSource , UITableViewDelegate {
                     cell.contactlbl.text = "\(index["caller_mobile"] as? String ?? "")"
                     return cell
                 }
-            }  else if roleID == 1 || roleID == 2 || roleID == 3 || roleID == 5 || roleID == 8 || roleID == 7 {
+            }  else if roleID == 1 || roleID == 2 || roleID == 3 || roleID == 5 || roleID == 8 || roleID == 7 || roleID == 10  {
+                
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "BookingPageCell", for: indexPath) as? BookingPageCell {
                     if  let rowData = datalist[indexPath.row] as? [String: Any] {
                         cell.NameLabel.text = rowData["Name"] as? String ?? ""
-                        cell.AMountLabel.text = rowData["Amount"] as? String ?? ""
+                      
                         cell.GSTLabel.text = rowData["GST"] as? String ?? ""
                         cell.VenueLabel.text = rowData["Venue"] as? String ?? ""
                         cell.ChennelLabel.text = rowData["ChannelName"] as? String ?? ""
                         cell.DateromLabel.text = " \(rowData["Katha_from_Date"] as? String ?? "") to \(rowData["Katha_date"] as? String ?? "")"
-                       kathaid = datalist[indexPath.row]["Katha_id"] as? Int ?? 0
+                        
+                        if roleID == 10 {
+                            cell.AMountLabel.text = rowData["Meta_Id"] as? String ?? ""
+                        } else  {
+                            cell.AMountLabel.text = rowData["Amount"] as? String ?? ""
+                        }
+                      
+                       kathaid = rowData["katha_id"] as? Int ?? 0
+                   
                         let status = rowData["Status"] as? String ?? ""
                         cell.statsulbl.text = status
                         if status == "Suggestion" {
@@ -1041,18 +1134,24 @@ extension BookingPageVc: UITableViewDataSource , UITableViewDelegate {
                             cell.Type1Lbl.isHidden = true
                             cell.forwardimage.isHidden = false
                         }
+                    
                         
-                        
-                        if roleID == 8 || roleID == 7 {
+                        if roleID == 8 || roleID == 7 || roleID == 10  {
                             cell.eyeview.isHidden = false
-                            cell.AMountLabel.isHidden = true
+                       //     cell.AMountLabel.isHidden = true
                             cell.GSTLabel.isHidden = true
+                            cell.gstlbl.isHidden = true
+                            
+                            if roleID == 10 {
+                                cell.Mainamount.text = "MetaId"
+                            }
                         } else {
                             cell.eyeview.isHidden = true
                             cell.AMountLabel.isHidden = false
                             cell.GSTLabel.isHidden = false
+                            cell.gstlbl.isHidden = false
                         }
-                        
+
                         if status == "Assign to Hod" {
                             cell.statsulbl.textColor = UIColor.purple
                         } else if status != "Suggestion" {
@@ -1080,8 +1179,9 @@ extension BookingPageVc: UITableViewDataSource , UITableViewDelegate {
                             cell.eyebtn.tag = kathaid
                             cell.eyebtn.addTarget(self, action: #selector(CheckboxTappedview(_:)), for: .touchUpInside)
                         }
-                        cell.eyeview.addTarget(self, action: #selector(eyeviewcheckboxTapped(_:)), for: .touchUpInside)
                         cell.eyeview.tag = indexPath.row
+                        cell.eyeview.addTarget(self, action: #selector(eyeviewcheckboxTapped(_:)), for: .touchUpInside)
+                       
                         
                         cell.editbtn.tag = indexPath.row
                         cell.editbtn.addTarget(self, action: #selector(CheckboxTapped(_:)), for: .touchUpInside)
@@ -1092,6 +1192,24 @@ extension BookingPageVc: UITableViewDataSource , UITableViewDelegate {
                         }
                         return cell
                     }
+                }
+            } else if  roleID == 9 {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "QcMetaCell", for: indexPath) as? QcMetaCell {
+                    let rowData = datalist[indexPath.row]
+                    cell.Date.text = " \(rowData["Katha_from_Date"] as? String ?? "") to \(rowData["Katha_date"] as? String ?? "")"
+                   kathaID = rowData["kathaId"] as? Int ?? 0
+                    
+                    cell.Venue.text = rowData["Venue"] as? String ?? ""
+                    cell.Name.text = rowData["name"] as? String ?? ""
+                    cell.Channel.text = rowData["ChannelName"] as? String ?? ""
+                    cell.Promo.text = rowData["Type_name"] as? String ?? ""
+                    cell.Time.text = rowData["KathaTiming"] as? String ?? ""
+                    
+                    cell.eyebtn.tag = indexPath.row
+                    cell.eyebtn.addTarget(self, action: #selector(QceyebtncheckboxTapped(_:)), for: .touchUpInside)
+                    cell.metaidbtn.tag = indexPath.row
+                    cell.metaidbtn.addTarget(self, action: #selector(metatncheckboxTapped(_:)), for: .touchUpInside)
+                    return cell
                 }
             }
         } else if tableView == secondtable {
@@ -1120,10 +1238,12 @@ extension BookingPageVc: UITableViewDataSource , UITableViewDelegate {
         if tableView == self.tableview {
             if roleID == 4 {
                 return 165
-            } else if roleID == 3 || roleID == 5  || roleID == 1 || roleID == 8 || roleID == 7 {
+            } else if roleID == 3 || roleID == 5  || roleID == 1 || roleID == 8 || roleID == 7 || roleID == 10  {
                 return 200
             } else if roleID == 2 {
                 return 240
+            }  else if roleID == 9 {
+                return 170
             }
         }
         return UITableView.automaticDimension
@@ -1232,4 +1352,28 @@ extension BookingPageVc: UICollectionViewDelegate, UICollectionViewDataSource, U
         filterCollView.isHidden = true
     }
 }
+extension BookingPageVc : UITextViewDelegate {
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (metaremarks.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        return numberOfChars < 200
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
 
+        if metaremarks.textColor == UIColor.lightGray {
+            metaremarks.text = ""
+            metaremarks.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+
+        if metaremarks.text == "" {
+
+            metaremarks.text = "Remark ..."
+            metaremarks.textColor = UIColor.lightGray
+        }
+    }
+}

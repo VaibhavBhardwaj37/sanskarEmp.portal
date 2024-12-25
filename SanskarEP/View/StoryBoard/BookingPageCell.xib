@@ -349,6 +349,7 @@
                 <outlet property="ChennelLabel" destination="Yht-BO-zHK" id="TLo-Aa-Xdm"/>
                 <outlet property="DateromLabel" destination="BNA-t0-hIx" id="kdU-01-3Pp"/>
                 <outlet property="GSTLabel" destination="UPw-E1-bcX" id="Zmx-gf-gHs"/>
+                <outlet property="Mainamount" destination="I96-Vy-wFq" id="9UQ-WL-ybJ"/>
                 <outlet property="NameLabel" destination="BmD-h6-whO" id="c7x-Re-bkt"/>
                 <outlet property="TimeLabel" destination="KNj-tk-sW7" id="3IA-2R-acW"/>
                 <outlet property="Type1Lbl" destination="MeT-38-E7h" id="8QO-SY-cJc"/>
@@ -360,6 +361,7 @@
                 <outlet property="eyebtn" destination="0dj-fH-g9Y" id="sNe-ik-Owt"/>
                 <outlet property="eyeview" destination="mdR-lV-Utt" id="acd-Yg-ndI"/>
                 <outlet property="forwardimage" destination="Ofa-0y-8Rw" id="2ol-oS-qZK"/>
+                <outlet property="gstlbl" destination="i61-FL-KTe" id="gma-zn-xsA"/>
                 <outlet property="rounduiview" destination="dfN-Gz-Mu6" id="bLj-wI-mVd"/>
                 <outlet property="statsulbl" destination="pqZ-Y8-aWZ" id="1Xy-lx-DRM"/>
                 <outlet property="typeslbl" destination="W3x-cb-DZH" id="ci3-6F-cqK"/>

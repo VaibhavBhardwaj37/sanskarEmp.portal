@@ -409,6 +409,7 @@ extension AllStatusVc: UITableViewDataSource, UITableViewDelegate {
             cell.MyImage.sd_setImage(with: URL(string: imgURL), placeholderImage: UIImage(named: "placeholder"))
             cell.message.isHidden = true
             cell.msgbtn.isHidden = true
+            cell.terminatedbtn.isHidden = true
             return cell
         }
 
@@ -462,8 +463,8 @@ extension AllStatusVc: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if Selected.selectedSegmentIndex == 1 {
-                let vc = storyboard!.instantiateViewController(withIdentifier: "EmployeeDetailNewVc") as! EmployeeDetailNewVc
-            vc.Datalist = filteredDetailData[indexPath.row]
+                let vc = storyboard!.instantiateViewController(withIdentifier: "ReportAllVc") as! ReportAllVc
+         //   vc.Datalist = filteredDetailData[indexPath.row]
                 if #available(iOS 15.0, *) {
                     if let sheet = vc.sheetPresentationController {
                         var customDetent: UISheetPresentationController.Detent?

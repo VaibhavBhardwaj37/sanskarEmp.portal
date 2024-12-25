@@ -29,6 +29,8 @@ class BookingPageCell: UITableViewCell {
     @IBOutlet weak var typeslbl: UILabel!
     @IBOutlet weak var Type1Lbl: UILabel!
     @IBOutlet weak var eyeview: UIButton!
+    @IBOutlet weak var gstlbl: UILabel!
+    @IBOutlet weak var Mainamount: UILabel!
     
     
     override func awakeFromNib() {
