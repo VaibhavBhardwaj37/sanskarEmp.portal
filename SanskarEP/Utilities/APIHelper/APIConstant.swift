@@ -99,6 +99,7 @@ let qcactionApi             = "api_panel/qcapproval"
 let CreateMetaApi           = "api_panel/createMetaId" 
 let deleteaccountAPi        = "api_panel/delete_emp"
 let EmployeeDetailApi       = "api_panel/detailofemp"
+let visitorregistration     = "visitor_registration"
 
 
 // inventory api

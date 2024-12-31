@@ -108,7 +108,7 @@ class VistorHistoryVC: UIViewController {
     
    
     @IBAction func submitbtn(_ sender: UIButton) {
-        
+        againvistorApiHit()
     }
     
     @IBAction func GuestBtnCLiclk(_ sender: UIButton) {
@@ -292,6 +292,36 @@ class VistorHistoryVC: UIViewController {
                     self.tableView.reloadData()
                 }
                 
+            }catch{
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func againvistorApiHit() {
+        var dict = Dictionary<String,Any>()
+        dict["EmpCode"] = currentUser.EmpCode
+        dict["MOBILE"] = outtimelbl.text
+        dict["TO_WHOME"] = namelbl.text
+        dict["IN_TIME"] = editstarttime.text
+        dict["ADDRESS"] = addresslbl.text
+        dict["AROGYA_SETU_STATUS"] = "yes"
+        DispatchQueue.main.async(execute: {Loader.showLoader()})
+        vistorList.removeAll()
+        newList.removeAll()
+        APIManager.apiCall(postData: dict as NSDictionary, url: visitorregistration) { result, response, error, data in
+            DispatchQueue.main.async(execute: {Loader.hideLoader()})
+            guard let data = data, error == nil else {
+                AlertController.alert(message: error?.localizedDescription as? String ?? "")
+                return
+            }
+            do{
+                let json = try JSONDecoder().decode(VistorResponse.self, from: data)
+                self.vistorList.append(contentsOf: json.data)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+    
             }catch{
                 print(error.localizedDescription)
             }

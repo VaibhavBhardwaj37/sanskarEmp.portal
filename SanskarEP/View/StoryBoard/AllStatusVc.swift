@@ -464,7 +464,10 @@ extension AllStatusVc: UITableViewDataSource, UITableViewDelegate {
         
         if Selected.selectedSegmentIndex == 1 {
                 let vc = storyboard!.instantiateViewController(withIdentifier: "ReportAllVc") as! ReportAllVc
-         //   vc.Datalist = filteredDetailData[indexPath.row]
+    //        vc.Datalist = filteredDetailData[indexPath.row]
+               let selectedData = filteredDetailData[indexPath.row]
+                   let empCode = selectedData["EmpCode"] as? String ?? ""
+                   vc.empCode = empCode
                 if #available(iOS 15.0, *) {
                     if let sheet = vc.sheetPresentationController {
                         var customDetent: UISheetPresentationController.Detent?

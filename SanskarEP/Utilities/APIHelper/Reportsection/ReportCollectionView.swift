@@ -25,7 +25,7 @@ class ReportCollectionView: UICollectionViewCell {
         borderview.layer.borderColor = UIColor.black.cgColor
         borderview.layer.borderWidth = 0.5
         borderview.layer.masksToBounds = true
-        borderview.layer.cornerRadius = 8
+        borderview.layer.cornerRadius = 0
     }
     func setCellSize(width: CGFloat, height: CGFloat) {
         viewWidth.constant = width
