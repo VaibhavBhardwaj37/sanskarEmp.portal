@@ -70,7 +70,7 @@ class AllStatusVc: UIViewController {
     }
     
     func adjust(){
-        if currentUser.EmpCode == "SANS-00079" {
+        if currentUser.EmpCode == "SANS-00079" || currentUser.Code == "H"{
             Selected.isHidden = false
         } else {
             Selected.isHidden = true
@@ -467,7 +467,15 @@ extension AllStatusVc: UITableViewDataSource, UITableViewDelegate {
     //        vc.Datalist = filteredDetailData[indexPath.row]
                let selectedData = filteredDetailData[indexPath.row]
                    let empCode = selectedData["EmpCode"] as? String ?? ""
+                   let empname = selectedData["name"] as? String ?? ""
+                   let empdepart = selectedData["Dept"] as? String ?? ""
+                   let empimage = selectedData["EmpImage"] as? String ?? ""
                    vc.empCode = empCode
+                   vc.empname = empname
+                   vc.empdepart = empdepart
+                   vc.empimage = empimage
+            
+            
                 if #available(iOS 15.0, *) {
                     if let sheet = vc.sheetPresentationController {
                         var customDetent: UISheetPresentationController.Detent?

@@ -70,7 +70,11 @@ class CalenderOnClick: UIViewController {
                         self.showApprovalIfNeeded()
                     }
                 } else {
-                    AlertController.alert(message: (response?.validatedValue("message"))!)
+                    if let message = response?.validatedValue("message") as? String {
+                        AlertController.alert(message: message)
+                    } else {
+                        AlertController.alert(message: "An unexpected error occurred.") 
+                    }
                 }
             }
         }
