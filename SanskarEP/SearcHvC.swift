@@ -13,7 +13,7 @@ class SearcHvC: UIViewController {
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var searchbar: UISearchBar!
     
-    var searchvalue =  ["Leave Request","Leave Cancellation","Profile","Tour Detail","AllStatusVc","Your Guest List","Your Visitor List","UpComing B'day","B'day Wishes","Advance","Submit Tour","Health Managment","Approved Tour","Stationary Request","Pay-Slip Request"]
+    var searchvalue =  ["Leave Request","Profile","Tour Detail","AllStatusVc","Your Visitor List","UpComing B'day","B'day Wishes","Advance","Submit Tour","Health Managment","Approved Tour","Stationary Request","Pay-Slip Request"]
     
     var filteredSearchValue = [String]()
     
@@ -57,66 +57,80 @@ extension SearcHvC : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath.row)
         let selectedSearchResult = filteredSearchValue[indexPath.row]
-        if let index = searchvalue.firstIndex(of: selectedSearchResult){
+
+        if let index = searchvalue.firstIndex(of: selectedSearchResult) {
+            func presentCustomSheet(withIdentifier identifier: String, title: String? = nil, additionalConfig: ((UIViewController) -> Void)? = nil) {
+                if let vc = self.storyboard?.instantiateViewController(withIdentifier: identifier) {
+                    // Dynamically set the title property if it exists
+                    if let configurableVC = vc as? AnyObject {
+                        if title != nil, configurableVC.responds(to: Selector("setTitleTxt:")) {
+                            configurableVC.setValue(title, forKey: "titleTxt")
+                        }
+                    }
+
+                    // iOS 15+ custom sheet presentation
+                    if #available(iOS 15.0, *) {
+                        if let sheet = vc.sheetPresentationController {
+                            var customDetent: UISheetPresentationController.Detent?
+                            if #available(iOS 16.0, *) {
+                                customDetent = UISheetPresentationController.Detent.custom { _ in
+                                    return 550
+                                }
+                                sheet.detents = [customDetent!]
+                                sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
+                            }
+                            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+                            sheet.prefersGrabberVisible = true
+                            sheet.preferredCornerRadius = 12
+                        }
+                    }
+                    additionalConfig?(vc)
+
+                    self.present(vc, animated: true, completion: nil)
+                }
+            }
+
             switch index {
             case 0:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "NewAllLeaveReqVc") as! NewAllLeaveReqVc
-            //    vc.headerTxt = searchvalue[indexPath.row]
-                self.present(vc,animated: true,completion: nil)
+                presentCustomSheet(withIdentifier: "NewAllLeaveReqVc")
+//            case 1:
+//                presentCustomSheet(withIdentifier: "LeaveCancel", title: searchvalue[indexPath.row])
             case 1:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "LeaveCancel") as! LeaveCancel
-                vc.titleTxt = searchvalue[indexPath.row]
-                self.present(vc,animated: true,completion: nil)
+                presentCustomSheet(withIdentifier: "ProfileVc")
             case 2:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileVc") as! ProfileVc
-                self.present(vc,animated: true,completion: nil)
+                presentCustomSheet(withIdentifier: "TourVC", title: searchvalue[indexPath.row])
             case 3:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "TourVC") as! TourVC
-                vc.titleTxt = searchvalue[indexPath.row]
-                self.present(vc,animated: true,completion: nil)
+                presentCustomSheet(withIdentifier: "AllStatusVc")
+//            case 5:
+//                presentCustomSheet(withIdentifier: "GuestHistoryVc")
             case 4:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "AllStatusVc") as! AllStatusVc
-                self.present(vc,animated: true,completion: nil)
+                presentCustomSheet(withIdentifier: "VistorHistoryVC")
             case 5:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "GuestHistoryVc") as! GuestHistoryVc
-                self.present(vc,animated: true,completion: nil)
+                presentCustomSheet(withIdentifier: "BdayViewController")
             case 6:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "VistorHistoryVC") as! VistorHistoryVC
-                self.present(vc,animated: true,completion: nil)
+                presentCustomSheet(withIdentifier: "MyBdayWishVc")
             case 7:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "BdayViewController") as! BdayViewController
-                self.present(vc,animated: true,completion: nil)
+                presentCustomSheet(withIdentifier: "AdvcanceVC", title: searchvalue[indexPath.row])
             case 8:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "MyBdayWishVc") as! MyBdayWishVc
-                self.present(vc,animated: true,completion: nil)
+                presentCustomSheet(withIdentifier: "AllDetail2VC")
             case 9:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "AdvcanceVC") as! AdvcanceVC
-                vc.titleTxt = searchvalue[indexPath.row]
-                self.present(vc,animated: true,completion: nil)
+                presentCustomSheet(withIdentifier: "HealthVc", title: searchvalue[indexPath.row])
             case 10:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "AllDetail2VC") as! AllDetail2VC
-                self.present(vc,animated: true,completion: nil)
+                presentCustomSheet(withIdentifier: "ApprovedTourVC")
             case 11:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "HealthVc") as! HealthVc
-                vc.titleTxt = searchvalue[indexPath.row]
-                self.present(vc,animated: true,completion: nil)
+                presentCustomSheet(withIdentifier: "HealthVc", title: searchvalue[indexPath.row]) { vc in
+                    if let healthVC = vc as? HealthVc {
+                        healthVC.stat = true
+                    }
+                }
             case 12:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "ApprovedTourVC") as! ApprovedTourVC
-                self.present(vc,animated: true,completion: nil)
-            case 13:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "HealthVc") as! HealthVc
-                vc.titleTxt = searchvalue[indexPath.row]
-                vc.stat = true
-                self.present(vc,animated: true,completion: nil)
-            case 14:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "PaySlipVc") as! PaySlipVc
-                vc.titleTxt = searchvalue[indexPath.row]
-                self.present(vc,animated: true,completion: nil)
+                presentCustomSheet(withIdentifier: "PaySlipVc", title: searchvalue[indexPath.row])
             default:
                 print(index)
             }
         }
     }
+
 }
 extension SearcHvC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

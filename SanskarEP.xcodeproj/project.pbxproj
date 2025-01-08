@@ -184,6 +184,7 @@
 		D56AEEB72CAEC29E005D3B9F /* RequestDataVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56AEEB62CAEC29E005D3B9F /* RequestDataVC.swift */; };
 		D56AEEBA2CAEC42E005D3B9F /* RequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56AEEB82CAEC42E005D3B9F /* RequestCell.swift */; };
 		D56AEEBB2CAEC42E005D3B9F /* RequestCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D56AEEB92CAEC42E005D3B9F /* RequestCell.xib */; };
+		D572FE612D27CCF500CAFED3 /* EmployeedetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D572FE602D27CCF500CAFED3 /* EmployeedetailsCell.swift */; };
 		D57B9E572CA2A0F5004073B7 /* BookforReceptionVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B9E562CA2A0F5004073B7 /* BookforReceptionVc.swift */; };
 		D57BA6DE2CC92ADA000910EA /* AssignLitstCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57BA6DC2CC92ADA000910EA /* AssignLitstCell.swift */; };
 		D57BA6DF2CC92ADA000910EA /* AssignLitstCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D57BA6DD2CC92ADA000910EA /* AssignLitstCell.xib */; };
@@ -497,6 +498,7 @@
 		D56AEEB62CAEC29E005D3B9F /* RequestDataVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDataVC.swift; sourceTree = "<group>"; };
 		D56AEEB82CAEC42E005D3B9F /* RequestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCell.swift; sourceTree = "<group>"; };
 		D56AEEB92CAEC42E005D3B9F /* RequestCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RequestCell.xib; sourceTree = "<group>"; };
+		D572FE602D27CCF500CAFED3 /* EmployeedetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeedetailsCell.swift; sourceTree = "<group>"; };
 		D57B9E562CA2A0F5004073B7 /* BookforReceptionVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookforReceptionVc.swift; sourceTree = "<group>"; };
 		D57BA6DC2CC92ADA000910EA /* AssignLitstCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignLitstCell.swift; sourceTree = "<group>"; };
 		D57BA6DD2CC92ADA000910EA /* AssignLitstCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignLitstCell.xib; sourceTree = "<group>"; };
@@ -1064,6 +1066,7 @@
 			children = (
 				D503E0BB2D1BE189003A0E63 /* ReportAllVc.swift */,
 				D503E0BF2D1BE4B9003A0E63 /* ReportCollectionView.swift */,
+				D572FE602D27CCF500CAFED3 /* EmployeedetailsCell.swift */,
 			);
 			path = Reportsection;
 			sourceTree = "<group>";
@@ -1582,6 +1585,7 @@
 				074F3E54280AED60004C9413 /* GuestHistoryVc.swift in Sources */,
 				D5D15F182C32AFF9008F15FD /* previewTableViewCell.swift in Sources */,
 				D55B05E12D0D6B3600406455 /* openpdfvc.swift in Sources */,
+				D572FE612D27CCF500CAFED3 /* EmployeedetailsCell.swift in Sources */,
 				0742EC792792E46600E97D2E /* PLVc.swift in Sources */,
 				07BE310427900F4500BDF230 /* LeaveRequestVc.swift in Sources */,
 				D55B05DB2D0D6B1500406455 /* Returnchallanvc.swift in Sources */,

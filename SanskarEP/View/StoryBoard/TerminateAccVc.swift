@@ -28,6 +28,7 @@ class TerminateAccVc: UIViewController {
     
     func EmployeeDetailAPi() {
         var dict = Dictionary<String, Any>()
+        dict["EmpCode"] = currentUser.EmpCode
         DispatchQueue.main.async(execute: {Loader.showLoader()})
         APIManager.apiCall(postData: dict as NSDictionary, url: EmployeeListApi) { result, response, error, data in
             DispatchQueue.main.async(execute: {Loader.hideLoader()})

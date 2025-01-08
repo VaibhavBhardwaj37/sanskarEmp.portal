@@ -129,7 +129,25 @@ class MyBdayWishVc: UIViewController {
             print(vc.imaged)
             vc.message = EmpData
             vc.empname = nameData
-            present(vc, animated: true)
+            if #available(iOS 15.0, *) {
+                if let sheet = vc.sheetPresentationController {
+                    var customDetent: UISheetPresentationController.Detent?
+                    if #available(iOS 16.0, *) {
+                        customDetent = UISheetPresentationController.Detent.custom { context in
+                            return 520
+                        }
+                        sheet.detents = [customDetent!]
+                        sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
+                    }
+                    sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+                    sheet.prefersGrabberVisible = true
+                    sheet.preferredCornerRadius = 12
+                }
+            }
+            self.present(vc, animated: true)
+         
+           
+          //  present(vc, animated: true)
            
         }
         

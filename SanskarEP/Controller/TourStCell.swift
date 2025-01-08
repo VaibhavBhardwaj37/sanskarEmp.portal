@@ -15,7 +15,7 @@ class TourStCell: UITableViewCell {
     @IBOutlet weak var fdate: UILabel!
     @IBOutlet weak var hodA: UILabel!
     @IBOutlet weak var canclebtn: UIButton!
-    
+    @IBOutlet weak var leavetype: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

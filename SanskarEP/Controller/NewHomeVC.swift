@@ -30,11 +30,7 @@ class NewHomeVC: UIViewController  {
     @IBOutlet weak var dotbtn: UIButton!
     @IBOutlet weak var eventview: UIView!
     @IBOutlet weak var tableview: UITableView!
-    @IBOutlet weak var Dotsview: UIView!
-    @IBOutlet weak var apprlbtn: UIButton!
-    @IBOutlet weak var inventorybtn: UIButton!
     @IBOutlet weak var detailview: UIView!
-    
     @IBOutlet weak var empname: UILabel!
     @IBOutlet weak var empcode: UILabel!
     @IBOutlet weak var depart: UILabel!
@@ -47,11 +43,16 @@ class NewHomeVC: UIViewController  {
     @IBOutlet weak var employeeImage: UIImageView!
     @IBOutlet weak var bookingview: UIView!
     @IBOutlet weak var Label1: UILabel!
+    @IBOutlet weak var detailcollection: UICollectionView!
     
     
     
     var selectedDate = Date()
     var totalSquares = [String]()
+    
+    var staticItems = [
+        ["month": "month", "Full": "Full", "Half": "Half", "Tour": "Tour", "WFH": "WFH"]]
+    let itemKeys = ["month", "Full", "Half", "Tour", "WFH"]
     
     //var dataList   = [[String:Any]]()
    //var DataList   = [[String:Any]]()
@@ -59,7 +60,7 @@ class NewHomeVC: UIViewController  {
     var daTalist = [[String: Any]]()
     var calenderlist = [[String: Any]]()
     
-    
+    var EmpCode = String()
     var empData: EmpLData?
     var EmpData = String()
     var imageData = String()
@@ -96,6 +97,7 @@ class NewHomeVC: UIViewController  {
         maincalview.layer.borderColor = UIColor.lightGray.cgColor
         
         detailview.layer.cornerRadius = 8
+    
         detailview.layer.borderWidth = 2
         detailview.layer.borderColor = UIColor.lightGray.cgColor
         
@@ -108,6 +110,9 @@ class NewHomeVC: UIViewController  {
         setCellView()
         setMonthView()
         EventApi()
+        
+       
+        
         
         empimage.layer.cornerRadius = 7
         dateview.layer.cornerRadius = 10
@@ -203,6 +208,12 @@ class NewHomeVC: UIViewController  {
     
     @IBAction func backbutton(_ sender: UIButton) {
         detailview.isHidden = true
+    }
+    
+    
+    @IBAction func attendancegraphbtn(_ sender: UIButton) {
+        let vc = storyboard!.instantiateViewController(withIdentifier: "ReportAllVc") as! ReportAllVc
+        self.present(vc, animated: true)
     }
     
     @IBAction func dotsbtn(_ sender: UIButton) {
@@ -306,7 +317,7 @@ class NewHomeVC: UIViewController  {
     
     @IBAction func SearchBarBtn(_ sender: UIButton) {
  //      let vc = self.storyboard?.instantiateViewController(withIdentifier: "PieChartVC") as! PieChartVC
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "PieChartVC") as! PieChartVC
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
         if #available(iOS 15.0, *) {
         if let sheet = vc.sheetPresentationController {
         var customDetent: UISheetPresentationController.Detent?
@@ -379,7 +390,41 @@ class NewHomeVC: UIViewController  {
             }
         }
     }
-
+    
+//    func detailApi() {
+//        self.staticItems.removeAll()
+//        
+//        var dict = Dictionary<String, Any>()
+//        dict["EmpCode"] = EmpCode
+//        DispatchQueue.main.async { Loader.showLoader() }
+//        APIManager.apiCall(postData: dict as NSDictionary, url: EmployeeDetailApi) { result, response, error, data in
+//            DispatchQueue.main.async { Loader.hideLoader() }
+//         
+//            if let responseData = response, let dataArray = responseData["data"] as? [[String: Any]] {
+//                for item in dataArray {
+//                    if let monthFull = item["month"] as? String {
+//                        let monthComponents = monthFull.split(separator: " ")
+//                        let month = String(monthComponents.first ?? "")
+//                        let full = "\(item["F"] ?? "0")"
+//                        let half = "\(item["H"] ?? "0")"
+//                        let wfh = "\(item["WFH"] ?? "0")"
+//                        let tour = "\(item["Tour"] ?? "0")"
+//                        let row: [String: String] = [
+//                            "month": month,
+//                            "Full": full,
+//                            "Half": half,
+//                            "Tour": tour,
+//                            "WFH": wfh
+//                        ]
+//                        self.staticItems.append(row)
+//                    }
+//                }
+//                self.detailcollection.reloadData()
+//            } else {
+//                print(response?["error"] as Any)
+//            }
+//        }
+//    }
     
     func AttendanceApi() {
         var dict = [String: Any]()
@@ -631,8 +676,12 @@ class NewHomeVC: UIViewController  {
             }
         }
     }
+    
     @objc func messageOnClick(_ sender: UIButton) {
-        // Use the tag to get the section and row
+        self.staticItems.removeAll()
+        self.staticItems.append(["month": "Month", "Full": "Full", "Half": "Half", "Tour": "Tour", "WFH": "WFH"])
+        self.detailcollection.reloadData()
+
         let indexPath = IndexPath(row: sender.tag, section: sender.superview?.superview?.tag ?? 0)
         let sectionData = daTalist[indexPath.section]
         let list = sectionData["list"] as? [[String: Any]]
@@ -644,9 +693,8 @@ class NewHomeVC: UIViewController  {
             self.depart.text = selectedData["Dept"] as? String ?? ""
             self.reason.text = selectedData["Reason"] as? String ?? ""
             self.type.text = selectedData["leave_type"] as? String ?? ""
-            self.requestid.text = selectedData["ID"] as? String ?? ""
 
-            if let leaveType = selectedData["leave_type"] as? String, leaveType.lowercased() == "Half" {
+            if let leaveType = selectedData["leave_type"] as? String, leaveType.lowercased() == "half" {
                 self.fromdate.text = selectedData["from_date"] as? String ?? ""
             } else {
                 self.fromdate.text = "\(selectedData["from_date"] as? String ?? "") to \(selectedData["to_date"] as? String ?? "")"
@@ -663,7 +711,47 @@ class NewHomeVC: UIViewController  {
             self.rejectbtn.layer.cornerRadius = 8
             self.detailview.isHidden = false
         }
+        if let empCode = selectedData["Emp_Code"] as? String {
+               self.detailApi(empCode: empCode)
+           }
     }
+
+    func detailApi(empCode: String) {
+        self.staticItems.removeAll()
+        self.staticItems.append(["month": "Month", "Full": "Full", "Half": "Half", "Tour": "Tour", "WFH": "WFH"]) // Add default headers
+
+        var dict = Dictionary<String, Any>()
+        dict["EmpCode"] = empCode
+        DispatchQueue.main.async { Loader.showLoader() }
+        APIManager.apiCall(postData: dict as NSDictionary, url: EmployeeDetailApi) { result, response, error, data in
+            DispatchQueue.main.async { Loader.hideLoader() }
+
+            if let responseData = response, let dataArray = responseData["data"] as? [[String: Any]] {
+                for item in dataArray {
+                    if let monthFull = item["month"] as? String {
+                        let monthComponents = monthFull.split(separator: " ")
+                        let month = String(monthComponents.first ?? "")
+                        let full = "\(item["F"] ?? "0")"
+                        let half = "\(item["H"] ?? "0")"
+                        let wfh = "\(item["WFH"] ?? "0")"
+                        let tour = "\(item["Tour"] ?? "0")"
+                        let row: [String: String] = [
+                            "month": month,
+                            "Full": full,
+                            "Half": half,
+                            "Tour": tour,
+                            "WFH": wfh
+                        ]
+                        self.staticItems.append(row)
+                    }
+                }
+                self.detailcollection.reloadData()
+            } else {
+                print(response?["error"] as Any)
+            }
+        }
+    }
+
 
 
 
@@ -715,66 +803,93 @@ class NewHomeVC: UIViewController  {
 
 extension NewHomeVC: UICollectionViewDataSource {
 
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return totalSquares.count
-      
+        if collectionView == calcollectionview {
+            return totalSquares.count
+        } else if collectionView == detailcollection {
+            return staticItems.count
+        }
+        return 0
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        if collectionView == calcollectionview {
+            return 1
+        } else if collectionView == detailcollection {
+            return itemKeys.count
+        }
+        return 0
     }
 
+    // Cell for item at index path
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalCell", for: indexPath) as? calenderCell else {
-            return UICollectionViewCell()
-        }
-        
-        let dateText = totalSquares[indexPath.item]
-        
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d"
-        let currentDateString = dateFormatter.string(from: Date())
-        
-        if dateText.isEmpty {
-            cell.isHidden = true
-        } else {
-            cell.isHidden = false
-            cell.dayofmonth.text = dateText
-            
-            let calendar = Calendar.current
-            let currentDay = calendar.component(.day, from: Date())
-            let currentMonth = calendar.component(.month, from: Date())
-            let currentYear = calendar.component(.year, from: Date())
-            let selectedMonth = calendar.component(.month, from: selectedDate)
-            let selectedYear = calendar.component(.year, from: selectedDate)
-            
-            if selectedYear < currentYear || (selectedYear == currentYear && selectedMonth < currentMonth) {
-                cell.dayofmonth.textColor = .gray
-            } else if selectedYear > currentYear || (selectedYear == currentYear && selectedMonth > currentMonth) {
-                cell.dayofmonth.textColor = .black
+        if collectionView == calcollectionview {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalCell", for: indexPath) as? calenderCell else {
+                return UICollectionViewCell()
+            }
+
+            let dateText = totalSquares[indexPath.item]
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "d"
+            let currentDateString = dateFormatter.string(from: Date())
+
+            if dateText.isEmpty {
+                cell.isHidden = true
             } else {
-                if let day = Int(dateText) {
-                    if day < currentDay {
-                        cell.dayofmonth.textColor = .gray
-                    } else if day == currentDay {
-                        cell.dayofmonth.textColor = .systemGreen
-                    } else {
-                        cell.dayofmonth.textColor = .black
+                cell.isHidden = false
+                cell.dayofmonth.text = dateText
+
+                let calendar = Calendar.current
+                let currentDay = calendar.component(.day, from: Date())
+                let currentMonth = calendar.component(.month, from: Date())
+                let currentYear = calendar.component(.year, from: Date())
+                let selectedMonth = calendar.component(.month, from: selectedDate)
+                let selectedYear = calendar.component(.year, from: selectedDate)
+
+                if selectedYear < currentYear || (selectedYear == currentYear && selectedMonth < currentMonth) {
+                    cell.dayofmonth.textColor = .gray
+                } else if selectedYear > currentYear || (selectedYear == currentYear && selectedMonth > currentMonth) {
+                    cell.dayofmonth.textColor = .black
+                } else {
+                    if let day = Int(dateText) {
+                        if day < currentDay {
+                            cell.dayofmonth.textColor = .gray
+                        } else if day == currentDay {
+                            cell.dayofmonth.textColor = .systemGreen
+                        } else {
+                            cell.dayofmonth.textColor = .black
+                        }
                     }
                 }
+
+                if indexPath.item % 7 == 0 {
+                    cell.dayofmonth.textColor = .red
+                }
             }
-            
-            if indexPath.item % 7 == 0 {
-                cell.dayofmonth.textColor = .red
+
+            cell.layer.cornerRadius = 8
+            return cell
+        } else if collectionView == detailcollection {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? EmployeedetailsCell else {
+                return UICollectionViewCell()
             }
+
+            let sectionKey = itemKeys[indexPath.section]
+            let rowData = staticItems[indexPath.item]
+
+            if let value = rowData[sectionKey] {
+                cell.detaillabel.text = " \(value)"
+            }
+
+            let width = collectionView.frame.width / CGFloat(itemKeys.count + 1) - 0.8
+            let height = 40
+            cell.setCellSize(width: width, height: CGFloat(height))
+            return cell
         }
-        
-        cell.layer.cornerRadius = 8
-        return cell
+        return UICollectionViewCell()
     }
 }
+
 //MARK: - UICollectionViewDelegate
 
 extension NewHomeVC: UICollectionViewDelegate {
@@ -783,19 +898,32 @@ extension NewHomeVC: UICollectionViewDelegate {
 
 extension NewHomeVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            if collectionView == self.datacoll {
-                return CGSize(width: 85, height: 85)
-            } else if collectionView == self.calcollectionview {
-                
-                let width = collectionView.frame.width / 8
-                let height: CGFloat = 30
-                return CGSize(width: width, height: height)
-            }
-            
-            return CGSize(width: collectionView.frame.width / 2 - 10, height: 30)
-        }
-    
+          if collectionView == self.datacoll {
+              return CGSize(width: 85, height: 85)
+          } else if collectionView == self.calcollectionview {
+              let width = collectionView.frame.width / 8
+              let height: CGFloat = 30
+              return CGSize(width: width, height: height)
+          } else if collectionView == self.detailcollection {
+              let totalSpacing: CGFloat = 0.5 * CGFloat(itemKeys.count - 1)
+              let width = (collectionView.frame.width - totalSpacing) / CGFloat(itemKeys.count)
+              let height: CGFloat = 40
+              return CGSize(width: width, height: height)
+          }
+
+      
+          return CGSize(width: collectionView.frame.width / 2 - 10, height: 30)
+      }
+
+     
+      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+          return 0.5
+      }
+      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+          return 0.5
+      }
 }
+
 //MARK: - Extra funcationality
 
 extension NewHomeVC {
@@ -854,6 +982,7 @@ extension NewHomeVC: UITableViewDelegate, UITableViewDataSource {
             
 //          cell.reasonlbl.text = cellData["Reason"] as? String ?? ""
             cell.TypeLbl.text = cellData["leave_type"] as? String ?? ""
+            EmpCode =  cellData["Emp_Code"] as? String ?? ""
             
 //            if let leaveType = cellData["leave_type"] as? String, leaveType.lowercased() == "half" {
 //                cell.todate.isHidden = true

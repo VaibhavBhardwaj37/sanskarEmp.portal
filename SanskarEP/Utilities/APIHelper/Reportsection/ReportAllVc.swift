@@ -103,7 +103,6 @@ class ReportAllVc: UIViewController {
             }
         }
     }
-
 }
 
 extension ReportAllVc: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -126,7 +125,7 @@ extension ReportAllVc: UICollectionViewDelegate, UICollectionViewDataSource {
            if let value = rowData[sectionKey] {
                cell.label.text = " \(value)"
            }
-        let width = collectionview.frame.width / CGFloat(itemKeys.count + 1) - 0.5
+        let width = collectionview.frame.width / CGFloat(itemKeys.count + 1) - 0.8
         let height = 40
         cell.setCellSize(width: width, height: CGFloat(height))
         return cell
