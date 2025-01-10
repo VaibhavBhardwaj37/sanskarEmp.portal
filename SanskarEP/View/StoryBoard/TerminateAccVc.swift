@@ -21,6 +21,7 @@ class TerminateAccVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         EmployeeDetailAPi()
+        filteredDetailData = DetailData
         tableview.dataSource = self
         tableview.delegate = self
         tableview.register(UINib(nibName: "bdayviewcell", bundle: nil), forCellReuseIdentifier: "bdayviewcell")

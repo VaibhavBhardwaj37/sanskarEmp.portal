@@ -27,7 +27,7 @@ class CalenderOnClick: UIViewController {
     @IBOutlet weak var InventoryContainerview: UIView!
     @IBOutlet weak var PrivacyPolicyContanierview: UIView!
     @IBOutlet weak var TerminateContanierview: UIView!
-    
+    @IBOutlet weak var cancelContanierview: UIView!
     
     var leavecontainerviewdata = CalendersheetVC.self
     var aprove: Bool = false
@@ -103,8 +103,8 @@ class CalenderOnClick: UIViewController {
                "Pay Slip": PayslipContainerview,
                "Other": OtherContainerview,
                "Privacy Policy": PrivacyPolicyContanierview,
-               "Delete Account": TerminateContanierview
-               
+               "Delete Account": TerminateContanierview,
+               "Leave cancellation" : cancelContanierview
            ]
            if let selectedView = viewMapping[name] {
                selectedView.isHidden = false  
@@ -116,7 +116,7 @@ class CalenderOnClick: UIViewController {
                PayslipContainerview, AdvanceContainerview, StationaryContainerview,
                HealthContainerview, GuestContainerview, ReportContainerview,
                OtherContainerview, ApprovalContainerview, RequestContainerview,
-               InventoryContainerview,PrivacyPolicyContanierview,TerminateContanierview
+               InventoryContainerview,PrivacyPolicyContanierview,TerminateContanierview,cancelContanierview
            ]
            allContainers.forEach { $0?.isHidden = true }
        }

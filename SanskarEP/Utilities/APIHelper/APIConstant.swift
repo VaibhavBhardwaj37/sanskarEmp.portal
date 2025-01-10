@@ -100,7 +100,7 @@ let CreateMetaApi           = "api_panel/createMetaId"
 let deleteaccountAPi        = "api_panel/delete_emp"
 let EmployeeDetailApi       = "api_panel/detailofemp"
 let visitorregistration     = "visitor_registration"
-
+let cancelstatus            = "api_panel/getLeaveCanDetail"
 
 // inventory api
 let submitedlistapi        = "api_panel/get_inventory_detail"

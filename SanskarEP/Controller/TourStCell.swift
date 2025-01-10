@@ -16,10 +16,11 @@ class TourStCell: UITableViewCell {
     @IBOutlet weak var hodA: UILabel!
     @IBOutlet weak var canclebtn: UIButton!
     @IBOutlet weak var leavetype: UILabel!
+    @IBOutlet weak var tolbl: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        canclebtn.layer.cornerRadius = 8
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

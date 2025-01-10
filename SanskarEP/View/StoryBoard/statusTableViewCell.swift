@@ -16,11 +16,11 @@ class statusTableViewCell: UITableViewCell {
     @IBOutlet weak var status: UILabel!
     @IBOutlet weak var to: UILabel!
     @IBOutlet weak var cancelbtn: UIButton!
-    
+    @IBOutlet weak var reasonlbl: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-       
+        cancelbtn.layer.cornerRadius = 8 
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

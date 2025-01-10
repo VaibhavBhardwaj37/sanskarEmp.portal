@@ -21,12 +21,18 @@ class AllStatusVc: UIViewController {
 @IBOutlet weak var searchbar: UISearchBar!
 @IBOutlet weak var myreportv: NSLayoutConstraint!
 @IBOutlet weak var tableviewheight: NSLayoutConstraint!
+@IBOutlet weak var reasonview: UIView!
+@IBOutlet weak var submit: UIButton!
+@IBOutlet weak var reasontext: UITextView!
     
-    var list: [[String: Any]] = []
+    
+    
+    var getLeaveRequestList = [Datas]()
     var PLlist: [[String: Any]] = []
     var DetailData = [[String:Any]]()
     var reqNo = ""
     var type  = ""
+    var LeaveType = ""
     var selectedOption: String = ""
     var filteredDetailData: [[String: Any]] = []
 
@@ -39,12 +45,9 @@ class AllStatusVc: UIViewController {
         getDetails()
         EmployeeDetailAPi()
         
-//        selectText.layer.cornerRadius = 8
-//        selectText.clipsToBounds = true
-//        selectText.layer.borderWidth = 1
-        
+        reasonview.isHidden = true
         adjust()
-        
+        submit.layer.cornerRadius = 8
         tableviewheight.constant = -40
         
         tableview.dataSource = self
@@ -57,6 +60,14 @@ class AllStatusVc: UIViewController {
         filteredDetailData = DetailData
         
  //       setupDropDown()
+        
+        reasontext.delegate = self
+        reasontext.layer.cornerRadius = 10
+        reasontext.clipsToBounds = true
+     
+        reasontext.textColor = UIColor.lightGray
+        reasontext.layer.borderWidth = 1
+        
         myreportview.isHidden =  true
         Allreportview.isHidden =  true
         
@@ -82,31 +93,17 @@ class AllStatusVc: UIViewController {
         dismiss(animated: true,completion: nil)
     }
     
-//    func setupDropDown() {
-//        selectText.optionArray = options
-//        selectText.isSearchEnable = true
-//        selectText.listHeight = 170
-//        selectText.didSelect { [weak self] selectedText, _, _ in
-//            guard let self = self else { return }
-//            self.selectedOption = selectedText
-//            
-//            switch selectedText {
-//            case "Full Day Leave Status":
-//                self.type = "full"
-//            case "Half Day Leave Status":
-//                self.type = "half"
-//            case "Off Day Request Status":
-//                self.type = "off"
-//            case "Tour Request Status":
-//                self.type = "tour"
-//            default:
-//                self.type = ""
-//            }
-//            
-//            self.getDetails()
-//            self.PlgetDetails()
-//        }
-//    }
+    @IBAction func clearbtn(_ sender: UIButton) {
+        reasonview.isHidden = true
+    }
+    
+    
+    @IBAction func submitbtn(_ sender: UIButton) {
+        cancelApi() 
+        reasonview.isHidden = true
+    }
+    
+
 
 
     func check(status: String ) -> String {
@@ -178,7 +175,7 @@ class AllStatusVc: UIViewController {
                         self.tableview.reloadData()
                     }
                 } else {
-                    AlertController.alert(message: (response?.validatedValue("message"))!)
+                   AlertController.alert(message: (response?.validatedValue("message"))!)
                     print(response?["error"] as Any)
                 }
                 
@@ -189,7 +186,8 @@ class AllStatusVc: UIViewController {
         var dict = Dictionary<String,Any>()
         dict["EmpCode"] = currentUser.EmpCode
         dict["RequestId"] = reqNo
-        dict["leave_type"] = "full"
+        dict["leave_type"] = LeaveType
+        dict["reason"] = reasontext.text
         DispatchQueue.main.async(execute: {Loader.showLoader()})
         APIManager.apiCall(postData: dict as NSDictionary, url: kLeaveCancel) { result, response, error, data in
             DispatchQueue.main.async(execute: {Loader.hideLoader()})
@@ -202,60 +200,40 @@ class AllStatusVc: UIViewController {
             self.tableview.reloadData()
         }
     }
+
+    
     func getDetails() {
-        var dict = Dictionary<String, Any>()
+        var dict = Dictionary<String,Any>()
         dict["EmpCode"] = currentUser.EmpCode
-        DispatchQueue.main.async(execute: { Loader.showLoader() })
+        DispatchQueue.main.async(execute: {Loader.showLoader()})
         APIManager.apiCall(postData: dict as NSDictionary, url: status) { result, response, error, data in
-            DispatchQueue.main.async(execute: { Loader.hideLoader() })
-            if let JSON = response as? NSDictionary, let status = JSON["status"] as? Bool, status == true {
-                print(JSON)
-                if let data = JSON["data"] as? [[String:Any]] {
-                    print(data)
-                    self.list = data
-                    print(self.list)
-                    DispatchQueue.main.async {
-                       self.tableview.reloadData()
-                    }
-                }
-            }  else {
-                
-              //  AlertController.alert(message: (response?.validatedValue("message"))!)
+            DispatchQueue.main.async(execute: {Loader.hideLoader()})
+            guard let data = data, error == nil else {
+                AlertController.alert(message: error?.localizedDescription ?? "")
+                return
             }
-            self.tableview.reloadData()
+            do{
+                let json = try JSONDecoder().decode(GetLeaveRequestList.self, from: data)
+                self.getLeaveRequestList.append(contentsOf: json.data ?? [])
+                DispatchQueue.main.async {
+              //      AlertController.alert(message: (response?.validatedValue("message"))!)
+                    self.tableview.reloadData()
+                }
+            }catch{
+                print(error.localizedDescription)
+            }
         }
     }
-//    func getDetails() {
-//        var dict = Dictionary<String,Any>()
-//        dict["EmpCode"] = currentUser.EmpCode
-//   //     dict["leave_type"] = type
-//        list.removeAll()
-//        DispatchQueue.main.async(execute: {Loader.showLoader()})
-//        APIManager.apiCall(postData: dict as NSDictionary, url: status) { result, response, error, data in
-//            DispatchQueue.main.async(execute: {Loader.hideLoader()})
-//            if let JSON = response as? NSDictionary,
-//               let status = JSON.value(forKey: "status") as? Bool,
-//               status == true {
-//                
-//                if let jsonData = response?["data"] as? [[[String: Any]]] {
-//                    self.list = jsonData.flatMap { $0.flatMap { $0 } }
-//                    print(self.list)
-//                    self.tableview.reloadData()
-//                }
-//            } else {
-//                print(response?["error"] as Any)
-//            }
-//        }
-//    }
+   
     
     @objc func Checkboxtapped(_ sender: UIButton) {
-        
+        self.reasonview.isHidden = !self.reasonview.isHidden
     }
     
     func PlgetDetails() {
         var dict = Dictionary<String,Any>()
         dict["EmpCode"] = currentUser.EmpCode
-        list.removeAll()
+        getLeaveRequestList.removeAll()
         DispatchQueue.main.async(execute: {Loader.showLoader()})
         APIManager.apiCall(postData: dict as NSDictionary, url: kplPlanel) { result, response, error, data in
             DispatchQueue.main.async(execute: {Loader.hideLoader()})
@@ -272,154 +250,13 @@ class AllStatusVc: UIViewController {
     }
 }
 
-//extension AllStatusVc: UIPickerViewDataSource, UIPickerViewDelegate {
-//
-//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-//        return 1
-//    }
-//    
-//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//    
-//        return options.count
-//    }
-//    
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return options[row]
-//    }
-//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        
-//  
-//    }
-    
-    
-//    func configurefulldaystatus(_ cell: TourStCell, indexPath: IndexPath) {
-//        let rowData = list[indexPath.row]
-//        cell.reqid.text = rowData["Emp_Req_No"] as? String ?? ""
-//        cell.fdate.text = rowData["Leave_From"] as? String ?? ""
-//        cell.todate.text = rowData["Leave_to"] as? String ?? ""
-//        cell.duration.text = rowData["Lduration"] as? String ?? ""
-//        
-//        if let hodApprovalStatus = rowData["HOD_Approval"] as? String {
-//            cell.hodA.text = check(status: hodApprovalStatus)
-//            cell.hodA.textColor = sColor(status: hodApprovalStatus)
-//            if ["A", "XA", "X"].contains(hodApprovalStatus){
-//                cell.canclebtn.isHidden = true
-//            } else {
-//                cell.canclebtn.isHidden = false
-//            }
-//        } else {
-//            cell.hodA.text = ""
-//            cell.hodA.textColor = .black
-//            cell.canclebtn.isHidden = false
-//        }
-//        cell.canclebtn.addTarget(self, action: #selector(checkboxTapped(_:)), for: .touchUpInside)
-//    }
-
-//    func configurehalfdayStatus(_ cell: statusTableViewCell, indexPath: IndexPath) {
-//        let rowData = list[indexPath.row]
-//        cell.reqId.text = rowData["ID"] as? String ?? ""
-//        cell.fromdate.text = rowData["RDate"] as? String ?? ""
-//        
-//        if let hodApprovalStatus = rowData["Status"] as? String {
-//            cell.status.text = check(status: hodApprovalStatus)
-//            cell.status.textColor = sColor(status: hodApprovalStatus)
-//            
-//            if ["A", "XA", "X"].contains(hodApprovalStatus) {
-//                cell.cancelbtn.isHidden = true
-//            } else {
-//                cell.cancelbtn.isHidden = false
-//            }
-//        } else {
-//            cell.status.text = ""
-//            cell.status.textColor = .black
-//        }
-//        
-//        cell.todate.isHidden = true
-//        cell.to.isHidden = true
-//        cell.cancelbtn.addTarget(self, action: #selector(checkboxTapped(_:)), for: .touchUpInside)
-//    }
-
-    
-//    func configureoffdayStatus(_ cell: statusTableViewCell, indexPath: IndexPath) {
-//        let rowData = list[indexPath.row]
-//               cell.reqId.text = rowData["Emp_Req_No"] as? String ?? ""
-//               cell.fromdate.text = rowData["Leave_From"] as? String ?? ""
-//        if let hodApprovalStatus = rowData["Status"] as? String {
-//               cell.status.text = check(status: hodApprovalStatus)
-//               cell.status.textColor = sColor(status: hodApprovalStatus)
-//            
-//            if ["A", "XA", "X"].contains(hodApprovalStatus) {
-//                cell.cancelbtn.isHidden = true
-//            } else {
-//                cell.cancelbtn.isHidden = false
-//            }
-//           } else {
-//               cell.status.text = ""
-//               cell.status.textColor = .black
-//           }
-//        cell.todate.isHidden = true
-//        cell.to.isHidden = true
-//        cell.cancelbtn.addTarget(self, action: #selector(checkboxTapped(_:)), for: .touchUpInside)
-//    }
-    
-//    func configuretourdayStatus(_ cell: statusTableViewCell, indexPath: IndexPath) {
-//        let rowData = list[indexPath.row]
-//        cell.reqId.text = rowData["Location"] as? String ?? ""
-//        cell.fromdate.text = rowData["from_date"] as? String ?? ""
-//        cell.todate.text = rowData["to_date"] as? String ?? ""
-//        if let hodApprovalStatus = rowData["Status"] as? String {
-//            
-//               cell.status.text = check(status: hodApprovalStatus)
-//               cell.status.textColor = sColor(status: hodApprovalStatus)
-//            if ["A", "XA", "X"].contains(hodApprovalStatus){
-//                cell.cancelbtn.isHidden = true
-//            } else {
-//                cell.cancelbtn.isHidden = false
-//            }
-//           } else {
-//               cell.status.text = ""
-//               cell.status.textColor = .black
-//           }
-//        cell.cancelbtn.addTarget(self, action: #selector(checkboxTapped(_:)), for: .touchUpInside)
-//    }
-    
-//    func configurePlStatus(_ cell: PLCell, indexPath: IndexPath) {
-//        let index = indexPath.row
-//           cell.dateLbl.text = PLlist[index]["Date"] as? String ?? ""
-//        let Added = PLlist[index]["Credit"] as? String ?? ""
-//        let Deduct = PLlist[index]["Debit"] as? String ?? ""
-//        
-//        if Added.isEmpty || Added == ".00" {
-//                cell.creditLbl.isHidden = true
-//                cell.addedlbl.isHidden = true
-//                cell.debitLbl.isHidden = false
-//                cell.deducted.isHidden = false
-//                cell.debitLbl.text = Deduct
-//            } else {
-//                cell.creditLbl.isHidden = false
-//                cell.addedlbl.isHidden = false
-//                cell.creditLbl.text = Added
-//                cell.debitLbl.isHidden = true
-//                cell.deducted.isHidden = true
-//            }
-//        cell.balanceLbl.text = PLlist[index]["Balance"] as? String ?? ""
-//        cell.refrencelbl.text = PLlist[index]["Reference"] as? String ?? ""
-//
-//    }
-// }
-
 
 extension AllStatusVc: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if Selected.selectedSegmentIndex == 1 {
             return filteredDetailData.count
            } else if Selected.selectedSegmentIndex == 0 {
-//               switch selectedOption {
-//               case "PL Summary":
-//                   return PLlist.count
-//               default:
-               return list.count
-//               }
+               return getLeaveRequestList.count
            }
         return 0
     }
@@ -443,80 +280,35 @@ extension AllStatusVc: UITableViewDataSource, UITableViewDelegate {
             return cell
         }
 
-//           var cellIdentifier: String
-//           switch selectedOption {
-//           case "Full Day Leave Status":
-//               cellIdentifier = "TourStCell"
-//           case "Half Day Leave Status":
-//               cellIdentifier = "statusTableViewCell"
-//           case "Off Day Request Status":
-//               cellIdentifier = "statusTableViewCell"
-//           case "Tour Request Status":
-//               cellIdentifier = "statusTableViewCell"
-//           case "PL Summary":
-//               cellIdentifier = "PLCell"
-//           default:
-//               cellIdentifier = "TourStCell"
-//           }
-           
-  //         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-           
-//           switch selectedOption {
-//           case "Full Day Leave Status":
-//               if let tourCell = cell as? TourStCell {
-//                   configurefulldaystatus(tourCell, indexPath: indexPath)
-//               }
-//           case "Half Day Leave Status":
-//               if let halfdaystatusCell = cell as? statusTableViewCell {
-//                   configurehalfdayStatus(halfdaystatusCell, indexPath: indexPath)
-//               }
-//           case "Off Day Request Status":
-//               if let offdaystatusCell = cell as? statusTableViewCell {
-//                   configureoffdayStatus(offdaystatusCell, indexPath: indexPath)
-//               }
-//           case "Tour Request Status":
-//               if let tourdaystatusCell = cell as? statusTableViewCell {
-//                   configuretourdayStatus(tourdaystatusCell, indexPath: indexPath)
-//               }
-//           case "PL Summary":
-//               if let PLSUMMARYCell = cell as? PLCell {
-//                   configurePlStatus(PLSUMMARYCell, indexPath: indexPath)
-//               }
-//           default:
-//               break
-//           }
+
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TourStCell", for: indexPath) as? TourStCell else {
             return UITableViewCell()
         }
-        let rowData = list[indexPath.row]
-        cell.reqid.text = rowData["Emp_Req_No"] as? String ?? ""
-        cell.fdate.text = rowData["Date1"] as? String ?? ""
-        cell.todate.text = rowData["Date2"] as? String ?? ""
-        cell.duration.text = rowData["Lduration"] as? String ?? ""
-        cell.leavetype.text = rowData["leave_type"] as? String ?? ""
-        cell.hodA.text = rowData["Status"] as? String ?? ""
+        let rowData = getLeaveRequestList[indexPath.row]
+        reqNo =  "\(rowData.sno ?? 0)"
+        cell.reqid.text = "\(rowData.sno ?? 0)"
+        cell.fdate.text = rowData.date1
+        cell.todate.text = rowData.date2
+        cell.duration.text = ""
+        LeaveType = rowData.leave_type ?? ""
+        cell.leavetype.text = rowData.leave_type
+        cell.hodA.text = rowData.status
         
-       
-        var rowdata = rowData["Leave_can"] as? Int ?? 0
+        if rowData.leave_type == "half" {
+            cell.todate.isHidden = true
+            cell.tolbl.isHidden = true
+        } else {
+            cell.todate.isHidden = false
+            cell.tolbl.isHidden = false
+        }
+
+        var rowdata = rowData.leave_can
         if rowdata == 0 {
             cell.canclebtn.isHidden = false
         } else {
             cell.canclebtn.isHidden = true
         }
-//        if let hodApprovalStatus = rowData["Status"] as? String
-//        {
-//            cell.hodA.text = check(status: hodApprovalStatus)
-//            cell.hodA.textColor = sColor(status: hodApprovalStatus)
-//            if ["A", "XA", "X"].contains(hodApprovalStatus){
-//                cell.canclebtn.isHidden = true
-//            } else {
-//                cell.canclebtn.isHidden = false
-//            }
-//        } else {
-        //    cell.hodA.text = ""
-        //    cell.hodA.textColor = .black
-       //     cell.canclebtn.isHidden = false
-     //   }
+
         cell.canclebtn.tag = indexPath.row
         cell.canclebtn.addTarget(self, action: #selector(Checkboxtapped(_:)), for: .touchUpInside)
            return cell
@@ -558,9 +350,9 @@ extension AllStatusVc: UITableViewDataSource, UITableViewDelegate {
             
 
         } else {
-            if selectedOption != "PL Summary" {
-                      reqNo = list[indexPath.row]["Emp_Req_No"] as? String ?? ""
-                  }
+//            if selectedOption != "PL Summary" {
+//                      reqNo = list[indexPath.row]["Emp_Req_No"] as? String ?? ""
+//                  }
         }
         
         }
@@ -569,19 +361,7 @@ extension AllStatusVc: UITableViewDataSource, UITableViewDelegate {
         if Selected.selectedSegmentIndex == 1 {
             return 120
         } else  if Selected.selectedSegmentIndex == 0 {
-//            switch selectedOption {
-//            case "Full Day Leave Status":
-//                return 140
-//            case "Half Day Leave Status":
-//                return 100
-//            case "Off Day Request Status":
-//                return 100
-//            case "Tour Request Status":
-//                return 100
-//            case "PL Summary":
-//                return 180
-//                
-//            default:
+
                 return 165
             }
         return 0
@@ -602,4 +382,29 @@ extension AllStatusVc: UISearchBarDelegate {
            }
            tableview.reloadData()
        }
+}
+extension AllStatusVc : UITextViewDelegate {
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (reasontext.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        return numberOfChars < 200
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+
+        if reasontext.textColor == UIColor.lightGray {
+            reasontext.text = ""
+            reasontext.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+
+        if reasontext.text == "" {
+
+            reasontext.text = ""
+            reasontext.textColor = UIColor.black
+        }
+    }
 }
