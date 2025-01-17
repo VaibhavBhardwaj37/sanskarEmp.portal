@@ -16,6 +16,7 @@ class NewEventListCell: UITableViewCell {
     @IBOutlet weak var imageview: UIImageView!
     @IBOutlet weak var colorlbl: UILabel!
     @IBOutlet weak var viewbtn: UIButton!
+    @IBOutlet weak var Datelbl: UILabel!
     
     
     override func awakeFromNib() {

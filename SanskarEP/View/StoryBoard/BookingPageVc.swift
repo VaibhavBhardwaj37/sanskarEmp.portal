@@ -144,7 +144,7 @@ class BookingPageVc: UIViewController {
         //            tapGesture.cancelsTouchesInView = false
         //            self.view.addGestureRecognizer(tapGesture)
         
-        if  let roleID = Int(currentUser.booking_role_id), roleID == 2  || roleID == 5 || roleID == 6 || roleID == 8 || roleID == 7 || roleID == 9 || roleID == 10 {
+        if  let roleID = Int(currentUser.booking_role_id), roleID == 5 || roleID == 6 || roleID == 8 || roleID == 7 || roleID == 9 || roleID == 10 {
             btn.isHidden = true
             searchbtn.isHidden = true
             labelbtn.isHidden = true
@@ -396,7 +396,7 @@ class BookingPageVc: UIViewController {
                 }
             }
             present(vc, animated: true, completion: nil)
-        } else if let roleID = Int(currentUser.booking_role_id), roleID == 1 || roleID == 3 {
+        } else if let roleID = Int(currentUser.booking_role_id), roleID == 1 || roleID == 2 || roleID == 3 {
             vc = storyboard!.instantiateViewController(withIdentifier: "BookingKathaVc") as! BookingKathaVc
             
             if #available(iOS 15.0, *) {

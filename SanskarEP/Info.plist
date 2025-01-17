@@ -1,91 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        <!-- App Versioning -->
-        <key>CFBundleVersion</key>
-        <string>3</string> <!-- Increment build number -->
-        <key>CFBundleShortVersionString</key>
-        <string>1.0.0</string> <!-- App version -->
-        
-        <!-- URL Schemes -->
-        <key>CFBundleURLTypes</key>
-        <array>
-            <dict>
-                <key>CFBundleTypeRole</key>
-                <string>Editor</string>
-                <key>CFBundleURLSchemes</key>
-                <array>
-                    <string>com.googleusercontent.apps.310705780847-bg6fn3b4nivjhp4k8t3srhfbpjq4r004</string>
-                </array>
-            </dict>
-        </array>
-        
-        <!-- Firebase -->
-        <key>FirebaseAppDelegateProxyEnabled</key>
-        <false/>
-        
-        <!-- App Transport Security -->
-        <key>NSAppTransportSecurity</key>
-        <dict>
-            <key>NSAllowsArbitraryLoads</key>
-            <true/>
-            <key>NSExceptionDomains</key>
-            <dict>
-                <key>yourdomain.com</key>
-                <dict>
-                    <key>NSIncludesSubdomains</key>
-                    <true/>
-                    <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-                    <false/>
-                </dict>
-            </dict>
-        </dict>
-        
-        <!-- Background Modes -->
-        <key>UIBackgroundModes</key>
-        <array>
-            <string>processing</string> <!-- Add only if needed -->
-        </array>
-        
-        <!-- BGTaskScheduler -->
-        <key>BGTaskSchedulerPermittedIdentifiers</key>
-        <array>
-            <string>com.yourcompany.app.refresh</string>
-            <string>com.yourcompany.app.cleanup</string>
-        </array>
-        
-        <!-- Privacy - Sensitive User Data Usage Descriptions -->
-        <key>NSCalendarsUsageDescription</key>
-        <string>This app requires calendar access to schedule events and reminders.</string>
-        <key>NSPhotoLibraryUsageDescription</key>
-        <string>This app needs access to your photo library to upload images.</string>
-        <key>NSCameraUsageDescription</key>
-        <string>This app requires access to your camera to take photos.</string>
-        <key>NSMicrophoneUsageDescription</key>
-        <string>This app needs microphone access for audio recording features.</string>
-        <key>NSLocationWhenInUseUsageDescription</key>
-        <string>This app requires your location to provide location-based services.</string>
-
-        <!-- Scene Configuration -->
-        <key>UIApplicationSceneManifest</key>
-        <dict>
-            <key>UIApplicationSupportsMultipleScenes</key>
-            <false/>
-            <key>UISceneConfigurations</key>
-            <dict>
-                <key>UIWindowSceneSessionRoleApplication</key>
-                <array>
-                    <dict>
-                        <key>UISceneConfigurationName</key>
-                        <string>Default Configuration</string>
-                        <key>UISceneDelegateClassName</key>
-                        <string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
-                        <key>UISceneStoryboardFile</key>
-                        <string>Main</string>
-                    </dict>
-                </array>
-            </dict>
-        </dict>
-    </dict>
+<dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.yourcompany.app.refresh</string>
+		<string>com.yourcompany.app.cleanup</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.310705780847-bg6fn3b4nivjhp4k8t3srhfbpjq4r004</string>
+			</array>
+		</dict>
+	</array>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>yourdomain.com</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+				<false/>
+			</dict>
+		</dict>
+	</dict>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneConfigurationName</key>
+					<string>Default Configuration</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+					<key>UISceneStoryboardFile</key>
+					<string>Main</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>processing</string>
+	</array>
+</dict>
 </plist>

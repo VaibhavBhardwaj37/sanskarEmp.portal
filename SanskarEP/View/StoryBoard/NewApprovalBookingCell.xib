@@ -23,10 +23,10 @@
                         <rect key="frame" x="5" y="5" width="411" height="125"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4bW-Qp-2w1">
-                                <rect key="frame" x="10" y="7" width="230" height="22"/>
+                                <rect key="frame" x="10" y="7" width="250" height="22"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sant Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4jh-nc-Jb5">
-                                        <rect key="frame" x="0.0" y="0.0" width="230" height="22"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sant Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="4jh-nc-Jb5">
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="22"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                         <nil key="textColor"/>
@@ -37,17 +37,17 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="3BZ-27-edf"/>
                                     <constraint firstItem="4jh-nc-Jb5" firstAttribute="top" secondItem="4bW-Qp-2w1" secondAttribute="top" id="CTg-al-FSc"/>
-                                    <constraint firstAttribute="width" constant="230" id="SUO-iU-uWE"/>
+                                    <constraint firstAttribute="width" constant="250" id="SUO-iU-uWE"/>
                                     <constraint firstAttribute="trailing" secondItem="4jh-nc-Jb5" secondAttribute="trailing" id="iB8-bC-6Xz"/>
                                     <constraint firstItem="4jh-nc-Jb5" firstAttribute="leading" secondItem="4bW-Qp-2w1" secondAttribute="leading" id="uxT-BL-bFu"/>
                                     <constraint firstAttribute="bottom" secondItem="4jh-nc-Jb5" secondAttribute="bottom" id="voO-vU-a3S"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vOD-9P-HLL">
-                                <rect key="frame" x="245" y="6" width="90" height="22"/>
+                                <rect key="frame" x="265" y="6" width="110" height="22"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Channel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mTa-Uj-KyW">
-                                        <rect key="frame" x="0.0" y="0.0" width="90" height="22"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="110" height="22"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                         <nil key="textColor"/>
@@ -60,7 +60,7 @@
                                     <constraint firstItem="mTa-Uj-KyW" firstAttribute="leading" secondItem="vOD-9P-HLL" secondAttribute="leading" id="EWF-c8-nQK"/>
                                     <constraint firstItem="mTa-Uj-KyW" firstAttribute="top" secondItem="vOD-9P-HLL" secondAttribute="top" id="T2j-Oh-Gb7"/>
                                     <constraint firstAttribute="bottom" secondItem="mTa-Uj-KyW" secondAttribute="bottom" id="WmS-8e-a1J"/>
-                                    <constraint firstAttribute="width" constant="90" id="jUd-Hg-hvh"/>
+                                    <constraint firstAttribute="width" constant="110" id="jUd-Hg-hvh"/>
                                     <constraint firstAttribute="height" constant="22" id="vXw-Rw-8u2"/>
                                 </constraints>
                             </view>
@@ -168,10 +168,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eDA-T7-PVf">
-                                <rect key="frame" x="126" y="97" width="90" height="22"/>
+                                <rect key="frame" x="126" y="97" width="150" height="22"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wan-37-Vn3">
-                                        <rect key="frame" x="0.0" y="0.0" width="90" height="22"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="22"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                         <nil key="textColor"/>
@@ -180,12 +180,12 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="Wan-37-Vn3" secondAttribute="trailing" id="CMD-g9-Zx1"/>
-                                    <constraint firstItem="Wan-37-Vn3" firstAttribute="leading" secondItem="eDA-T7-PVf" secondAttribute="leading" id="Rgl-07-tBN"/>
+                                    <constraint firstAttribute="bottom" secondItem="Wan-37-Vn3" secondAttribute="bottom" id="06d-r9-0qq"/>
+                                    <constraint firstItem="Wan-37-Vn3" firstAttribute="top" secondItem="eDA-T7-PVf" secondAttribute="top" id="Id5-RT-pR1"/>
+                                    <constraint firstItem="Wan-37-Vn3" firstAttribute="leading" secondItem="eDA-T7-PVf" secondAttribute="leading" id="RGk-uk-Svu"/>
                                     <constraint firstAttribute="height" constant="22" id="WeH-QM-JQG"/>
-                                    <constraint firstAttribute="width" constant="90" id="aDx-eV-3bk"/>
-                                    <constraint firstItem="Wan-37-Vn3" firstAttribute="top" secondItem="eDA-T7-PVf" secondAttribute="top" id="gMe-s6-6vn"/>
-                                    <constraint firstAttribute="bottom" secondItem="Wan-37-Vn3" secondAttribute="bottom" id="gkO-gQ-VbM"/>
+                                    <constraint firstAttribute="width" constant="150" id="aDx-eV-3bk"/>
+                                    <constraint firstAttribute="trailing" secondItem="Wan-37-Vn3" secondAttribute="trailing" id="fNs-RY-Y21"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kJM-42-qyP">
@@ -297,7 +297,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -50,8 +50,19 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Orv-oB-pkE">
+                                <rect key="frame" x="158" y="27" width="200" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="1Xd-rE-vRf"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="1iW-yN-CkR"/>
+                                    <constraint firstAttribute="height" constant="22" id="GhR-fr-c87"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.forward.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Myx-Ep-iCe">
-                                <rect key="frame" x="318" y="11" width="35" height="27"/>
+                                <rect key="frame" x="318" y="6.9999999999999982" width="35" height="31"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="35" id="BQe-KC-5OA"/>
@@ -77,13 +88,15 @@
                             <constraint firstItem="YNM-qm-L6w" firstAttribute="leading" secondItem="bYq-Lt-mss" secondAttribute="trailing" constant="8" symbolic="YES" id="5P4-Cz-Z5f"/>
                             <constraint firstAttribute="trailing" secondItem="IpH-fJ-GRJ" secondAttribute="trailing" constant="5" id="ISz-ww-wOS"/>
                             <constraint firstItem="I2l-QV-JVr" firstAttribute="top" secondItem="p5a-n5-fdq" secondAttribute="top" constant="7" id="KxO-YJ-QmI"/>
-                            <constraint firstItem="Myx-Ep-iCe" firstAttribute="top" secondItem="p5a-n5-fdq" secondAttribute="top" constant="10" id="LK1-a0-b7O"/>
+                            <constraint firstItem="Myx-Ep-iCe" firstAttribute="top" secondItem="p5a-n5-fdq" secondAttribute="top" constant="6" id="LK1-a0-b7O"/>
+                            <constraint firstAttribute="bottom" secondItem="Orv-oB-pkE" secondAttribute="bottom" id="MDB-EI-KaR"/>
                             <constraint firstItem="bYq-Lt-mss" firstAttribute="top" secondItem="p5a-n5-fdq" secondAttribute="top" constant="3" id="Mgf-jN-KkK"/>
                             <constraint firstAttribute="bottom" secondItem="I2l-QV-JVr" secondAttribute="bottom" constant="7" id="Msr-Eb-eCX"/>
                             <constraint firstItem="YNM-qm-L6w" firstAttribute="centerY" secondItem="p5a-n5-fdq" secondAttribute="centerY" id="Qcz-Kq-uQx"/>
                             <constraint firstAttribute="trailing" secondItem="I2l-QV-JVr" secondAttribute="trailing" constant="8" id="U0o-Md-Vu9"/>
                             <constraint firstAttribute="bottom" secondItem="bYq-Lt-mss" secondAttribute="bottom" constant="3" id="X7A-3Y-jCO"/>
                             <constraint firstItem="IpH-fJ-GRJ" firstAttribute="top" secondItem="p5a-n5-fdq" secondAttribute="top" constant="5" id="ZOL-Rr-aAf"/>
+                            <constraint firstAttribute="bottom" secondItem="Orv-oB-pkE" secondAttribute="bottom" id="Zus-Ez-lm2"/>
                             <constraint firstAttribute="bottom" secondItem="Myx-Ep-iCe" secondAttribute="bottom" constant="10.67" id="alL-Fv-jt1"/>
                             <constraint firstItem="bYq-Lt-mss" firstAttribute="leading" secondItem="p5a-n5-fdq" secondAttribute="leading" constant="5" id="amc-0M-bCg"/>
                             <constraint firstItem="Myx-Ep-iCe" firstAttribute="leading" secondItem="OB3-Po-lVj" secondAttribute="trailing" constant="5" id="cOk-4f-dY3"/>
@@ -91,6 +104,8 @@
                             <constraint firstAttribute="bottom" secondItem="IpH-fJ-GRJ" secondAttribute="bottom" constant="5" id="dGW-uL-aYh"/>
                             <constraint firstItem="OB3-Po-lVj" firstAttribute="centerY" secondItem="p5a-n5-fdq" secondAttribute="centerY" id="gOU-CR-utd"/>
                             <constraint firstAttribute="trailing" secondItem="Myx-Ep-iCe" secondAttribute="trailing" constant="5" id="jeT-S5-erB"/>
+                            <constraint firstAttribute="trailing" secondItem="Orv-oB-pkE" secondAttribute="trailing" id="orc-1U-hag"/>
+                            <constraint firstAttribute="trailing" secondItem="Orv-oB-pkE" secondAttribute="trailing" id="v5z-ta-Dcr"/>
                             <constraint firstItem="OB3-Po-lVj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YNM-qm-L6w" secondAttribute="trailing" constant="5" id="vRI-WK-Xgq"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
@@ -110,6 +125,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="Datelbl" destination="Orv-oB-pkE" id="A4z-kq-r8H"/>
                 <outlet property="NameLbl" destination="YNM-qm-L6w" id="l48-pG-bZf"/>
                 <outlet property="TypeLbl" destination="OB3-Po-lVj" id="AD5-6b-ST9"/>
                 <outlet property="colorlbl" destination="bYq-Lt-mss" id="lpE-bw-OUh"/>

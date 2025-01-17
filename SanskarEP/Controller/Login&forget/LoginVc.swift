@@ -27,7 +27,7 @@ class LoginVc: UIViewController {
         // Do any additional setup after loading the view.
         updateUI()
         navigationController?.isNavigationBarHidden = true
-        
+        Registerbtn.isHidden = true
     }
     
     //MARK: - Update UI

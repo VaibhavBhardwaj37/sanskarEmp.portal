@@ -21,7 +21,7 @@ class LeaveViewController: UIViewController {
         
         policyno.text = currentUser.PolicyNumber
         Policyamnt.text = currentUser.PolicyAmount
-        Date.text = currentUser.Name
+        Date.text = currentUser.PolicyValidity
     }
     
     

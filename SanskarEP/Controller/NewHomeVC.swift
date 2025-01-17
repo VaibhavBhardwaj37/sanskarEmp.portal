@@ -34,7 +34,6 @@ class NewHomeVC: UIViewController  {
     @IBOutlet weak var empname: UILabel!
     @IBOutlet weak var empcode: UILabel!
     @IBOutlet weak var depart: UILabel!
-    @IBOutlet weak var requestid: UILabel!
     @IBOutlet weak var reason: UILabel!
     @IBOutlet weak var type: UILabel!
     @IBOutlet weak var fromdate: UILabel!
@@ -44,11 +43,14 @@ class NewHomeVC: UIViewController  {
     @IBOutlet weak var bookingview: UIView!
     @IBOutlet weak var Label1: UILabel!
     @IBOutlet weak var detailcollection: UICollectionView!
-    
+    @IBOutlet weak var deplbl: UILabel!
+    @IBOutlet weak var newStatuslbl: UILabel!
     
     
     var selectedDate = Date()
     var totalSquares = [String]()
+    var NameLbl = String()
+    var requestid: String?
     
     var staticItems = [
         ["month": "month", "Full": "Full", "Half": "Half", "Tour": "Tour", "WFH": "WFH"]]
@@ -71,7 +73,7 @@ class NewHomeVC: UIViewController  {
     var noteLbl: Bool = false
     var aprove: Bool = false
     var book: Bool = false
-        
+    var bEmpcode = String()
 
     //var datalist = [[String:Any]]()
   
@@ -639,7 +641,7 @@ class NewHomeVC: UIViewController  {
 
 
     @IBAction func approvebtn(_ sender: UIButton) {
-        if let reqId = requestid.text, !reqId.isEmpty {
+        if let reqId = requestid, !reqId.isEmpty {
                getGrant(reqId, "granted")
            } else {
                print("Request ID is missing")
@@ -648,7 +650,7 @@ class NewHomeVC: UIViewController  {
     }
     
     @IBAction func rejectbtn(_ sender: UIButton) {
-        if let reqId = requestid.text, !reqId.isEmpty {
+        if let reqId = requestid, !reqId.isEmpty {
                getGrant(reqId, "declined")
            } else {
                print("Request ID is missing")
@@ -681,36 +683,77 @@ class NewHomeVC: UIViewController  {
         self.staticItems.removeAll()
         self.staticItems.append(["month": "Month", "Full": "Full", "Half": "Half", "Tour": "Tour", "WFH": "WFH"])
         self.detailcollection.reloadData()
-
+        
         let indexPath = IndexPath(row: sender.tag, section: sender.superview?.superview?.tag ?? 0)
         let sectionData = daTalist[indexPath.section]
         let list = sectionData["list"] as? [[String: Any]]
         let selectedData = list?[indexPath.row] ?? [:]
-
+        
         DispatchQueue.main.async {
             self.empname.text = selectedData["Name"] as? String ?? ""
             self.empcode.text = selectedData["Emp_Code"] as? String ?? ""
             self.depart.text = selectedData["Dept"] as? String ?? ""
             self.reason.text = selectedData["Reason"] as? String ?? ""
             self.type.text = selectedData["leave_type"] as? String ?? ""
-
+            self.requestid = selectedData["ID"] as? String ?? ""
+            
             if let leaveType = selectedData["leave_type"] as? String, leaveType.lowercased() == "half" {
                 self.fromdate.text = selectedData["from_date"] as? String ?? ""
             } else {
                 self.fromdate.text = "\(selectedData["from_date"] as? String ?? "") to \(selectedData["to_date"] as? String ?? "")"
             }
-
+            
             if let image = selectedData["PImg"] as? String {
                 let img = image.replacingOccurrences(of: " ", with: "%20")
                 self.employeeImage.sd_setImage(with: URL(string: img))
             } else {
                 self.employeeImage.image = UIImage(named: "download")
             }
-
+            
             self.approvalbtn.layer.cornerRadius = 8
             self.rejectbtn.layer.cornerRadius = 8
             self.detailview.isHidden = false
+            
+            if currentUser.Code == "H" {
+                self.deplbl.text = " Dep"
+                self.depart.text = selectedData["Dept"] as? String ?? ""
+                
+                let rowdata = selectedData["status"] as? String ?? ""
+                if rowdata == "R" {
+                    self.newStatuslbl.text = "Pending"
+                    self.newStatuslbl.textColor = UIColor.red
+                    self.approvalbtn.isHidden = false
+                    self.rejectbtn.isHidden = false
+                } else if rowdata == "A" {
+                    self.newStatuslbl.text = "Approved"
+                    self.newStatuslbl.textColor = UIColor.systemGreen
+                    self.approvalbtn.isHidden = true
+                    self.rejectbtn.isHidden = true
+                } else if rowdata == "X" {
+                    self.newStatuslbl.text = "Cancel"
+                    self.newStatuslbl.textColor = UIColor.systemRed
+                    self.approvalbtn.isHidden = true
+                    self.rejectbtn.isHidden = true
+                }
+                
+            } else {
+                self.approvalbtn.isHidden = true
+                self.rejectbtn.isHidden = true
+                self.deplbl.text = " Status"
+                let rowdata = selectedData["status"] as? String ?? ""
+                if rowdata == "R" {
+                    self.depart.text = "Pending"
+                    self.depart.textColor = UIColor.red
+                } else if rowdata == "A" {
+                    self.depart.text = "Approved"
+                    self.depart.textColor = UIColor.systemGreen
+                } else if rowdata == "X" {
+                    self.depart.text = "Cancel"
+                    self.depart.textColor = UIColor.systemRed
+                }
+            }
         }
+    
         if let empCode = selectedData["Emp_Code"] as? String {
                self.detailApi(empCode: empCode)
            }
@@ -776,6 +819,9 @@ class NewHomeVC: UIViewController  {
                     vc.imaged = ""
                 }
             }
+            bEmpcode = cellData["PImg"] as? String ?? ""
+            vc.EmpCode = bEmpcode
+            
             if #available(iOS 15.0, *) {
                 if let sheet = vc.sheetPresentationController {
                     var customDetent: UISheetPresentationController.Detent?
@@ -797,7 +843,26 @@ class NewHomeVC: UIViewController  {
         }
     }
 
-    
+    func formatDate(_ dateString: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd-MMM-yyyy"
+        if let date = inputFormatter.date(from: dateString) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = "dd-MMM"
+            return outputFormatter.string(from: date)
+        }
+        return dateString
+    }
+    func calculateDayDifference(fromDate: String, toDate: String) -> Int {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MMM-yyyy"
+        if let startDate = formatter.date(from: fromDate), let endDate = formatter.date(from: toDate) {
+            let calendar = Calendar.current
+            let components = calendar.dateComponents([.day], from: startDate, to: endDate)
+            return (components.day ?? 0) + 1
+        }
+        return 1
+    }
 }
 
 
@@ -974,7 +1039,9 @@ extension NewHomeVC: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "NewEventListCell", for: indexPath) as! NewEventListCell
             cell.eventbtn.addTarget(self, action: #selector(messageOnClick(_:)), for: .touchUpInside)
             cell.eventbtn.tag = indexPath.row
+            
             cell.viewbtn . isHidden = true
+            
             cell.NameLbl.text = cellData["Name"] as? String ?? ""
   //        cell.fromdate.text = cellData["from_date"] as? String ?? ""
  //        cell.todate.text = cellData["to_date"] as? String ?? ""
@@ -983,6 +1050,26 @@ extension NewHomeVC: UITableViewDelegate, UITableViewDataSource {
 //          cell.reasonlbl.text = cellData["Reason"] as? String ?? ""
             cell.TypeLbl.text = cellData["leave_type"] as? String ?? ""
             EmpCode =  cellData["Emp_Code"] as? String ?? ""
+            
+            if let leaveType = cellData["leave_type"] as? String, leaveType.lowercased() == "half" {
+                if let fromDate = cellData["from_date"] as? String {
+                    let formattedFromDate = formatDate(fromDate)
+                    cell.Datelbl.text = "\(formattedFromDate) (1)"
+                } else {
+                    cell.Datelbl.text = ""
+                }
+            } else {
+                if let fromDate = cellData["from_date"] as? String, let toDate = cellData["to_date"] as? String {
+                    let formattedFromDate = formatDate(fromDate)
+                    let formattedToDate = formatDate(toDate)
+                    let dayCount = calculateDayDifference(fromDate: fromDate, toDate: toDate)
+                    cell.Datelbl.text = "\(formattedFromDate) to \(formattedToDate) (\(dayCount))"
+                } else {
+                    cell.Datelbl.text = ""
+                }
+            }
+            
+    //        cell.Datelbl.text =
             
 //            if let leaveType = cellData["leave_type"] as? String, leaveType.lowercased() == "half" {
 //                cell.todate.isHidden = true
@@ -997,16 +1084,21 @@ extension NewHomeVC: UITableViewDelegate, UITableViewDataSource {
                 cell.eventbtn.isHidden = false
                 cell.imageview.isHidden = false
             } else {
-                cell.NameLbl.text = cellData["Name"] as? String ?? ""
+       //         cell.NameLbl.text = cellData["ID"] as? String ?? ""
+                NameLbl = cellData["leave_type"] as? String ?? ""
+                
+                cell.NameLbl.text = "Leave Request" + " " +  "(" + NameLbl + ")"
+                
                 let rowdata = cellData["status"] as? String ?? ""
                 if rowdata == "R" {
                     cell.TypeLbl.text = "Pending"
                     cell.TypeLbl.textColor = UIColor.red
                 }
-                cell.eventbtn.isHidden = true
+  //              cell.eventbtn.isHidden = true
 //                cell.type.isHidden = true
 //                cell.typelbl.isHidden = true
                 cell.imageview.isHidden = true
+                cell.Datelbl.isHidden = true
            }
             
             return cell
@@ -1076,7 +1168,7 @@ extension NewHomeVC: UITableViewDelegate, UITableViewDataSource {
 
         switch type {
         case "leave":
-            return 60
+            return 70
         case "booking":
             return 150
         case "birthday":

@@ -125,7 +125,6 @@
 		C7DB78512A61228000B61339 /* tpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DB78502A61228000B61339 /* tpViewController.swift */; };
 		C7DB78532A6183E200B61339 /* TourBillApprovalVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DB78522A6183E200B61339 /* TourBillApprovalVc.swift */; };
 		D46E127B63A0DCE6AA92BD86 /* Pods_SanskarEPTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8966C5E381405DAB219CB62A /* Pods_SanskarEPTests.framework */; };
-		D500EC332D2F925600AC6269 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D500EC322D2F925600AC6269 /* PrivacyInfo.xcprivacy */; };
 		D503E0BC2D1BE189003A0E63 /* ReportAllVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503E0BB2D1BE189003A0E63 /* ReportAllVc.swift */; };
 		D503E0C02D1BE4B9003A0E63 /* ReportCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503E0BF2D1BE4B9003A0E63 /* ReportCollectionView.swift */; };
 		D504991C2C64D5CC00F228C0 /* ApprovalLitNewVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D504991B2C64D5CC00F228C0 /* ApprovalLitNewVc.swift */; };
@@ -439,7 +438,6 @@
 		C7CDB89129EA89120094848C /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		C7DB78502A61228000B61339 /* tpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tpViewController.swift; sourceTree = "<group>"; };
 		C7DB78522A6183E200B61339 /* TourBillApprovalVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourBillApprovalVc.swift; sourceTree = "<group>"; };
-		D500EC322D2F925600AC6269 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		D503E0BB2D1BE189003A0E63 /* ReportAllVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportAllVc.swift; sourceTree = "<group>"; };
 		D503E0BF2D1BE4B9003A0E63 /* ReportCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCollectionView.swift; sourceTree = "<group>"; };
 		D504991B2C64D5CC00F228C0 /* ApprovalLitNewVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalLitNewVc.swift; sourceTree = "<group>"; };
@@ -939,7 +937,6 @@
 				0740388D278BF0A1007C70CC /* Controller */,
 				077E863F278BEF33002BF76B /* Assets.xcassets */,
 				077E8644278BEF33002BF76B /* Info.plist */,
-				D500EC322D2F925600AC6269 /* PrivacyInfo.xcprivacy */,
 				D51631142B6927C4002EDC7D /* NewPasswordVc.swift */,
 				D5F153DE2B6B786F00E12BAB /* SearcHvC.swift */,
 				D5F153E22B6B9AEE00E12BAB /* searchCell.swift */,
@@ -1261,7 +1258,6 @@
 				D5F153E52B6B9AEE00E12BAB /* searchCell.xib in Resources */,
 				D5D9BE3B2C2A904600FF9CF0 /* NewReqCell.xib in Resources */,
 				D5D9BE412C2AA1DE00FF9CF0 /* otherCell.xib in Resources */,
-				D500EC332D2F925600AC6269 /* PrivacyInfo.xcprivacy in Resources */,
 				C70CE9F52A83C080001DC970 /* GuestManageCell.xib in Resources */,
 				D5E744DB2C7F007A00C1F542 /* InventoryitemDataCell.xib in Resources */,
 				D52477562AA1F2F800214D2F /* bdayviewcell.xib in Resources */,
@@ -1823,7 +1819,10 @@
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SanskarEP/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "we need to use the camera";
+				INFOPLIST_KEY_CFBundleDisplayName = SEP;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "SEP Employee Portal needs access to your calendar to help you schedule and manage events or reminders efficiently within the app.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow SEP Employee Portal needs to access your camera to take photos for your profile picture or other app features.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to let you choose and upload images for personalized features in the app.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -1840,6 +1839,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.SanskarEP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = None;
 				SWIFT_VERSION = 5.0;
@@ -1862,7 +1864,10 @@
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SanskarEP/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "we need to use the camera";
+				INFOPLIST_KEY_CFBundleDisplayName = SEP;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "SEP Employee Portal needs access to your calendar to help you schedule and manage events or reminders efficiently within the app.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow SEP Employee Portal needs to access your camera to take photos for your profile picture or other app features.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to let you choose and upload images for personalized features in the app.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -1879,6 +1884,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.SanskarEP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;

@@ -166,6 +166,7 @@ extension scheduleVC: UITableViewDelegate,UITableViewDataSource {
         cell.TypeLbl.isHidden = true
         cell.colorlbl.isHidden = true
         cell.imageview.isHidden = true
+        cell.Datelbl.isHidden = true
         return cell
     }
 }
