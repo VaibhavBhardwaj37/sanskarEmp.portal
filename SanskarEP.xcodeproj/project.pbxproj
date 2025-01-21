@@ -147,6 +147,7 @@
 		D5345B752C75F2BF0038065A /* leaveview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5345B742C75F2BF0038065A /* leaveview.swift */; };
 		D5345B772C75F2D70038065A /* leaveview.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5345B762C75F2D70038065A /* leaveview.xib */; };
 		D5345B792C75F5080038065A /* LeaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5345B782C75F5080038065A /* LeaveViewController.swift */; };
+		D53848222D3F6EC900232F58 /* ApprovalPageVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53848212D3F6EC900232F58 /* ApprovalPageVc.swift */; };
 		D53F96EA2CBE81B0002E4B6F /* KathaFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53F96E92CBE81B0002E4B6F /* KathaFilterCell.swift */; };
 		D546705F2C43DB4100CFFAC8 /* CalendersheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D546705E2C43DB4100CFFAC8 /* CalendersheetVC.swift */; };
 		D55046B42BBEB9060089EBB5 /* KathaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55046B32BBEB9060089EBB5 /* KathaVC.swift */; };
@@ -460,6 +461,7 @@
 		D5345B742C75F2BF0038065A /* leaveview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = leaveview.swift; sourceTree = "<group>"; };
 		D5345B762C75F2D70038065A /* leaveview.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = leaveview.xib; sourceTree = "<group>"; };
 		D5345B782C75F5080038065A /* LeaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveViewController.swift; sourceTree = "<group>"; };
+		D53848212D3F6EC900232F58 /* ApprovalPageVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalPageVc.swift; sourceTree = "<group>"; };
 		D53F96E92CBE81B0002E4B6F /* KathaFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KathaFilterCell.swift; sourceTree = "<group>"; };
 		D546705E2C43DB4100CFFAC8 /* CalendersheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendersheetVC.swift; sourceTree = "<group>"; };
 		D55046B32BBEB9060089EBB5 /* KathaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KathaVC.swift; sourceTree = "<group>"; };
@@ -755,6 +757,7 @@
 			isa = PBXGroup;
 			children = (
 				077E863C278BEF32002BF76B /* Main.storyboard */,
+				D53848212D3F6EC900232F58 /* ApprovalPageVc.swift */,
 				D5E73E052D2E97E700A441DD /* NewLeaveCancel.swift */,
 				D568625A2D16A9BE00DA7B03 /* employeedetailCell.swift */,
 				D568625B2D16A9BE00DA7B03 /* employeedetailCell.xib */,
@@ -1617,6 +1620,7 @@
 				07D47B6427996FC9000490E5 /* workFromHome.swift in Sources */,
 				D55B05E52D0D6B5000406455 /* requestdatamodel.swift in Sources */,
 				D50C2D732BB2EE4C00C5C25E /* SaveListVc.swift in Sources */,
+				D53848222D3F6EC900232F58 /* ApprovalPageVc.swift in Sources */,
 				D5FF605A2B3463B100466705 /* NotificationCell.swift in Sources */,
 				D5971F5C2BE21A36004FB8FA /* BookingPageCell.swift in Sources */,
 				D55046B72BBEBC2B0089EBB5 /* KathaCell.swift in Sources */,

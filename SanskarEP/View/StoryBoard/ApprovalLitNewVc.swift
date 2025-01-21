@@ -78,8 +78,14 @@ class ApprovalLitNewVc: UIViewController {
         TourTableview.register(UINib(nibName: "NewApprovalTourCell", bundle: nil), forCellReuseIdentifier: "NewApprovalTourCell")
         LeavebtnAction(Leavebtn)
         
-   
-       
+        if currentUser.EmpCode == "SANS-00079" || currentUser.EmpCode == "SANS-00082" {
+            Bookingview.isHidden = false
+        } else {
+            Bookingview.isHidden = true
+        }
+
+      
+
     }
   
   
@@ -228,7 +234,7 @@ class ApprovalLitNewVc: UIViewController {
     func getDetails() {
         var dict = [String: Any]()
         dict["EmpCode"] = currentUser.EmpCode
-        dict["leave_type"] = type
+        dict["leave_type"] = "All"
         dict["fromDate"] = fromDate ?? ""
         dict["toDate"] = toDate ?? ""
 
@@ -493,6 +499,7 @@ class ApprovalLitNewVc: UIViewController {
             self.BookingTableview.reloadData()
         }
     }
+    
     func HODdetail(){
         var dict = Dictionary<String,Any>()
         dict["EmpCode"] = currentUser.EmpCode
