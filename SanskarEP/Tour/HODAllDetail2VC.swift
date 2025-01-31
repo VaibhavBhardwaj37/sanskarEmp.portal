@@ -248,15 +248,10 @@ class HODAllDetail2VC: UIViewController  {
     func TourApp(_ status: String) {
         var dict = Dictionary<String,Any>()
         dict["Sno"] = hsno
-        print(dict["Sno"])
         dict["TourID"] = htour
-        print(dict["TourID"])
         dict["Approval_status"] = status
-        print(dict["Approval_status"])
         dict["Approval_amount"] = apprvltxt.text!
-        print(dict["Approval_amount"])
         dict["Hod_remarks"] = remTxt.text!
-        print(dict["Hod_remarks"])
         
         DispatchQueue.main.async(execute: {Loader.showLoader()})
         APIManager.apiCall(postData: dict as NSDictionary, url: tourAppro) { result, response, error, data in
@@ -278,7 +273,8 @@ class HODAllDetail2VC: UIViewController  {
             self.tableview.reloadData()
         }
     }
-    func newDetailApi(){
+    
+    func newDetailApi() {
         var dict = Dictionary<String,Any>()
         dict["TourId"] = htour
         dict["type"] =  "1"
@@ -340,6 +336,7 @@ class HODAllDetail2VC: UIViewController  {
            appamt.text = "\(totalAmount)"
         }
     }
+
 extension HODAllDetail2VC: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // Ensure only numeric characters are allowed

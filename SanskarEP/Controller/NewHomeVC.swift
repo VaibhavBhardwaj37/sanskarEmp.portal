@@ -51,7 +51,8 @@ class NewHomeVC: UIViewController  {
     var totalSquares = [String]()
     var NameLbl = String()
     var requestid: String?
-    
+    var selectedData = String()
+    var selectedDateString = String()
     var staticItems = [
         ["month": "month", "Full": "Full", "Half": "Half", "Tour": "Tour", "WFH": "WFH"]]
     let itemKeys = ["month", "Full", "Half", "Tour", "WFH"]
@@ -502,12 +503,54 @@ class NewHomeVC: UIViewController  {
         }
     }
     
+//    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+//        if gestureRecognizer.state == .began {
+//            let location = gestureRecognizer.location(in: calcollectionview)
+//            if let indexPath = calcollectionview.indexPathForItem(at: location) {
+//             
+//        //        let vc = storyboard!.instantiateViewController(withIdentifier: "CalenderOnClick") as! CalenderOnClick
+//                let vc = storyboard!.instantiateViewController(withIdentifier: "ApprovalPageVc") as! ApprovalPageVc
+//                if #available(iOS 15.0, *) {
+//                    if let sheet = vc.sheetPresentationController {
+//                        var customDetent: UISheetPresentationController.Detent?
+//                        if #available(iOS 16.0, *) {
+//                            customDetent = UISheetPresentationController.Detent.custom { context in
+//                                return 540
+//                            }
+//                            sheet.detents = [customDetent!]
+//                            sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
+//                        }
+//                        sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+//                        sheet.prefersGrabberVisible = true
+//                        sheet.preferredCornerRadius = 12
+//                    }
+//                }
+//                self.present(vc, animated: true)
+//            }
+//        }
+//    }
+    
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
         if gestureRecognizer.state == .began {
             let location = gestureRecognizer.location(in: calcollectionview)
             if let indexPath = calcollectionview.indexPathForItem(at: location) {
-             
-                let vc = storyboard!.instantiateViewController(withIdentifier: "CalenderOnClick") as! CalenderOnClick
+               let  selectedData = totalSquares[indexPath.item]
+                
+              
+                let monthYearText = MonthLabel.text?.split(separator: " ")
+                let month = monthYearText?.first ?? ""
+                let year = monthYearText?.last ?? ""
+                
+           
+                let selectedDay = totalSquares[indexPath.item]
+                 selectedDateString = ""
+                if let day = Int(selectedDay) {
+                    selectedDateString = "\(year)-\(String(format: "%02d", monthToNumber(String(month))))-\(String(format: "%02d", day))"
+                }
+                
+                let vc = storyboard!.instantiateViewController(withIdentifier: "ApprovalPageVc") as! ApprovalPageVc
+            //    vc.data = selectedData
+                vc.selectedDateFormatted = selectedDateString
                 
                 if #available(iOS 15.0, *) {
                     if let sheet = vc.sheetPresentationController {
@@ -528,7 +571,20 @@ class NewHomeVC: UIViewController  {
             }
         }
     }
-    
+
+    // Helper function to convert month name to month number
+    func monthToNumber(_ month: String) -> Int {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM"
+        if let monthDate = dateFormatter.date(from: month) {
+            let calendar = Calendar.current
+            return calendar.component(.month, from: monthDate)
+        }
+        return 1 // Default to January if the month is invalid
+    }
+
+
+
     func EventApi() {
         var dict = [String: Any]()
         dict["EmpCode"] = currentUser.EmpCode
@@ -538,7 +594,7 @@ class NewHomeVC: UIViewController  {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         let reqDate = dateFormatter.string(from: currentDate)
-        dict["req_date"] = reqDate
+        dict["req_date"] = "2025-01-29"
         DispatchQueue.main.async {
             Loader.showLoader()
         }
@@ -642,7 +698,7 @@ class NewHomeVC: UIViewController  {
 
     @IBAction func approvebtn(_ sender: UIButton) {
         if let reqId = requestid, !reqId.isEmpty {
-               getGrant(reqId, "granted")
+               getGrant([reqId], "granted")
            } else {
                print("Request ID is missing")
            }
@@ -651,13 +707,13 @@ class NewHomeVC: UIViewController  {
     
     @IBAction func rejectbtn(_ sender: UIButton) {
         if let reqId = requestid, !reqId.isEmpty {
-               getGrant(reqId, "declined")
+               getGrant([reqId], "declined")
            } else {
                print("Request ID is missing")
            }
         detailview.isHidden = true
     }
-    func getGrant(_ id: String, _ reply: String) {
+    func getGrant(_ id: [String], _ reply: String) {
         var dict = Dictionary<String, Any>()
         dict["req_id"] = id
         print(dict["req_id"])
@@ -761,7 +817,7 @@ class NewHomeVC: UIViewController  {
 
     func detailApi(empCode: String) {
         self.staticItems.removeAll()
-        self.staticItems.append(["month": "Month", "Full": "Full", "Half": "Half", "Tour": "Tour", "WFH": "WFH"]) // Add default headers
+        self.staticItems.append(["month": "Month", "Full": "Full", "Half": "Half", "Tour": "Tour", "WFH": "WFH"]) 
 
         var dict = Dictionary<String, Any>()
         dict["EmpCode"] = empCode
@@ -819,7 +875,7 @@ class NewHomeVC: UIViewController  {
                     vc.imaged = ""
                 }
             }
-            bEmpcode = cellData["PImg"] as? String ?? ""
+            bEmpcode = cellData["EmpCode"] as? String ?? ""
             vc.EmpCode = bEmpcode
             
             if #available(iOS 15.0, *) {
@@ -867,7 +923,7 @@ class NewHomeVC: UIViewController  {
 
 
 extension NewHomeVC: UICollectionViewDataSource {
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == calcollectionview {
             return totalSquares.count
@@ -885,32 +941,32 @@ extension NewHomeVC: UICollectionViewDataSource {
         }
         return 0
     }
-
+    
     // Cell for item at index path
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == calcollectionview {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalCell", for: indexPath) as? calenderCell else {
                 return UICollectionViewCell()
             }
-
+            
             let dateText = totalSquares[indexPath.item]
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "d"
             let currentDateString = dateFormatter.string(from: Date())
-
+            
             if dateText.isEmpty {
                 cell.isHidden = true
             } else {
                 cell.isHidden = false
                 cell.dayofmonth.text = dateText
-
+                
                 let calendar = Calendar.current
                 let currentDay = calendar.component(.day, from: Date())
                 let currentMonth = calendar.component(.month, from: Date())
                 let currentYear = calendar.component(.year, from: Date())
                 let selectedMonth = calendar.component(.month, from: selectedDate)
                 let selectedYear = calendar.component(.year, from: selectedDate)
-
+                
                 if selectedYear < currentYear || (selectedYear == currentYear && selectedMonth < currentMonth) {
                     cell.dayofmonth.textColor = .gray
                 } else if selectedYear > currentYear || (selectedYear == currentYear && selectedMonth > currentMonth) {
@@ -926,26 +982,26 @@ extension NewHomeVC: UICollectionViewDataSource {
                         }
                     }
                 }
-
+                
                 if indexPath.item % 7 == 0 {
                     cell.dayofmonth.textColor = .red
                 }
             }
-
+            
             cell.layer.cornerRadius = 8
             return cell
         } else if collectionView == detailcollection {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? EmployeedetailsCell else {
                 return UICollectionViewCell()
             }
-
+            
             let sectionKey = itemKeys[indexPath.section]
             let rowData = staticItems[indexPath.item]
-
+            
             if let value = rowData[sectionKey] {
                 cell.detaillabel.text = " \(value)"
             }
-
+            
             let width = collectionView.frame.width / CGFloat(itemKeys.count + 1) - 0.8
             let height = 40
             cell.setCellSize(width: width, height: CGFloat(height))
@@ -953,8 +1009,17 @@ extension NewHomeVC: UICollectionViewDataSource {
         }
         return UICollectionViewCell()
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == calcollectionview {
+            
+            
+        } else if collectionView == detailcollection {
+            
+        }
+        
+    }
 }
-
 //MARK: - UICollectionViewDelegate
 
 extension NewHomeVC: UICollectionViewDelegate {

@@ -25,7 +25,7 @@ class ApprovalLitNewVc: UIViewController {
     @IBOutlet weak var BookingBtn: UIButton!
     @IBOutlet weak var TourBtn: UIButton!
     @IBOutlet weak var Allselectview: UIView!
-    @IBOutlet weak var Deselectview: UIView!
+    @IBOutlet weak var Deselectview: UIView! 
     @IBOutlet weak var selectbtn: UIButton!
     @IBOutlet weak var openselectview: NSLayoutConstraint!
     @IBOutlet weak var AllApprovebtn: UIButton!
@@ -33,6 +33,12 @@ class ApprovalLitNewVc: UIViewController {
     @IBOutlet weak var Leaveimageview: UIImageView!
     @IBOutlet weak var Bookingimageview: UIImageView!
     @IBOutlet weak var Tourimageview: UIImageView!
+    @IBOutlet weak var heightcons: NSLayoutConstraint!
+    @IBOutlet weak var bookingallselective: UIView!
+    @IBOutlet weak var bookingdeselectview: UIView!
+    @IBOutlet weak var bookingallapprovebtn: UIButton!
+    @IBOutlet weak var bookingallrejectbtn: UIButton!
+    
     
     
     var Datalist = [[String:Any]]()
@@ -51,18 +57,22 @@ class ApprovalLitNewVc: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      //  getDetails()
+        getDetails()
         bookingdetailapi()
         HODdetail()
         
+        type = "All"
         LeaveDetailview.isHidden = false
         Bookingdetailview.isHidden = true
         TourDetaiview.isHidden = true
-        Allselectview.isHidden = true
+        Allselectview.isHidden = false
         Deselectview.isHidden = true
         AllApprovebtn.layer.cornerRadius = 8
         RejectAllbtn.layer.cornerRadius = 8
-     //   selectbtn.isHidden = true
+        
+        bookingallapprovebtn.layer.cornerRadius = 8
+        bookingallrejectbtn.layer.cornerRadius = 8
+        //   selectbtn.isHidden = true
         
         Leavetableview.delegate = self
         Leavetableview.dataSource = self
@@ -78,23 +88,36 @@ class ApprovalLitNewVc: UIViewController {
         TourTableview.register(UINib(nibName: "NewApprovalTourCell", bundle: nil), forCellReuseIdentifier: "NewApprovalTourCell")
         LeavebtnAction(Leavebtn)
         
-        if currentUser.EmpCode == "SANS-00079" || currentUser.EmpCode == "SANS-00082" {
-            Bookingview.isHidden = false
-        } else {
+
+        if currentUser.EmpCode == "SANS-00042" {
+            TourView.isHidden = false
             Bookingview.isHidden = true
+            Leaveview.isHidden = false
+          
+        } else  if currentUser.EmpCode == "SANS-00079" || currentUser.EmpCode == "SANS-00082" {
+            Bookingview.isHidden = false
+            Leaveview.isHidden = false
+            TourView.isHidden = true
+        
+        } else {
+          
+            TourView.isHidden = true
+            Leaveview.isHidden = true
+            Bookingview.isHidden = true
+            heightcons.constant = -20
         }
-
-      
-
+        getDetails()
+        Leavetableview.reloadData()
+        
+        bookingdeselectview.isHidden = true
+        bookingallselective.isHidden = true
     }
   
-  
-
-    @IBAction func backbtn(_ sender: UIButton) {
-        dismiss(animated: true,completion: nil)
-    }
     
     @IBAction func LeavebtnAction(_ sender: UIButton) {
+        bookingallselective.isHidden = true
+        Allselectview.isHidden = false
+
         type = "All"
         getDetails()
         Leaveimageview.image = UIImage(named : "radioimage")
@@ -102,11 +125,12 @@ class ApprovalLitNewVc: UIViewController {
         Tourimageview.image = UIImage(named : "radio")
         
      
-        self.LeaveDetailview.isHidden = !self.LeaveDetailview.isHidden
+        LeaveDetailview.isHidden = false
+        //!self.LeaveDetailview.isHidden
         Bookingdetailview.isHidden = true
         TourDetaiview.isHidden = true
         self.Leavetableview.reloadData()
-        Deselectview.isHidden = true
+        //Deselectview.isHidden = true
         Allselectview.isHidden = false
         if Allselectview.isHidden {
             let safeAreaInsetsTop = view.safeAreaInsets.top
@@ -119,18 +143,21 @@ class ApprovalLitNewVc: UIViewController {
    
     
     @IBAction func BookigBtn(_ sender: Any) {
+        bookingallselective.isHidden = false
+        Allselectview.isHidden = true
+        
         Leaveimageview.image = UIImage(named : "radio")
         Bookingimageview.image = UIImage(named : "radioimage")
         Tourimageview.image = UIImage(named : "radio")
         
-        self.Bookingdetailview.isHidden = !self.Bookingdetailview.isHidden
+        Bookingdetailview.isHidden = false
         LeaveDetailview.isHidden = true
         TourDetaiview.isHidden = true
         self.BookingTableview.reloadData()
-        Deselectview.isHidden = true
+       // Deselectview.isHidden = true
         Allselectview.isHidden = false
         
-        if Allselectview.isHidden {
+        if bookingallselective.isHidden {
             let safeAreaInsetsTop = view.safeAreaInsets.top
             self.openselectview.constant = safeAreaInsetsTop + 10
         } else {
@@ -145,7 +172,7 @@ class ApprovalLitNewVc: UIViewController {
         Bookingimageview.image = UIImage(named : "radio")
         Tourimageview.image = UIImage(named : "radioimage")
         
-        self.TourDetaiview.isHidden = !self.TourDetaiview.isHidden
+        TourDetaiview.isHidden = false
         LeaveDetailview.isHidden = true
         Bookingdetailview.isHidden = true
         self.TourTableview.reloadData()
@@ -160,41 +187,12 @@ class ApprovalLitNewVc: UIViewController {
         }
     }
     
-    @IBAction func fulldayonclick(_ sender: UIButton) {
-        type = "full"
-        getDetails()
-        Allselectview.isHidden = false
-        if Allselectview.isHidden {
-            // Hide OneView and adjust table view position
-            let safeAreaInsetsTop = view.safeAreaInsets.top
-            self.openselectview.constant = safeAreaInsetsTop + 50
-        } else {
-            // Show OneView and adjust table view position
-            self.openselectview.constant = 75
-        }
-    }
-    
-    
-    
-    @IBAction func SelectAllBtn(_ sender: UIButton) {
-//        Deselectview.isHidden = false
-//   
-//        if selectedRows.count == approveM.count {
-//                   selectedRows.removeAll()
-//            // Deselect all rows
-//           sender.setTitle("Select All", for: .normal)
-//            Deselectview.isHidden = true
-//               } else {
-//                   selectedRows = Set(0..<approveM.count)
-//
-//                   sender.setTitle("Deselect All", for: .normal)
-//       
-//               }
-//        Leavetableview.reloadData()
-        Deselectview.isHidden = false
-           
+   
+    @IBAction func leaveallselect(_ sender: UIButton) {
+     //   Deselectview.isHidden = false
+        Deselectview.isHidden = !Deselectview.isHidden
         if selectedRows.count == approveM.count {
-                   selectedRows.removeAll()
+            selectedRows.removeAll()
             // Deselect all rows
            sender.setTitle("Select All", for: .normal)
                } else {
@@ -202,34 +200,25 @@ class ApprovalLitNewVc: UIViewController {
                    // Change title to "Deselect All"
                    sender.setTitle("Deselect All", for: .normal)
                }
-              Leavetableview.reloadData()
-        
-           // Select/Deselect BookingTableview rows
-           if selectedBookingRows.count == Datalist.count {
-               selectedBookingRows.removeAll()
-           } else {
-               selectedBookingRows = Set(0..<Datalist.count)
-           }
-           BookingTableview.reloadData()
-           
-           // Select/Deselect TourTableview rows
-           if selectedTourRows.count == Datalist.count {
-               selectedTourRows.removeAll()
-           } else {
-               selectedTourRows = Set(0..<Datalist.count)
-           }
-           TourTableview.reloadData()
-           
-           // Update button title
-           if selectedRows.count == approveM.count && selectedBookingRows.count == Datalist.count && selectedTourRows.count == Datalist.count {
-               sender.setTitle("Deselect All", for: .normal)
-           } else {
-               sender.setTitle("Select All", for: .normal)
-               Deselectview.isHidden = true
-           }
+               Leavetableview.reloadData()
     }
     
     
+    @IBAction func bookingallselectbtn(_ sender: UIButton) {
+        bookingdeselectview.isHidden = !bookingdeselectview.isHidden
+        
+        if selectedBookingRows.count == Datalist.count {
+            selectedBookingRows.removeAll()
+            // Deselect all rows
+           sender.setTitle("Select All", for: .normal)
+               } else {
+                   selectedBookingRows = Set(0..<Datalist.count)
+                   // Change title to "Deselect All"
+                   sender.setTitle("Deselect All", for: .normal)
+               }
+               BookingTableview.reloadData()
+           
+    }
     
     func getDetails() {
         var dict = [String: Any]()
@@ -293,7 +282,7 @@ class ApprovalLitNewVc: UIViewController {
            TourTableview.reloadData()
        }
     
-    func getGrant(_ id: String, _ reply: String) {
+    func getGrant(_ id: [String], _ reply: String) {
         var dict = Dictionary<String,Any>()
         dict["req_id"] = id
         print(dict["req_id"])
@@ -315,21 +304,27 @@ class ApprovalLitNewVc: UIViewController {
             
         }
     }
+
     @objc
-    func LeaveAcceptOnClick(_ sender: UIButton ) {
+    func LeaveAcceptOnClick(_ sender: UIButton) {
         print(sender.tag)
         let index = approveM[sender.tag]
-        getGrant(index["ID"] as? String ?? "", "granted")
+        if let id = index["ID"] as? String {
+            getGrant([id], "granted")
+        }
         approveM.remove(at: sender.tag)
         Leavetableview.reloadData()
-       
     }
+
     
     @objc
     func LeaverejectOnClick(_ sender: UIButton ) {
         print(sender.tag)
         let index = approveM[sender.tag]
-        getGrant(index["ID"] as? String ?? "", "declined")
+    //    getGrant(index["ID"] as? String ?? "", "declined")
+        if let id = index["ID"] as? String {
+            getGrant([id], "declined")
+        }
         approveM.remove(at: sender.tag)
         Leavetableview.reloadData()
       
@@ -345,136 +340,146 @@ class ApprovalLitNewVc: UIViewController {
         }
     }
     
-    private func showConfirmationPopup(action: String, bookingIds: [String], indexPath: IndexPath) {
-        let alertController = UIAlertController(title: "Confirmation", message: "Are you sure you want to \(action) this booking?", preferredStyle: .alert)
-        
-        let confirmAction = UIAlertAction(title: "Yes, Confirm", style: .default) { _ in
-            if action == "approve" {
-                self.approveBooking(bookingIds: bookingIds, status: "1")
-            } else if action == "reject" {
-                self.rejectBooking(bookingIds: bookingIds, status: "2")
-            }
-            self.Datalist.remove(at: indexPath.row)
-            self.BookingTableview.reloadData()
+    func updateApproveAllButtonTitle1() {
+        if selectedBookingRows.count == Datalist.count {
+            bookingallapprovebtn.setTitle("Approve All", for: .normal)
+            bookingallrejectbtn.setTitle("Reject All", for: .normal)
+        } else {
+            bookingallapprovebtn.setTitle("Approve Selected", for: .normal)
+            bookingallrejectbtn.setTitle("Reject Selected", for: .normal)
         }
-        
-        let cancelAction = UIAlertAction(title: "No, Cancel", style: .cancel, handler: nil)
-        
-        alertController.addAction(confirmAction)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
     }
     
-    func approveBooking(bookingIds: [String], status: String) {
+    func approveBooking(_ bookingIds: [String], _ status: String) {
         var dict = Dictionary<String, Any>()
-           dict["kathaid"] = bookingIds
-           dict["empcode"] = currentUser.EmpCode
-           dict["status"] = "1"
+        dict["katha_id"] = bookingIds.map { String($0) }
+        dict["EmpCode"] = currentUser.EmpCode
+        dict["status"] = status
 
-           DispatchQueue.main.async(execute: {Loader.showLoader()})
-           APIManager.apiCall(postData: dict as NSDictionary, url: hodBApprovalApi) { result, response, error, data in
-               DispatchQueue.main.async(execute: {Loader.hideLoader()})
-               if let _ = data, (response?["status"] as? Bool == true), response != nil {
-                   AlertController.alert(message: (response?.validatedValue("message"))!)
-                   DispatchQueue.main.async {
-                       // Remove processed bookings from Datalist
-                       self.Datalist = self.Datalist.filter { !bookingIds.contains($0["Katha_id"] as? String ?? "") }
-                       self.selectedBookingRows.removeAll()
-                       self.BookingTableview.reloadData()
-                   }
-               } else {
-                   print(response?["error"] as Any)
-               }
-           }
+        DispatchQueue.main.async(execute: { Loader.showLoader() })
+        APIManager.apiCall(postData: dict as NSDictionary, url: hodBApprovalApi) { result, response, error, data in
+            DispatchQueue.main.async(execute: { Loader.hideLoader() })
+            if let _ = data, (response?["status"] as? Bool == true), response != nil {
+                AlertController.alert(message: (response?.validatedValue("message"))!)
+                DispatchQueue.main.async {
+                    self.BookingTableview.reloadData()
+                }
+            } else {
+                print(response?["error"] as Any)
+            }
         }
-    func rejectBooking(bookingIds: [String], status: String) {
-        var dict = Dictionary<String, Any>()
-          dict["kathaid"] = bookingIds
-          dict["empcode"] = currentUser.EmpCode
-          dict["status"] = "2"
+    }
 
-          DispatchQueue.main.async(execute: {Loader.showLoader()})
-          APIManager.apiCall(postData: dict as NSDictionary, url: hodBApprovalApi) { result, response, error, data in
-              DispatchQueue.main.async(execute: {Loader.hideLoader()})
-              if let _ = data, (response?["status"] as? Bool == true), response != nil {
-                  AlertController.alert(message: (response?.validatedValue("message"))!)
-                  DispatchQueue.main.async {
-                      // Remove processed bookings from Datalist
-                      self.Datalist = self.Datalist.filter { !bookingIds.contains($0["Katha_id"] as? String ?? "") }
-                      self.selectedBookingRows.removeAll()
-                      self.BookingTableview.reloadData()
-                  }
-              } else {
-                  print(response?["error"] as Any)
-              }
-          }
-       }
     @objc
     func BookingAcceptonClick(_ sender: UIButton) {
-        let indexPath = IndexPath(row: sender.tag, section: 0)
-        let bookingId = Datalist[indexPath.row]["Katha_id"] as? String ?? ""
-        BookingTableview.reloadData()
-        showConfirmationPopup(action: "approve", bookingIds: [bookingId], indexPath: indexPath)
+        let index = Datalist[sender.tag]
+        if let id = index["Katha_id"] as? String {
+            approveBooking([id],  "1")
+        }
+        Datalist.remove(at: sender.tag)
         BookingTableview.reloadData()
     }
 
     
     @objc
     func BookingrejectonClick(_ sender: UIButton ) {
-        let index = sender.tag
-        let bookingId = Datalist[index]["Katha_id"] as? String ?? ""
-        BookingTableview.reloadData()
-        showConfirmationPopup(action: "reject", bookingIds: [bookingId], indexPath: IndexPath(row: index, section: 0))
+        let index = Datalist[sender.tag]
+        if let id = index["Katha_id"] as? String {
+            approveBooking([id],  "2")
+        }
+        Datalist.remove(at: sender.tag)
         BookingTableview.reloadData()
     }
     
     @objc
     func TouracceptonClick(_ sender: UIButton ) {
-        print(sender.tag)
-        let index = datalist[sender.tag]
-        getGrant(index["ID"] as? String ?? "", "granted")
-        datalist.remove(at: sender.tag)
-        TourTableview.reloadData()
+//        print(sender.tag)
+//        let index = datalist[sender.tag]
+//        getGrant([index["ID"] as? String ?? ""], "granted" )
+//        datalist.remove(at: sender.tag)
+//        TourTableview.reloadData()
        
     }
     
     @objc
     func TourRejectonClick(_ sender: UIButton ) {
-        print(sender.tag)
-        let index = datalist[sender.tag]
-        getGrant(index["ID"] as? String ?? "", "declined")
-        datalist.remove(at: sender.tag)
-        TourTableview.reloadData()
+//        print(sender.tag)
+//        let index = datalist[sender.tag]
+//        getGrant([index["ID"] as? String ?? ""], "declined")
+//        datalist.remove(at: sender.tag)
+//        TourTableview.reloadData()
       
     }
     
 
     @IBAction func AllApproveBtn(_ sender: UIButton) {
-        
+     
+        var ids: [String] = []
+
         for index in selectedRows {
-               let data = approveM[index]
-               getGrant(data["ID"] as? String ?? "", "granted")
-           }
+            if let id = approveM[index]["ID"] as? String {
+                ids.append(id)
+            }
+        }
+        if !ids.isEmpty {
+            getGrant(ids, "granted")
+        }
         
-           // Remove the selected rows from the table
-           approveM = approveM.enumerated().filter { !selectedRows.contains($0.offset) }.map { $0.element }
-           selectedRows.removeAll()
-           Leavetableview.reloadData()
+        approveM = approveM.enumerated().filter { !selectedRows.contains($0.offset) }.map { $0.element }
+        selectedRows.removeAll()
+        Leavetableview.reloadData() 
     }
     
     @IBAction func AllRejectBtn(_ sender: UIButton) {
-        let selectedIDs = selectedRows.map { approveM[$0]["ID"] as? String ?? "" }
-            
-            // Perform rejection for all selected items
-            for id in selectedIDs {
-                getGrant(id, "declined")
+
+        var ids: [String] = []
+
+        for index in selectedRows {
+            if let id = approveM[index]["ID"] as? String {
+                ids.append(id)
             }
-            
-            // Remove the selected rows from the table
-            approveM = approveM.filter { !selectedIDs.contains($0["ID"] as? String ?? "") }
-            selectedRows.removeAll()
+        }
+        if !ids.isEmpty {
+            getGrant(ids, "declined")
+        }
+        approveM = approveM.enumerated().filter { !selectedRows.contains($0.offset) }.map { $0.element }
+        selectedRows.removeAll()
         Leavetableview.reloadData()
+    }
+    
+    @IBAction func bookingallselet(_ sender: UIButton) {
+        var ids: [String] = []
+
+        for index in selectedBookingRows {
+            if let id = Datalist[index]["Katha_id"] as? String {
+                ids.append(id)
+            }
+        }
+        if !ids.isEmpty {
+            approveBooking(ids, "1")
+        }
+        
+        Datalist = Datalist.enumerated().filter { !selectedBookingRows.contains($0.offset) }.map { $0.element }
+        selectedBookingRows.removeAll()
+        BookingTableview.reloadData()
+    }
+    
+    
+    @IBAction func bookingallreject(_ sender: UIButton) {
+        var ids: [String] = []
+
+        for index in selectedBookingRows {
+            if let id = Datalist[index]["Katha_id"] as? String {
+                ids.append(id)
+            }
+        }
+        if !ids.isEmpty {
+            approveBooking(ids, "2")
+        }
+        
+        Datalist = Datalist.enumerated().filter { !selectedBookingRows.contains($0.offset) }.map { $0.element }
+        selectedBookingRows.removeAll()
+        BookingTableview.reloadData()
     }
     
     func bookingdetailapi() {
@@ -500,7 +505,7 @@ class ApprovalLitNewVc: UIViewController {
         }
     }
     
-    func HODdetail(){
+    func HODdetail() {
         var dict = Dictionary<String,Any>()
         dict["EmpCode"] = currentUser.EmpCode
         APIManager.apiCall(postData: dict as NSDictionary, url: HODdetails) { result, response, error, data in
@@ -586,9 +591,9 @@ extension ApprovalLitNewVc: UITableViewDelegate,UITableViewDataSource {
              cell.TimeLbl.text = KathaTime
             let Venue = Datalist[indexPath.row]["Venue"] as? String ?? ""
              cell.Locationlbl.text = Venue
-            let fromdate = Datalist[indexPath.row]["Katha_date"] as? String ?? ""
+            let fromdate = Datalist[indexPath.row]["Katha_from_Date"] as? String ?? ""
              cell.fromdate.text = fromdate
-            let todate = Datalist[indexPath.row]["Katha_from_Date"] as? String ?? ""
+            let todate = Datalist[indexPath.row]["Katha_date"] as? String ?? ""
              cell.todate.text = todate
             let Name = Datalist[indexPath.row]["Name"] as? String ?? ""
             let kathid = Datalist[indexPath.row]["Katha_id"] as? String ?? ""
@@ -607,7 +612,7 @@ extension ApprovalLitNewVc: UITableViewDelegate,UITableViewDataSource {
             cell.rejectbtn.tag = indexPath.row
             cell.rejectbtn.addTarget(self, action: #selector(BookingrejectonClick(_:)), for: .touchUpInside)
             cell.selectionStyle = .none
-      //      updateApproveAllButtonTitle()
+            updateApproveAllButtonTitle1()
             return cell
             
         } else if tableView == TourTableview {
@@ -628,7 +633,7 @@ extension ApprovalLitNewVc: UITableViewDelegate,UITableViewDataSource {
             if let requestAmount = datalist[indexPath.row]["Approval_Amount"] as? String {
                 cell.AppAmnt.text =  requestAmount + ".00"
             } else {
-                cell.AppAmnt.text = "₹ 0" // or handle the case where the amount is not found
+                cell.AppAmnt.text = "₹ 0"
             }
             
             let empcode = datalist[indexPath.row]["EmpCode"] as? String ?? ""
