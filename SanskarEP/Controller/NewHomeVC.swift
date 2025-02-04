@@ -319,8 +319,8 @@ class NewHomeVC: UIViewController  {
 
     
     @IBAction func SearchBarBtn(_ sender: UIButton) {
- //      let vc = self.storyboard?.instantiateViewController(withIdentifier: "PieChartVC") as! PieChartVC
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
+       let vc = self.storyboard?.instantiateViewController(withIdentifier: "HODAllDetailVC") as! HODAllDetailVC
+//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
         if #available(iOS 15.0, *) {
         if let sheet = vc.sheetPresentationController {
         var customDetent: UISheetPresentationController.Detent?
@@ -594,7 +594,7 @@ class NewHomeVC: UIViewController  {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         let reqDate = dateFormatter.string(from: currentDate)
-        dict["req_date"] = "2025-01-29"
+        dict["req_date"] = reqDate
         DispatchQueue.main.async {
             Loader.showLoader()
         }

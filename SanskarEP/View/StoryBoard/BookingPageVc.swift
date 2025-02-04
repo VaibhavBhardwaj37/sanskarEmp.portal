@@ -76,6 +76,9 @@ class BookingPageVc: UIViewController {
     @IBOutlet weak var metaremarks: UITextView!
     @IBOutlet weak var metasubmitbtn: UIButton!
     @IBOutlet weak var mtacancel: UIButton!
+    @IBOutlet weak var filterbtn: UIButton!
+    @IBOutlet weak var searchview: UIView!
+    @IBOutlet weak var searchbar: UISearchBar!
     
     
     var datalist  = [[String:Any]]()
@@ -167,6 +170,7 @@ class BookingPageVc: UIViewController {
         } else {
             searchbtn.isHidden = false
         }
+        searchbtn.isHidden = true
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         filterCollView.collectionViewLayout = layout
@@ -179,6 +183,8 @@ class BookingPageVc: UIViewController {
         metaremarks.layer.borderWidth = 1.0
         metaremarks.layer.borderColor = UIColor.lightGray.cgColor
         metaremarks.textColor = UIColor.lightGray
+        
+        searchview.isHidden = true
     }
     
     func removeData() {
@@ -223,8 +229,8 @@ class BookingPageVc: UIViewController {
         Endtime.layer.borderWidth = 0.5
         Endtime.layer.borderColor = UIColor.lightGray.cgColor
         remarkstxt.layer.cornerRadius = 10
-        remarkstxt.layer.borderWidth = 0.5
-        remarkstxt.layer.borderColor = UIColor.lightGray.cgColor
+        remarkstxt.layer.borderWidth = 1.0
+        remarkstxt.layer.borderColor = UIColor.black.cgColor
         editfromdate.layer.cornerRadius = 10
         editfromdate.layer.borderWidth = 0.5
         editfromdate.layer.borderColor = UIColor.lightGray.cgColor
@@ -281,14 +287,28 @@ class BookingPageVc: UIViewController {
         } else {
         }
     }
+    
+    @IBAction func filterbtnaction(_ sender: UIButton) {
+        self.searchview.isHidden = !self.searchview.isHidden
+    }
+    
+    
+    @IBAction func searchhidebtn(_ sender: UIButton) {
+        searchbar.isHidden = true
+    }
+    
     @IBAction func switchToggled(_ sender: UISwitch) {
         if sender.isOn {
             allselectbtn.isHidden = false
             FilterListApi()
+            searchbtn.isHidden = false
+            filterbtn.isHidden = true
         } else {
             allselectbtn.isHidden = true
             selectedBookingRows.removeAll()
             boookingApi()
+            searchbtn.isHidden = true
+            filterbtn.isHidden = false
         }
         self.tableview.reloadData()
     }
@@ -1318,6 +1338,7 @@ extension BookingPageVc: UITableViewDataSource , UITableViewDelegate {
         }
     }
 }
+
 extension BookingPageVc: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filterData.count

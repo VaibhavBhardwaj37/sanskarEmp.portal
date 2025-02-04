@@ -38,7 +38,8 @@ class ApprovalLitNewVc: UIViewController {
     @IBOutlet weak var bookingdeselectview: UIView!
     @IBOutlet weak var bookingallapprovebtn: UIButton!
     @IBOutlet weak var bookingallrejectbtn: UIButton!
-    
+    @IBOutlet weak var bookingall: UIButton!
+    @IBOutlet weak var tourtablens: NSLayoutConstraint!
     
     
     var Datalist = [[String:Any]]()
@@ -177,44 +178,42 @@ class ApprovalLitNewVc: UIViewController {
         Bookingdetailview.isHidden = true
         self.TourTableview.reloadData()
  //       Deselectview.isHidden = true
-        Allselectview.isHidden = false
-        
-        if Allselectview.isHidden {
-            let safeAreaInsetsTop = view.safeAreaInsets.top
-            self.openselectview.constant = safeAreaInsetsTop + 10
-        } else {
-            self.openselectview.constant = 10
-        }
+        Allselectview.isHidden = true
+        bookingallselective.isHidden = true
+        tourtablens.constant = -60
+//        if Allselectview.isHidden {
+//            let safeAreaInsetsTop = view.safeAreaInsets.top
+//            self.openselectview.constant = safeAreaInsetsTop + 10
+//        } else {
+//            self.openselectview.constant = 10
+//        }
     }
     
    
     @IBAction func leaveallselect(_ sender: UIButton) {
-     //   Deselectview.isHidden = false
-        Deselectview.isHidden = !Deselectview.isHidden
         if selectedRows.count == approveM.count {
-            selectedRows.removeAll()
-            // Deselect all rows
-           sender.setTitle("Select All", for: .normal)
-               } else {
-                   selectedRows = Set(0..<approveM.count)
-                   // Change title to "Deselect All"
-                   sender.setTitle("Deselect All", for: .normal)
-               }
-               Leavetableview.reloadData()
+               selectedRows.removeAll()
+               sender.setTitle("Select", for: .normal)
+               Deselectview.isHidden = true
+           } else {
+               selectedRows = Set(0..<approveM.count)
+               sender.setTitle("Deselect", for: .normal)
+               Deselectview.isHidden = false
+           }
+           Leavetableview.reloadData()
     }
     
     
     @IBAction func bookingallselectbtn(_ sender: UIButton) {
-        bookingdeselectview.isHidden = !bookingdeselectview.isHidden
         
         if selectedBookingRows.count == Datalist.count {
             selectedBookingRows.removeAll()
-            // Deselect all rows
-           sender.setTitle("Select All", for: .normal)
+           sender.setTitle("Select", for: .normal)
+            bookingdeselectview.isHidden = true
                } else {
                    selectedBookingRows = Set(0..<Datalist.count)
-                   // Change title to "Deselect All"
-                   sender.setTitle("Deselect All", for: .normal)
+                   sender.setTitle("Deselect", for: .normal)
+                   bookingdeselectview.isHidden = false
                }
                BookingTableview.reloadData()
            
@@ -253,34 +252,81 @@ class ApprovalLitNewVc: UIViewController {
 
     
     @objc func checkboxTapped(_ sender: UIButton) {
-           let rowIndex = sender.tag
-           if selectedRows.contains(rowIndex) {
-               selectedRows.remove(rowIndex)
-           } else {
-               selectedRows.insert(rowIndex)
-           }
-           Leavetableview.reloadData()
-       }
+        let rowIndex = sender.tag
+        if selectedRows.contains(rowIndex) {
+            selectedRows.remove(rowIndex)
+        } else {
+            selectedRows.insert(rowIndex)
+        }
+
+        // If all rows are selected, update button title
+        if selectedRows.count == approveM.count {
+            selectbtn.setTitle("Deselect", for: .normal)
+            Deselectview.isHidden = false
+        } else {
+            selectbtn.setTitle("Select", for: .normal)
+        }
+        
+        Leavetableview.reloadData()
+    }
+
     
     @objc func CheckboxTapped(_ sender: UIButton) {
-           let rowIndex = sender.tag
-           if selectedBookingRows.contains(rowIndex) {
-               selectedBookingRows.remove(rowIndex)
-           } else {
-               selectedBookingRows.insert(rowIndex)
-           }
-           BookingTableview.reloadData()
+//           let rowIndex = sender.tag
+//           if selectedBookingRows.contains(rowIndex) {
+//               selectedBookingRows.remove(rowIndex)
+//           } else {
+//               selectedBookingRows.insert(rowIndex)
+//           }
+//           BookingTableview.reloadData()
+        let rowIndex = sender.tag
+        if selectedBookingRows.contains(rowIndex) {
+            selectedBookingRows.remove(rowIndex)
+        } else {
+            selectedBookingRows.insert(rowIndex)
+        }
+
+        // If all rows are selected, update button title
+        if selectedBookingRows.count == Datalist.count {
+            bookingall.setTitle("Deselect", for: .normal)
+            bookingdeselectview.isHidden = false
+        } else {
+            bookingall.setTitle("Select", for: .normal)
+        }
+        
+        BookingTableview.reloadData()
        }
     
     @objc func Checkboxtapped(_ sender: UIButton) {
-           let rowIndex = sender.tag
-           if selectedTourRows.contains(rowIndex) {
-               selectedTourRows.remove(rowIndex)
-           } else {
-               selectedTourRows.insert(rowIndex)
-           }
-           TourTableview.reloadData()
-       }
+        let index = sender.tag
+
+        let sno = datalist[index]["Sno"] as? Int ?? 0
+        let requestAmount = datalist[index]["Amount"] as? String ?? ""
+        let empcode = datalist[index]["EmpCode"] as? String ?? ""
+        let tour = datalist[index]["TourID"] as? String ?? ""
+        let date = datalist[index]["Date1"] as? String ?? ""
+        let date1 = datalist[index]["Date2"] as? String ?? ""
+        let location = datalist[index]["Location"] as? String ?? ""
+        let approvedAmount = datalist[index]["Approval_Amount"] as? String ?? ""
+        let status = datalist[index]["Status"] as? String ?? ""
+        let empname = datalist[index]["Name"] as? String ?? ""
+
+        let vc = storyboard?.instantiateViewController(withIdentifier: "HODAllDetail2VC") as! HODAllDetail2VC
+
+        vc.heamt = requestAmount
+        vc.hemco = empcode
+        vc.hemn  = empname
+        vc.htour = tour
+        vc.location = location
+        vc.hdat1 = date
+        vc.hdat2 = date1
+        vc.hsno = String(sno)
+        vc.haamt = approvedAmount
+        vc.hst = status
+
+        self.present(vc, animated: true, completion: nil)
+    }
+
     
     func getGrant(_ id: [String], _ reply: String) {
         var dict = Dictionary<String,Any>()
@@ -335,8 +381,8 @@ class ApprovalLitNewVc: UIViewController {
             AllApprovebtn.setTitle("Approve All", for: .normal)
             RejectAllbtn.setTitle("Reject All", for: .normal)
         } else {
-            AllApprovebtn.setTitle("Approve Selected", for: .normal)
-            RejectAllbtn.setTitle("Reject Selected", for: .normal)
+            AllApprovebtn.setTitle("Approve", for: .normal)
+            RejectAllbtn.setTitle("Reject", for: .normal)
         }
     }
     
@@ -345,8 +391,8 @@ class ApprovalLitNewVc: UIViewController {
             bookingallapprovebtn.setTitle("Approve All", for: .normal)
             bookingallrejectbtn.setTitle("Reject All", for: .normal)
         } else {
-            bookingallapprovebtn.setTitle("Approve Selected", for: .normal)
-            bookingallrejectbtn.setTitle("Reject Selected", for: .normal)
+            bookingallapprovebtn.setTitle("Approve", for: .normal)
+            bookingallrejectbtn.setTitle("Reject", for: .normal)
         }
     }
     
@@ -646,21 +692,17 @@ extension ApprovalLitNewVc: UITableViewDelegate,UITableViewDataSource {
             cell.ToDate.text = date1
            let  Tour = datalist[indexPath.row]["Location"] as? String ?? ""
               cell.Location.text = Tour
+           let sno = datalist[indexPath.row]["Sno"] as?  Int ?? 0
+            let ApprovedAmount = datalist[indexPath.row]["Approval_Amount"] as? String ?? ""
             
-            
-            if selectedTourRows.contains(indexPath.row) {
-                  cell.Checkbutn.setImage(UIImage(named: "check-mark 1"), for: .normal)
-              } else {
-                  cell.Checkbutn.setImage(UIImage(named: ""), for: .normal)
-              }
+//            if selectedTourRows.contains(indexPath.row) {
+//                  cell.Checkbutn.setImage(UIImage(named: "check-mark 1"), for: .normal)
+//              } else {
+//                  cell.Checkbutn.setImage(UIImage(named: ""), for: .normal)
+//              }
             cell.Checkbutn.tag = indexPath.row
             cell.Checkbutn.addTarget(self, action: #selector(Checkboxtapped(_:)), for: .touchUpInside)
-            cell.Approvebtn.tag = indexPath.row
-            cell.Approvebtn.addTarget(self, action: #selector(TouracceptonClick(_:)), for: .touchUpInside)
-            cell.Approvebtn.tag = indexPath.row
-            cell.Rejectbtn.addTarget(self, action: #selector(TourRejectonClick(_:)), for: .touchUpInside)
-         
-            cell.selectionStyle = .none
+        
         //    updateApproveAllButtonTitle()
             return cell
         }
@@ -688,13 +730,13 @@ extension ApprovalLitNewVc: UITableViewDelegate,UITableViewDataSource {
             BookingTableview.reloadRows(at: [indexPath], with: .none)
             
         } else if tableView == TourTableview {
-            if selectedTourRows.contains(indexPath.row) {
-                selectedTourRows.remove(indexPath.row)
-            } else {
-                selectedTourRows.insert(indexPath.row)
-            }
-            
-            TourTableview.reloadRows(at: [indexPath], with: .none)
+//            if selectedTourRows.contains(indexPath.row) {
+//                selectedTourRows.remove(indexPath.row)
+//            } else {
+//                selectedTourRows.insert(indexPath.row)
+//            }
+//            
+//            TourTableview.reloadRows(at: [indexPath], with: .none)
         }
     }
  

@@ -18,8 +18,6 @@ class NewApprovalTourCell: UITableViewCell {
     @IBOutlet weak var ToDate: UILabel!
     @IBOutlet weak var ReqAmnt: UILabel!
     @IBOutlet weak var AppAmnt: UILabel!
-    @IBOutlet weak var Approvebtn: UIButton!
-    @IBOutlet weak var Rejectbtn: UIButton!
     @IBOutlet weak var Checkbutn: UIButton!
     @IBOutlet weak var Tourview: UIView!
     @IBOutlet weak var Empview: UIView!
@@ -37,10 +35,7 @@ class NewApprovalTourCell: UITableViewCell {
         Dateview.layer.cornerRadius = 6
         reqview.layer.cornerRadius = 6
         appview.layer.cornerRadius = 6
-        Approvebtn.layer.cornerRadius = 6
-        Rejectbtn.layer.cornerRadius = 6
-        
-        Approvebtn.clipsToBounds = true
+      
        
     }
 

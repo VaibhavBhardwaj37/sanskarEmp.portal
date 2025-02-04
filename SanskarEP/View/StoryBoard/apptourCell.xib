@@ -55,10 +55,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dep" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Goc-Z6-F66">
-                                <rect key="frame" x="150" y="39" width="150" height="21"/>
+                                <rect key="frame" x="150" y="39" width="30.333333333333343" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="W7R-cN-Y0c"/>
-                                    <constraint firstAttribute="width" constant="150" id="ZE3-5n-GeJ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                 <nil key="textColor"/>
@@ -102,10 +101,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Te-eG-SC5">
-                                <rect key="frame" x="305" y="39" width="163" height="21"/>
+                                <rect key="frame" x="185.33333333333334" y="39" width="67" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="cCh-Vd-EOM"/>
-                                    <constraint firstAttribute="width" constant="163" id="tfs-Yw-iRi"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                 <nil key="textColor"/>

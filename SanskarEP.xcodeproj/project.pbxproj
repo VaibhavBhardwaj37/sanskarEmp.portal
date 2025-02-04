@@ -119,8 +119,6 @@
 		C7BA6A5E2A8756580074F9B6 /* CustomDialogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BA6A5C2A8756580074F9B6 /* CustomDialogVC.swift */; };
 		C7BA6A5F2A8756580074F9B6 /* CustomDialogVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7BA6A5D2A8756580074F9B6 /* CustomDialogVC.xib */; };
 		C7C7403E2C7C771400EE27C1 /* inventoryhome.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C7403D2C7C771400EE27C1 /* inventoryhome.swift */; };
-		C7C740642C7C7FD800EE27C1 /* submitchallanvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C740632C7C7FD800EE27C1 /* submitchallanvc.swift */; };
-		C7C740812C7C819800EE27C1 /* misscealaneousmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C7407E2C7C819700EE27C1 /* misscealaneousmodel.swift */; };
 		C7CDB89229EA89120094848C /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7CDB89129EA89120094848C /* Storyboard.storyboard */; };
 		C7DB78512A61228000B61339 /* tpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DB78502A61228000B61339 /* tpViewController.swift */; };
 		C7DB78532A6183E200B61339 /* TourBillApprovalVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DB78522A6183E200B61339 /* TourBillApprovalVc.swift */; };
@@ -135,6 +133,25 @@
 		D50C2D732BB2EE4C00C5C25E /* SaveListVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50C2D722BB2EE4C00C5C25E /* SaveListVc.swift */; };
 		D51597BF2B91A10F00BFB4F4 /* AllStatusVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51597BE2B91A10F00BFB4F4 /* AllStatusVc.swift */; };
 		D51631152B6927C4002EDC7D /* NewPasswordVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51631142B6927C4002EDC7D /* NewPasswordVc.swift */; };
+		D5217AA42D4DE3BB007453B9 /* createchallanvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5217AA32D4DE3BB007453B9 /* createchallanvc.swift */; };
+		D5217AA62D4DE400007453B9 /* Returnchallanvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5217AA52D4DE400007453B9 /* Returnchallanvc.swift */; };
+		D5217AAA2D4DE420007453B9 /* Savedchallanvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5217AA92D4DE420007453B9 /* Savedchallanvc.swift */; };
+		D5217AAC2D4DE440007453B9 /* openpdfvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5217AAB2D4DE440007453B9 /* openpdfvc.swift */; };
+		D5217AAE2D4DE45B007453B9 /* submittedmdeldata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5217AAD2D4DE45B007453B9 /* submittedmdeldata.swift */; };
+		D5217AB02D4DE46B007453B9 /* Additemvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5217AAF2D4DE46B007453B9 /* Additemvc.swift */; };
+		D5217AB22D4DE47C007453B9 /* Addinventordetailvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5217AB12D4DE47C007453B9 /* Addinventordetailvc.swift */; };
+		D5217AB42D4DE49C007453B9 /* requestdatamodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5217AB32D4DE49C007453B9 /* requestdatamodel.swift */; };
+		D5217AB62D4DE4A8007453B9 /* dropdownfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5217AB52D4DE4A8007453B9 /* dropdownfile.swift */; };
+		D5217AB82D4DE4BA007453B9 /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5217AB72D4DE4BA007453B9 /* QRCodeScannerViewController.swift */; };
+		D5217ABA2D4DE4CD007453B9 /* Requestvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5217AB92D4DE4CD007453B9 /* Requestvc.swift */; };
+		D5217ABF2D4DE5AE007453B9 /* datatablecell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5217ABC2D4DE5AE007453B9 /* datatablecell.xib */; };
+		D5217AC02D4DE5AE007453B9 /* datatablecell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5217ABD2D4DE5AE007453B9 /* datatablecell.swift */; };
+		D5217AC12D4DE5AE007453B9 /* submitchallanvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5217ABE2D4DE5AE007453B9 /* submitchallanvc.swift */; };
+		D5217AC62D4DE69C007453B9 /* misscealaneouscell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5217AC32D4DE69C007453B9 /* misscealaneouscell.xib */; };
+		D5217AC72D4DE69C007453B9 /* misscealaneousmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5217AC42D4DE69C007453B9 /* misscealaneousmodel.swift */; };
+		D5217AC82D4DE69C007453B9 /* misscealaneouscell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5217AC52D4DE69C007453B9 /* misscealaneouscell.swift */; };
+		D5217ACA2D4DE95B007453B9 /* Inventoryitemcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5217AC92D4DE95B007453B9 /* Inventoryitemcell.xib */; };
+		D5217ACC2D4DE97E007453B9 /* Inventoryitemcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5217ACB2D4DE97E007453B9 /* Inventoryitemcell.swift */; };
 		D52477552AA1F2F800214D2F /* bdayviewcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52477532AA1F2F800214D2F /* bdayviewcell.swift */; };
 		D52477562AA1F2F800214D2F /* bdayviewcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D52477542AA1F2F800214D2F /* bdayviewcell.xib */; };
 		D52477592AA208B800214D2F /* bdayreplycell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52477572AA208B800214D2F /* bdayreplycell.swift */; };
@@ -157,17 +174,6 @@
 		D5587EAB2AB9B3BF00E03A68 /* TourfullDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5587EA92AB9B3BF00E03A68 /* TourfullDetailsCell.swift */; };
 		D5587EAC2AB9B3BF00E03A68 /* TourfullDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5587EAA2AB9B3BF00E03A68 /* TourfullDetailsCell.xib */; };
 		D5587EAE2AB9BC4600E03A68 /* TourAllDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5587EAD2AB9BC4600E03A68 /* TourAllDetailsVC.swift */; };
-		D55B05D92D0D6B0900406455 /* createchallanvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05D82D0D6B0900406455 /* createchallanvc.swift */; };
-		D55B05DB2D0D6B1500406455 /* Returnchallanvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05DA2D0D6B1500406455 /* Returnchallanvc.swift */; };
-		D55B05DD2D0D6B2100406455 /* Requestvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05DC2D0D6B2100406455 /* Requestvc.swift */; };
-		D55B05DF2D0D6B2B00406455 /* Savedchallanvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05DE2D0D6B2B00406455 /* Savedchallanvc.swift */; };
-		D55B05E12D0D6B3600406455 /* openpdfvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05E02D0D6B3600406455 /* openpdfvc.swift */; };
-		D55B05E32D0D6B4100406455 /* Additemvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05E22D0D6B4100406455 /* Additemvc.swift */; };
-		D55B05E52D0D6B5000406455 /* requestdatamodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05E42D0D6B5000406455 /* requestdatamodel.swift */; };
-		D55B05E72D0D6B5C00406455 /* dropdownfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05E62D0D6B5C00406455 /* dropdownfile.swift */; };
-		D55B05E92D0D6B6600406455 /* Addinventordetailvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05E82D0D6B6600406455 /* Addinventordetailvc.swift */; };
-		D55B05EB2D0D6B8000406455 /* submittedmdeldata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05EA2D0D6B8000406455 /* submittedmdeldata.swift */; };
-		D55B05ED2D0D6B8900406455 /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B05EC2D0D6B8900406455 /* QRCodeScannerViewController.swift */; };
 		D55D44822AE3FFC3007D4248 /* HodDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D44802AE3FFC3007D4248 /* HodDetailCell.swift */; };
 		D55D44832AE3FFC3007D4248 /* HodDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D55D44812AE3FFC3007D4248 /* HodDetailCell.xib */; };
 		D55D44852AE40A80007D4248 /* HODAllDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D44842AE40A80007D4248 /* HODAllDetailVC.swift */; };
@@ -252,7 +258,6 @@
 		D5E5A34B2B85DA910051D025 /* LeaveFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E5A34A2B85DA910051D025 /* LeaveFilterVC.swift */; };
 		D5E608F02CDCF57900978854 /* apptourCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E608EE2CDCF57900978854 /* apptourCell.swift */; };
 		D5E608F12CDCF57900978854 /* apptourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5E608EF2CDCF57900978854 /* apptourCell.xib */; };
-		D5E73E012D2E46ED00A441DD /* Submitchallanpages in Resources */ = {isa = PBXBuildFile; fileRef = D5E73E002D2E46ED00A441DD /* Submitchallanpages */; };
 		D5E73E042D2E69B400A441DD /* GetLeaveRequestList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E73E032D2E69B400A441DD /* GetLeaveRequestList.swift */; };
 		D5E73E062D2E97E700A441DD /* NewLeaveCancel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E73E052D2E97E700A441DD /* NewLeaveCancel.swift */; };
 		D5E744CE2C7EF3E500C1F542 /* SavedDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E744CC2C7EF3E500C1F542 /* SavedDataCell.swift */; };
@@ -434,8 +439,6 @@
 		C7BA6A5C2A8756580074F9B6 /* CustomDialogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialogVC.swift; sourceTree = "<group>"; };
 		C7BA6A5D2A8756580074F9B6 /* CustomDialogVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomDialogVC.xib; sourceTree = "<group>"; };
 		C7C7403D2C7C771400EE27C1 /* inventoryhome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = inventoryhome.swift; sourceTree = "<group>"; };
-		C7C740632C7C7FD800EE27C1 /* submitchallanvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = submitchallanvc.swift; sourceTree = "<group>"; };
-		C7C7407E2C7C819700EE27C1 /* misscealaneousmodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = misscealaneousmodel.swift; sourceTree = "<group>"; };
 		C7CDB89129EA89120094848C /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		C7DB78502A61228000B61339 /* tpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tpViewController.swift; sourceTree = "<group>"; };
 		C7DB78522A6183E200B61339 /* TourBillApprovalVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourBillApprovalVc.swift; sourceTree = "<group>"; };
@@ -449,6 +452,25 @@
 		D50C2D722BB2EE4C00C5C25E /* SaveListVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveListVc.swift; sourceTree = "<group>"; };
 		D51597BE2B91A10F00BFB4F4 /* AllStatusVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStatusVc.swift; sourceTree = "<group>"; };
 		D51631142B6927C4002EDC7D /* NewPasswordVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordVc.swift; sourceTree = "<group>"; };
+		D5217AA32D4DE3BB007453B9 /* createchallanvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = createchallanvc.swift; sourceTree = "<group>"; };
+		D5217AA52D4DE400007453B9 /* Returnchallanvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Returnchallanvc.swift; sourceTree = "<group>"; };
+		D5217AA92D4DE420007453B9 /* Savedchallanvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Savedchallanvc.swift; sourceTree = "<group>"; };
+		D5217AAB2D4DE440007453B9 /* openpdfvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = openpdfvc.swift; sourceTree = "<group>"; };
+		D5217AAD2D4DE45B007453B9 /* submittedmdeldata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = submittedmdeldata.swift; sourceTree = "<group>"; };
+		D5217AAF2D4DE46B007453B9 /* Additemvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Additemvc.swift; sourceTree = "<group>"; };
+		D5217AB12D4DE47C007453B9 /* Addinventordetailvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Addinventordetailvc.swift; sourceTree = "<group>"; };
+		D5217AB32D4DE49C007453B9 /* requestdatamodel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = requestdatamodel.swift; sourceTree = "<group>"; };
+		D5217AB52D4DE4A8007453B9 /* dropdownfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dropdownfile.swift; sourceTree = "<group>"; };
+		D5217AB72D4DE4BA007453B9 /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
+		D5217AB92D4DE4CD007453B9 /* Requestvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Requestvc.swift; sourceTree = "<group>"; };
+		D5217ABC2D4DE5AE007453B9 /* datatablecell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = datatablecell.xib; sourceTree = "<group>"; };
+		D5217ABD2D4DE5AE007453B9 /* datatablecell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = datatablecell.swift; sourceTree = "<group>"; };
+		D5217ABE2D4DE5AE007453B9 /* submitchallanvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = submitchallanvc.swift; sourceTree = "<group>"; };
+		D5217AC32D4DE69C007453B9 /* misscealaneouscell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = misscealaneouscell.xib; sourceTree = "<group>"; };
+		D5217AC42D4DE69C007453B9 /* misscealaneousmodel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = misscealaneousmodel.swift; sourceTree = "<group>"; };
+		D5217AC52D4DE69C007453B9 /* misscealaneouscell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = misscealaneouscell.swift; sourceTree = "<group>"; };
+		D5217AC92D4DE95B007453B9 /* Inventoryitemcell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Inventoryitemcell.xib; sourceTree = "<group>"; };
+		D5217ACB2D4DE97E007453B9 /* Inventoryitemcell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Inventoryitemcell.swift; sourceTree = "<group>"; };
 		D52477532AA1F2F800214D2F /* bdayviewcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bdayviewcell.swift; sourceTree = "<group>"; };
 		D52477542AA1F2F800214D2F /* bdayviewcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = bdayviewcell.xib; sourceTree = "<group>"; };
 		D52477572AA208B800214D2F /* bdayreplycell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bdayreplycell.swift; sourceTree = "<group>"; };
@@ -471,17 +493,6 @@
 		D5587EA92AB9B3BF00E03A68 /* TourfullDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourfullDetailsCell.swift; sourceTree = "<group>"; };
 		D5587EAA2AB9B3BF00E03A68 /* TourfullDetailsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TourfullDetailsCell.xib; sourceTree = "<group>"; };
 		D5587EAD2AB9BC4600E03A68 /* TourAllDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourAllDetailsVC.swift; sourceTree = "<group>"; };
-		D55B05D82D0D6B0900406455 /* createchallanvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = createchallanvc.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/createchallanvc.swift; sourceTree = "<group>"; };
-		D55B05DA2D0D6B1500406455 /* Returnchallanvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Returnchallanvc.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/Returnchallanvc.swift; sourceTree = "<group>"; };
-		D55B05DC2D0D6B2100406455 /* Requestvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Requestvc.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/Requestvc.swift; sourceTree = "<group>"; };
-		D55B05DE2D0D6B2B00406455 /* Savedchallanvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Savedchallanvc.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/Savedchallanvc.swift; sourceTree = "<group>"; };
-		D55B05E02D0D6B3600406455 /* openpdfvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = openpdfvc.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/openpdfvc.swift; sourceTree = "<group>"; };
-		D55B05E22D0D6B4100406455 /* Additemvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Additemvc.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/Additemvc.swift; sourceTree = "<group>"; };
-		D55B05E42D0D6B5000406455 /* requestdatamodel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = requestdatamodel.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/requestdatamodel.swift; sourceTree = "<group>"; };
-		D55B05E62D0D6B5C00406455 /* dropdownfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = dropdownfile.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/dropdownfile.swift; sourceTree = "<group>"; };
-		D55B05E82D0D6B6600406455 /* Addinventordetailvc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Addinventordetailvc.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/Addinventordetailvc.swift; sourceTree = "<group>"; };
-		D55B05EA2D0D6B8000406455 /* submittedmdeldata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = submittedmdeldata.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/submittedmdeldata.swift; sourceTree = "<group>"; };
-		D55B05EC2D0D6B8900406455 /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QRCodeScannerViewController.swift; path = ../../../../Desktop/InventoryApp/InventoryApp/QRCodeScannerViewController.swift; sourceTree = "<group>"; };
 		D55D44802AE3FFC3007D4248 /* HodDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HodDetailCell.swift; sourceTree = "<group>"; };
 		D55D44812AE3FFC3007D4248 /* HodDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HodDetailCell.xib; sourceTree = "<group>"; };
 		D55D44842AE40A80007D4248 /* HODAllDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HODAllDetailVC.swift; sourceTree = "<group>"; };
@@ -567,7 +578,6 @@
 		D5E5A34A2B85DA910051D025 /* LeaveFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveFilterVC.swift; sourceTree = "<group>"; };
 		D5E608EE2CDCF57900978854 /* apptourCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = apptourCell.swift; sourceTree = "<group>"; };
 		D5E608EF2CDCF57900978854 /* apptourCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = apptourCell.xib; sourceTree = "<group>"; };
-		D5E73E002D2E46ED00A441DD /* Submitchallanpages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Submitchallanpages; sourceTree = "<group>"; };
 		D5E73E032D2E69B400A441DD /* GetLeaveRequestList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLeaveRequestList.swift; sourceTree = "<group>"; };
 		D5E73E052D2E97E700A441DD /* NewLeaveCancel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLeaveCancel.swift; sourceTree = "<group>"; };
 		D5E744CC2C7EF3E500C1F542 /* SavedDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedDataCell.swift; sourceTree = "<group>"; };
@@ -1007,27 +1017,28 @@
 		C7C740292C7C764100EE27C1 /* inventoryapp */ = {
 			isa = PBXGroup;
 			children = (
-				D5E73E002D2E46ED00A441DD /* Submitchallanpages */,
+				D5217AC22D4DE69C007453B9 /* Misscealaneousitem */,
+				D5217ABB2D4DE5AE007453B9 /* Submitchallanpages */,
 				C7C7403D2C7C771400EE27C1 /* inventoryhome.swift */,
-				D55B05D82D0D6B0900406455 /* createchallanvc.swift */,
-				C7C740632C7C7FD800EE27C1 /* submitchallanvc.swift */,
-				D55B05DA2D0D6B1500406455 /* Returnchallanvc.swift */,
-				D55B05DC2D0D6B2100406455 /* Requestvc.swift */,
+				D5217AA52D4DE400007453B9 /* Returnchallanvc.swift */,
+				D5217AA32D4DE3BB007453B9 /* createchallanvc.swift */,
 				D5E744CC2C7EF3E500C1F542 /* SavedDataCell.swift */,
 				D5E744CD2C7EF3E500C1F542 /* SavedDataCell.xib */,
-				D55B05DE2D0D6B2B00406455 /* Savedchallanvc.swift */,
-				D55B05E02D0D6B3600406455 /* openpdfvc.swift */,
-				D55B05EC2D0D6B8900406455 /* QRCodeScannerViewController.swift */,
-				D55B05EA2D0D6B8000406455 /* submittedmdeldata.swift */,
-				D55B05E22D0D6B4100406455 /* Additemvc.swift */,
-				D55B05E82D0D6B6600406455 /* Addinventordetailvc.swift */,
-				D55B05E42D0D6B5000406455 /* requestdatamodel.swift */,
-				D55B05E62D0D6B5C00406455 /* dropdownfile.swift */,
+				D5217AA92D4DE420007453B9 /* Savedchallanvc.swift */,
+				D5217AB92D4DE4CD007453B9 /* Requestvc.swift */,
+				D5217AAB2D4DE440007453B9 /* openpdfvc.swift */,
+				D5217AAD2D4DE45B007453B9 /* submittedmdeldata.swift */,
+				D5217AAF2D4DE46B007453B9 /* Additemvc.swift */,
+				D5217AB32D4DE49C007453B9 /* requestdatamodel.swift */,
+				D5217AB72D4DE4BA007453B9 /* QRCodeScannerViewController.swift */,
+				D5217AB52D4DE4A8007453B9 /* dropdownfile.swift */,
+				D5217AB12D4DE47C007453B9 /* Addinventordetailvc.swift */,
 				D5E744D82C7F007A00C1F542 /* InventoryitemDataCell.swift */,
 				D5E744D92C7F007A00C1F542 /* InventoryitemDataCell.xib */,
+				D5217AC92D4DE95B007453B9 /* Inventoryitemcell.xib */,
+				D5217ACB2D4DE97E007453B9 /* Inventoryitemcell.swift */,
 				D5E744D02C7EF89300C1F542 /* MisscealaneousDataCell.swift */,
 				D5E744D12C7EF89300C1F542 /* MisscealaneousDataCell.xib */,
-				C7C7407E2C7C819700EE27C1 /* misscealaneousmodel.swift */,
 			);
 			path = inventoryapp;
 			sourceTree = "<group>";
@@ -1053,6 +1064,26 @@
 				D572FE602D27CCF500CAFED3 /* EmployeedetailsCell.swift */,
 			);
 			path = Reportsection;
+			sourceTree = "<group>";
+		};
+		D5217ABB2D4DE5AE007453B9 /* Submitchallanpages */ = {
+			isa = PBXGroup;
+			children = (
+				D5217ABC2D4DE5AE007453B9 /* datatablecell.xib */,
+				D5217ABD2D4DE5AE007453B9 /* datatablecell.swift */,
+				D5217ABE2D4DE5AE007453B9 /* submitchallanvc.swift */,
+			);
+			path = Submitchallanpages;
+			sourceTree = "<group>";
+		};
+		D5217AC22D4DE69C007453B9 /* Misscealaneousitem */ = {
+			isa = PBXGroup;
+			children = (
+				D5217AC32D4DE69C007453B9 /* misscealaneouscell.xib */,
+				D5217AC42D4DE69C007453B9 /* misscealaneousmodel.swift */,
+				D5217AC52D4DE69C007453B9 /* misscealaneouscell.swift */,
+			);
+			path = Misscealaneousitem;
 			sourceTree = "<group>";
 		};
 		D5345B732C75F2930038065A /* allviewnew */ = {
@@ -1231,8 +1262,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5217ABF2D4DE5AE007453B9 /* datatablecell.xib in Resources */,
 				D5FC7FF72CC277F9002E5467 /* Request2Cell.xib in Resources */,
 				D50C2D712BB2E84400C5C25E /* TableBookCell.xib in Resources */,
+				D5217ACA2D4DE95B007453B9 /* Inventoryitemcell.xib in Resources */,
 				D5FF605B2B3463B100466705 /* NotificationCell.xib in Resources */,
 				077E8643278BEF33002BF76B /* LaunchScreen.storyboard in Resources */,
 				D5DB6CF22B207DD0007AE9A7 /* rejcell.xib in Resources */,
@@ -1267,7 +1300,6 @@
 				D5C3595E2C6A08F70069E784 /* NewApprovalTourCell.xib in Resources */,
 				D568625D2D16A9BE00DA7B03 /* employeedetailCell.xib in Resources */,
 				07BE3100278FF35200BDF230 /* RequestMgCell.xib in Resources */,
-				D5E73E012D2E46ED00A441DD /* Submitchallanpages in Resources */,
 				07D7DB8D278EF96A00DFF1C8 /* IosDatePicker.xib in Resources */,
 				D5F0DE5E2CA5667100B0DDAB /* ReceptionListCell.xib in Resources */,
 				078826A32796FA3C0047ED4A /* AcceptCell.xib in Resources */,
@@ -1292,6 +1324,7 @@
 				D5D372522B1082C00003334F /* statusTableViewCell.xib in Resources */,
 				D5E744D32C7EF89300C1F542 /* MisscealaneousDataCell.xib in Resources */,
 				07A3FDBE279174CB0053B16C /* LeaveReqCell.xib in Resources */,
+				D5217AC62D4DE69C007453B9 /* misscealaneouscell.xib in Resources */,
 				075E4B382812A50E003B54E8 /* CustomAlert.xib in Resources */,
 				0723BF9B27C3ADEB0001A4DC /* BookingCell.xib in Resources */,
 				0788269F2796EA210047ED4A /* ApprovalCell.xib in Resources */,
@@ -1429,14 +1462,15 @@
 				074038A0278BF4AC007C70CC /* SwiftLoader.swift in Sources */,
 				07BE3102278FF5FC00BDF230 /* RequestMgVc.swift in Sources */,
 				0740389A278BF3F5007C70CC /* CustomExtension.swift in Sources */,
-				D55B05E92D0D6B6600406455 /* Addinventordetailvc.swift in Sources */,
 				075E4B372812A50E003B54E8 /* CustomAlert.swift in Sources */,
+				D5217ACC2D4DE97E007453B9 /* Inventoryitemcell.swift in Sources */,
+				D5217AC02D4DE5AE007453B9 /* datatablecell.swift in Sources */,
 				D5DE95202B15FE17005DA0FC /* TourStatusVc.swift in Sources */,
 				D5345B792C75F5080038065A /* LeaveViewController.swift in Sources */,
+				D5217AA62D4DE400007453B9 /* Returnchallanvc.swift in Sources */,
 				D5E73E062D2E97E700A441DD /* NewLeaveCancel.swift in Sources */,
 				D5DB6CF12B207DD0007AE9A7 /* rejcell.swift in Sources */,
 				07AA116928293BA4000E904E /* BookingFilterVC.swift in Sources */,
-				D55B05E72D0D6B5C00406455 /* dropdownfile.swift in Sources */,
 				C7AE09492A1BA21800782476 /* BirthPViewController.swift in Sources */,
 				074038A2278BF4FF007C70CC /* APIConstant.swift in Sources */,
 				078826A22796FA3C0047ED4A /* AcceptCell.swift in Sources */,
@@ -1445,7 +1479,6 @@
 				D5CBA4462B2B0F6900830E51 /* NewHealthVc.swift in Sources */,
 				07A3FDBD279174CB0053B16C /* LeaveReqCell.swift in Sources */,
 				C7A536B22A41B35100D6D0EF /* AddNewEmployeeVc.swift in Sources */,
-				D55B05DF2D0D6B2B00406455 /* Savedchallanvc.swift in Sources */,
 				D5F7284A2C99870600488850 /* EventbookingCell.swift in Sources */,
 				073161FA27969D12000BDCB0 /* PaySlipVc.swift in Sources */,
 				D53F96EA2CBE81B0002E4B6F /* KathaFilterCell.swift in Sources */,
@@ -1455,8 +1488,11 @@
 				0731F14F278C42B3001B5BBD /* AlertViewController.swift in Sources */,
 				077BA133278DABF500695B2F /* HeaderCell.swift in Sources */,
 				07354349278D7ED600D984D7 /* HomeCell.swift in Sources */,
+				D5217AC12D4DE5AE007453B9 /* submitchallanvc.swift in Sources */,
 				C7AC97472A4D883F000D1C43 /* BdayMessageVc.swift in Sources */,
 				079CD4902795349000C584EC /* PasswordVc.swift in Sources */,
+				D5217AB82D4DE4BA007453B9 /* QRCodeScannerViewController.swift in Sources */,
+				D5217AB22D4DE47C007453B9 /* Addinventordetailvc.swift in Sources */,
 				0723BF9D27C3B59E0001A4DC /* BookingVC.swift in Sources */,
 				D5C1ECD12C4A9E50001A5FBE /* calenderCell.swift in Sources */,
 				079E8C4227FAFC7800D00271 /* NotifyResponse.swift in Sources */,
@@ -1469,6 +1505,7 @@
 				0742EC6C2792A9CA00E97D2E /* LeaveCancel.swift in Sources */,
 				0723BF9A27C3ADEB0001A4DC /* BookingCell.swift in Sources */,
 				C7A536B02A41B33600D6D0EF /* RequestTourApprovalVc.swift in Sources */,
+				D5217AB62D4DE4A8007453B9 /* dropdownfile.swift in Sources */,
 				D51631152B6927C4002EDC7D /* NewPasswordVc.swift in Sources */,
 				D5BA0A632CEB778B000F5A59 /* DetailsEmployCell.swift in Sources */,
 				D58FCC022C8ADC8E00F22125 /* EventDetailVc.swift in Sources */,
@@ -1488,7 +1525,6 @@
 				D5E763022CEEF7300031BBB4 /* videoplayerVC.swift in Sources */,
 				D5E90FC22ADA7CCA00A9708E /* ImageController.swift in Sources */,
 				D55D44822AE3FFC3007D4248 /* HodDetailCell.swift in Sources */,
-				C7C740642C7C7FD800EE27C1 /* submitchallanvc.swift in Sources */,
 				0788269E2796EA210047ED4A /* ApprovalCell.swift in Sources */,
 				D50C2D702BB2E84400C5C25E /* TableBookCell.swift in Sources */,
 				077E863B278BEF32002BF76B /* LoginVc.swift in Sources */,
@@ -1498,7 +1534,6 @@
 				D5D9BE372C2A890D00FF9CF0 /* NewRequestVc.swift in Sources */,
 				D52CD0122B0B32BF009985DB /* RejectedTourVC.swift in Sources */,
 				D5B6A3942D1005B400B0763E /* QcMetaCell.swift in Sources */,
-				D55B05E32D0D6B4100406455 /* Additemvc.swift in Sources */,
 				D5E73E042D2E69B400A441DD /* GetLeaveRequestList.swift in Sources */,
 				077E4B52278D83AA008F837F /* HomeModel.swift in Sources */,
 				D5D372512B1082C00003334F /* statusTableViewCell.swift in Sources */,
@@ -1523,13 +1558,12 @@
 				D5DE951C2B15CE37005DA0FC /* halfdayStatusVc.swift in Sources */,
 				D562054D2CB3DC7000E502D6 /* BookingKathaVc.swift in Sources */,
 				079B921827C4AEFB000FA510 /* NewBookVc.swift in Sources */,
-				D55B05EB2D0D6B8000406455 /* submittedmdeldata.swift in Sources */,
 				D504991C2C64D5CC00F228C0 /* ApprovalLitNewVc.swift in Sources */,
 				D59372112BE4C6890003B48F /* clientCell.swift in Sources */,
 				07D7DB89278EE86A00DFF1C8 /* RoundUIView.swift in Sources */,
 				D5ED4DCC2A8760F800870640 /* NewHomeVC.swift in Sources */,
+				D5217AAA2D4DE420007453B9 /* Savedchallanvc.swift in Sources */,
 				0795353127D5E24900941FAC /* ToolBarPicker.swift in Sources */,
-				D55B05D92D0D6B0900406455 /* createchallanvc.swift in Sources */,
 				078C364627DE2976006EE678 /* MyWebServiceOperation.swift in Sources */,
 				D596F6D12D15460C0097EAA1 /* TerminateAccVc.swift in Sources */,
 				D503E0C02D1BE4B9003A0E63 /* ReportCollectionView.swift in Sources */,
@@ -1552,6 +1586,7 @@
 				075D79C327DB891700D95978 /* myBooking.swift in Sources */,
 				D5E608F02CDCF57900978854 /* apptourCell.swift in Sources */,
 				D57BA6DE2CC92ADA000910EA /* AssignLitstCell.swift in Sources */,
+				D5217AB42D4DE49C007453B9 /* requestdatamodel.swift in Sources */,
 				D5D899772B0C913E002B0827 /* ImageController1Vc.swift in Sources */,
 				0735433F278D744800D984D7 /* GredientView.swift in Sources */,
 				D5F153E42B6B9AEE00E12BAB /* searchCell.swift in Sources */,
@@ -1568,14 +1603,12 @@
 				D5C20CBE2BB8436400A65E8C /* BookingApprovalVc.swift in Sources */,
 				D5E501FB2AE64CC100100B40 /* HODAllDetail2cell.swift in Sources */,
 				07A3FDC2279183B70053B16C /* LeaveReport.swift in Sources */,
+				D5217AB02D4DE46B007453B9 /* Additemvc.swift in Sources */,
 				074F3E54280AED60004C9413 /* GuestHistoryVc.swift in Sources */,
 				D5D15F182C32AFF9008F15FD /* previewTableViewCell.swift in Sources */,
-				D55B05E12D0D6B3600406455 /* openpdfvc.swift in Sources */,
 				D572FE612D27CCF500CAFED3 /* EmployeedetailsCell.swift in Sources */,
 				0742EC792792E46600E97D2E /* PLVc.swift in Sources */,
 				07BE310427900F4500BDF230 /* LeaveRequestVc.swift in Sources */,
-				D55B05DB2D0D6B1500406455 /* Returnchallanvc.swift in Sources */,
-				D55B05ED2D0D6B8900406455 /* QRCodeScannerViewController.swift in Sources */,
 				D5AA5C152BBAF092003C4045 /* ApprovedListCell.swift in Sources */,
 				D5345B6B2C75CE190038065A /* CalenderOnClick.swift in Sources */,
 				C7C7403E2C7C771400EE27C1 /* inventoryhome.swift in Sources */,
@@ -1586,13 +1619,16 @@
 				D55046B42BBEB9060089EBB5 /* KathaVC.swift in Sources */,
 				C79EB1C82A4C5D7F00151259 /* droptourTableViewCell.swift in Sources */,
 				D5E744DA2C7F007A00C1F542 /* InventoryitemDataCell.swift in Sources */,
+				D5217AC82D4DE69C007453B9 /* misscealaneouscell.swift in Sources */,
 				D5F0DE5D2CA5667100B0DDAB /* ReceptionListCell.swift in Sources */,
 				07BC62A52790605500D03DB7 /* GuestVc.swift in Sources */,
+				D5217ABA2D4DE4CD007453B9 /* Requestvc.swift in Sources */,
 				D5FC9CC72AD5310600E6C198 /* ApprCell.swift in Sources */,
 				07AA116728290CCC000E904E /* FilterVC.swift in Sources */,
 				07981F37280EB91100C320E0 /* LeaveMgVC.swift in Sources */,
 				07D7DB8C278EF96A00DFF1C8 /* IosDatePicker.swift in Sources */,
 				07BE30FF278FF35200BDF230 /* RequestMgCell.swift in Sources */,
+				D5217AC72D4DE69C007453B9 /* misscealaneousmodel.swift in Sources */,
 				D5E56E2F2ADE62D8004C087F /* MaintourCell.swift in Sources */,
 				C773C2D829FBDE1300C5AC22 /* BdayViewController.swift in Sources */,
 				D5971F612BE272AF004FB8FA /* ClientDetailVC.swift in Sources */,
@@ -1610,7 +1646,6 @@
 				D5D7C6F02AED1EA80018C449 /* NewProfileVC.swift in Sources */,
 				0740389D278BF458007C70CC /* Loader.swift in Sources */,
 				D5E4BE732AE64B3200A743AD /* HODAllDetail2VC.swift in Sources */,
-				D55B05DD2D0D6B2100406455 /* Requestvc.swift in Sources */,
 				D5E98E972AB5A6C300AFDD2A /* TourDetailsCell.swift in Sources */,
 				C7AFF85E2A5597900043B186 /* mywishbdayTableViewCell.swift in Sources */,
 				D5E18D5A2D06C5F600E5762A /* scheduleVC.swift in Sources */,
@@ -1618,21 +1653,22 @@
 				07A559592813CF42006CEDDD /* GuestResponse.swift in Sources */,
 				079CD48E27952E3400C584EC /* OTPModel.swift in Sources */,
 				07D47B6427996FC9000490E5 /* workFromHome.swift in Sources */,
-				D55B05E52D0D6B5000406455 /* requestdatamodel.swift in Sources */,
 				D50C2D732BB2EE4C00C5C25E /* SaveListVc.swift in Sources */,
 				D53848222D3F6EC900232F58 /* ApprovalPageVc.swift in Sources */,
 				D5FF605A2B3463B100466705 /* NotificationCell.swift in Sources */,
 				D5971F5C2BE21A36004FB8FA /* BookingPageCell.swift in Sources */,
 				D55046B72BBEBC2B0089EBB5 /* KathaCell.swift in Sources */,
+				D5217AAC2D4DE440007453B9 /* openpdfvc.swift in Sources */,
 				D56AEEB72CAEC29E005D3B9F /* RequestDataVC.swift in Sources */,
 				D5A6F29E2BE121F500C9A79F /* BookingDetailCell.swift in Sources */,
 				078C364827DE298C006EE678 /* WebServiceOperation.swift in Sources */,
 				075D79C127DB611500D95978 /* HttpRequest.swift in Sources */,
 				D50A4FC22C83470B00A13496 /* EventCell.swift in Sources */,
-				C7C740812C7C819800EE27C1 /* misscealaneousmodel.swift in Sources */,
+				D5217AAE2D4DE45B007453B9 /* submittedmdeldata.swift in Sources */,
 				D5C359592C69E0D90069E784 /* NewApprovalBookingCell.swift in Sources */,
 				C7DB78512A61228000B61339 /* tpViewController.swift in Sources */,
 				D5FC9CCD2AD5536100E6C198 /* HTourCell.swift in Sources */,
+				D5217AA42D4DE3BB007453B9 /* createchallanvc.swift in Sources */,
 				D568625C2D16A9BE00DA7B03 /* employeedetailCell.swift in Sources */,
 				D503E0BC2D1BE189003A0E63 /* ReportAllVc.swift in Sources */,
 				072B135327D8A70800D6A4E9 /* SantData.swift in Sources */,
@@ -1742,7 +1778,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1798,7 +1834,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1833,7 +1869,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1878,7 +1914,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
