@@ -34,8 +34,8 @@ class CalenderOnClick: UIViewController {
     var ReqType  = [[String:Any]]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        requestTypeView.isHidden = true
-        requestTableview.isHidden = true
+     //   requestTypeView.isHidden = true
+    //    requestTableview.isHidden = true
         requestTypeView.layer.cornerRadius = 10
         requestTableview.dataSource = self
         requestTableview.delegate = self
@@ -81,8 +81,8 @@ class CalenderOnClick: UIViewController {
     func showApprovalIfNeeded() {
            if ReqType.contains(where: { $0["name"] as? String == "Approval" }) {
                aprove = true
-               typeLbl.text = "Approval"
-               ApprovalContainerview.isHidden = false
+             //  typeLbl.text = "Approval"
+            //   ApprovalContainerview.isHidden = false
            }
        }
     

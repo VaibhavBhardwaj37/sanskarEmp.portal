@@ -223,6 +223,9 @@
 		D5C3595A2C69E0D90069E784 /* NewApprovalBookingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5C359582C69E0D90069E784 /* NewApprovalBookingCell.xib */; };
 		D5C3595D2C6A08F70069E784 /* NewApprovalTourCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C3595B2C6A08F70069E784 /* NewApprovalTourCell.swift */; };
 		D5C3595E2C6A08F70069E784 /* NewApprovalTourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5C3595C2C6A08F70069E784 /* NewApprovalTourCell.xib */; };
+		D5C39F172D535F8C00B63E68 /* SecondnewApprovalVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C39F162D535F8C00B63E68 /* SecondnewApprovalVc.swift */; };
+		D5C39F232D5374CF00B63E68 /* ApprvlCollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C39F212D5374CF00B63E68 /* ApprvlCollCell.swift */; };
+		D5C39F242D5374CF00B63E68 /* ApprvlCollCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5C39F222D5374CF00B63E68 /* ApprvlCollCell.xib */; };
 		D5C986192ADFC1DE0094888B /* TourAppVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C986182ADFC1DE0094888B /* TourAppVC.swift */; };
 		D5CBA4462B2B0F6900830E51 /* NewHealthVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CBA4452B2B0F6900830E51 /* NewHealthVc.swift */; };
 		D5D15F182C32AFF9008F15FD /* previewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D15F162C32AFF9008F15FD /* previewTableViewCell.swift */; };
@@ -269,6 +272,7 @@
 		D5E763022CEEF7300031BBB4 /* videoplayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E763012CEEF7300031BBB4 /* videoplayerVC.swift */; };
 		D5E763072CEF48000031BBB4 /* PrivacyPolictVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E763062CEF48000031BBB4 /* PrivacyPolictVc.swift */; };
 		D5E800712CF990260049DAF8 /* BookingPageVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5971F582BE219A5004FB8FA /* BookingPageVc.swift */; };
+		D5E88CFC2D56189D00A360E3 /* LeaveTypeVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E88CFB2D56189D00A360E3 /* LeaveTypeVc.swift */; };
 		D5E90FC22ADA7CCA00A9708E /* ImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E90FC12ADA7CCA00A9708E /* ImageController.swift */; };
 		D5E98E972AB5A6C300AFDD2A /* TourDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E98E952AB5A6C300AFDD2A /* TourDetailsCell.swift */; };
 		D5E98E982AB5A6C300AFDD2A /* TourDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5E98E962AB5A6C300AFDD2A /* TourDetailsCell.xib */; };
@@ -279,6 +283,8 @@
 		D5F153DF2B6B786F00E12BAB /* SearcHvC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F153DE2B6B786F00E12BAB /* SearcHvC.swift */; };
 		D5F153E42B6B9AEE00E12BAB /* searchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F153E22B6B9AEE00E12BAB /* searchCell.swift */; };
 		D5F153E52B6B9AEE00E12BAB /* searchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5F153E32B6B9AEE00E12BAB /* searchCell.xib */; };
+		D5F252772D572AFE00C321DC /* newapproCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F252752D572AFE00C321DC /* newapproCell.swift */; };
+		D5F252782D572AFE00C321DC /* newapproCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5F252762D572AFE00C321DC /* newapproCell.xib */; };
 		D5F3FCDD2CA68FC600C9D4CA /* AssignListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F3FCDB2CA68FC600C9D4CA /* AssignListCell.swift */; };
 		D5F3FCDE2CA68FC600C9D4CA /* AssignListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5F3FCDC2CA68FC600C9D4CA /* AssignListCell.xib */; };
 		D5F7284A2C99870600488850 /* EventbookingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F728482C99870600488850 /* EventbookingCell.swift */; };
@@ -543,6 +549,9 @@
 		D5C359582C69E0D90069E784 /* NewApprovalBookingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewApprovalBookingCell.xib; sourceTree = "<group>"; };
 		D5C3595B2C6A08F70069E784 /* NewApprovalTourCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewApprovalTourCell.swift; sourceTree = "<group>"; };
 		D5C3595C2C6A08F70069E784 /* NewApprovalTourCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewApprovalTourCell.xib; sourceTree = "<group>"; };
+		D5C39F162D535F8C00B63E68 /* SecondnewApprovalVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondnewApprovalVc.swift; sourceTree = "<group>"; };
+		D5C39F212D5374CF00B63E68 /* ApprvlCollCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprvlCollCell.swift; sourceTree = SOURCE_ROOT; };
+		D5C39F222D5374CF00B63E68 /* ApprvlCollCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ApprvlCollCell.xib; sourceTree = SOURCE_ROOT; };
 		D5C986182ADFC1DE0094888B /* TourAppVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourAppVC.swift; sourceTree = "<group>"; };
 		D5CBA4452B2B0F6900830E51 /* NewHealthVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHealthVc.swift; sourceTree = "<group>"; };
 		D5D15F162C32AFF9008F15FD /* previewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = previewTableViewCell.swift; sourceTree = "<group>"; };
@@ -588,6 +597,7 @@
 		D5E744D92C7F007A00C1F542 /* InventoryitemDataCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InventoryitemDataCell.xib; sourceTree = "<group>"; };
 		D5E763012CEEF7300031BBB4 /* videoplayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = videoplayerVC.swift; sourceTree = "<group>"; };
 		D5E763062CEF48000031BBB4 /* PrivacyPolictVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolictVc.swift; sourceTree = "<group>"; };
+		D5E88CFB2D56189D00A360E3 /* LeaveTypeVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveTypeVc.swift; sourceTree = "<group>"; };
 		D5E90FC12ADA7CCA00A9708E /* ImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageController.swift; sourceTree = "<group>"; };
 		D5E98E952AB5A6C300AFDD2A /* TourDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourDetailsCell.swift; sourceTree = "<group>"; };
 		D5E98E962AB5A6C300AFDD2A /* TourDetailsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TourDetailsCell.xib; sourceTree = "<group>"; };
@@ -598,6 +608,8 @@
 		D5F153DE2B6B786F00E12BAB /* SearcHvC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearcHvC.swift; sourceTree = "<group>"; };
 		D5F153E22B6B9AEE00E12BAB /* searchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = searchCell.swift; sourceTree = "<group>"; };
 		D5F153E32B6B9AEE00E12BAB /* searchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = searchCell.xib; sourceTree = "<group>"; };
+		D5F252752D572AFE00C321DC /* newapproCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newapproCell.swift; sourceTree = "<group>"; };
+		D5F252762D572AFE00C321DC /* newapproCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = newapproCell.xib; sourceTree = "<group>"; };
 		D5F3FCDB2CA68FC600C9D4CA /* AssignListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignListCell.swift; sourceTree = "<group>"; };
 		D5F3FCDC2CA68FC600C9D4CA /* AssignListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignListCell.xib; sourceTree = "<group>"; };
 		D5F728482C99870600488850 /* EventbookingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventbookingCell.swift; sourceTree = "<group>"; };
@@ -767,6 +779,10 @@
 			isa = PBXGroup;
 			children = (
 				077E863C278BEF32002BF76B /* Main.storyboard */,
+				D5F252752D572AFE00C321DC /* newapproCell.swift */,
+				D5F252762D572AFE00C321DC /* newapproCell.xib */,
+				D5E88CFB2D56189D00A360E3 /* LeaveTypeVc.swift */,
+				D5C39F162D535F8C00B63E68 /* SecondnewApprovalVc.swift */,
 				D53848212D3F6EC900232F58 /* ApprovalPageVc.swift */,
 				D5E73E052D2E97E700A441DD /* NewLeaveCancel.swift */,
 				D568625A2D16A9BE00DA7B03 /* employeedetailCell.swift */,
@@ -1010,6 +1026,8 @@
 				07A5595B2813D4FE006CEDDD /* GuestCell.xib */,
 				07A5595E2813E4D0006CEDDD /* VistorCell.swift */,
 				07A5595F2813E4D0006CEDDD /* VistorCell.xib */,
+				D5C39F212D5374CF00B63E68 /* ApprvlCollCell.swift */,
+				D5C39F222D5374CF00B63E68 /* ApprvlCollCell.xib */,
 			);
 			path = "CellXib&Class";
 			sourceTree = "<group>";
@@ -1299,6 +1317,7 @@
 				D52477562AA1F2F800214D2F /* bdayviewcell.xib in Resources */,
 				D5C3595E2C6A08F70069E784 /* NewApprovalTourCell.xib in Resources */,
 				D568625D2D16A9BE00DA7B03 /* employeedetailCell.xib in Resources */,
+				D5F252782D572AFE00C321DC /* newapproCell.xib in Resources */,
 				07BE3100278FF35200BDF230 /* RequestMgCell.xib in Resources */,
 				07D7DB8D278EF96A00DFF1C8 /* IosDatePicker.xib in Resources */,
 				D5F0DE5E2CA5667100B0DDAB /* ReceptionListCell.xib in Resources */,
@@ -1325,6 +1344,7 @@
 				D5E744D32C7EF89300C1F542 /* MisscealaneousDataCell.xib in Resources */,
 				07A3FDBE279174CB0053B16C /* LeaveReqCell.xib in Resources */,
 				D5217AC62D4DE69C007453B9 /* misscealaneouscell.xib in Resources */,
+				D5C39F242D5374CF00B63E68 /* ApprvlCollCell.xib in Resources */,
 				075E4B382812A50E003B54E8 /* CustomAlert.xib in Resources */,
 				0723BF9B27C3ADEB0001A4DC /* BookingCell.xib in Resources */,
 				0788269F2796EA210047ED4A /* ApprovalCell.xib in Resources */,
@@ -1522,6 +1542,7 @@
 				D5D899752B0C911C002B0827 /* ImageContVC.swift in Sources */,
 				D56ADA902CAAB70500F90BD2 /* File.swift in Sources */,
 				D5D9BE3A2C2A904600FF9CF0 /* NewReqCell.swift in Sources */,
+				D5C39F232D5374CF00B63E68 /* ApprvlCollCell.swift in Sources */,
 				D5E763022CEEF7300031BBB4 /* videoplayerVC.swift in Sources */,
 				D5E90FC22ADA7CCA00A9708E /* ImageController.swift in Sources */,
 				D55D44822AE3FFC3007D4248 /* HodDetailCell.swift in Sources */,
@@ -1548,6 +1569,7 @@
 				D5880E0F2C4E5C9400E00E64 /* calenderHelper.swift in Sources */,
 				07354343278D773200D984D7 /* HomeVc.swift in Sources */,
 				07A559632813E79D006CEDDD /* VistorHistoryVC.swift in Sources */,
+				D5E88CFC2D56189D00A360E3 /* LeaveTypeVc.swift in Sources */,
 				D55D44852AE40A80007D4248 /* HODAllDetailVC.swift in Sources */,
 				07D7DB7D278EAF0500DFF1C8 /* Constant.swift in Sources */,
 				075D79C627DB8C5600D95978 /* BookingData.swift in Sources */,
@@ -1587,6 +1609,7 @@
 				D5E608F02CDCF57900978854 /* apptourCell.swift in Sources */,
 				D57BA6DE2CC92ADA000910EA /* AssignLitstCell.swift in Sources */,
 				D5217AB42D4DE49C007453B9 /* requestdatamodel.swift in Sources */,
+				D5F252772D572AFE00C321DC /* newapproCell.swift in Sources */,
 				D5D899772B0C913E002B0827 /* ImageController1Vc.swift in Sources */,
 				0735433F278D744800D984D7 /* GredientView.swift in Sources */,
 				D5F153E42B6B9AEE00E12BAB /* searchCell.swift in Sources */,
@@ -1619,6 +1642,7 @@
 				D55046B42BBEB9060089EBB5 /* KathaVC.swift in Sources */,
 				C79EB1C82A4C5D7F00151259 /* droptourTableViewCell.swift in Sources */,
 				D5E744DA2C7F007A00C1F542 /* InventoryitemDataCell.swift in Sources */,
+				D5C39F172D535F8C00B63E68 /* SecondnewApprovalVc.swift in Sources */,
 				D5217AC82D4DE69C007453B9 /* misscealaneouscell.swift in Sources */,
 				D5F0DE5D2CA5667100B0DDAB /* ReceptionListCell.swift in Sources */,
 				07BC62A52790605500D03DB7 /* GuestVc.swift in Sources */,

@@ -294,7 +294,7 @@ class BookingPageVc: UIViewController {
     
     
     @IBAction func searchhidebtn(_ sender: UIButton) {
-        searchbar.isHidden = true
+        searchview.isHidden = true
     }
     
     @IBAction func switchToggled(_ sender: UISwitch) {

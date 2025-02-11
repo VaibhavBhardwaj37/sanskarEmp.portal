@@ -104,7 +104,7 @@ class HomeVc: UIViewController {
         collectionView.register(UINib(nibName: "HomeCell", bundle: nil), forCellWithReuseIdentifier: "HomeCell")
        guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {return}
        flowLayout.minimumInteritemSpacing = margin
-      flowLayout.minimumLineSpacing = margin
+       flowLayout.minimumLineSpacing = margin
        flowLayout.sectionInset = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
         collectionView.delegate = self
         collectionView.dataSource = self

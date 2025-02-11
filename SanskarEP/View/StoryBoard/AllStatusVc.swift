@@ -366,9 +366,8 @@ extension AllStatusVc: UITableViewDataSource, UITableViewDelegate {
             }
         return 0
     }
-    
-
 }
+
 extension AllStatusVc: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
            if searchText.isEmpty {

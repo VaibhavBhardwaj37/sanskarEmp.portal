@@ -101,6 +101,7 @@ let deleteaccountAPi        = "api_panel/delete_emp"
 let EmployeeDetailApi       = "api_panel/detailofemp"
 let visitorregistration     = "visitor_registration"
 let cancelstatus            = "api_panel/getLeaveCanDetail"
+let monthwisedetailapi      = "api_panel/get_month_wise_emp_detail"
 
 // inventory api
 let submitedlistapi        = "api_panel/get_inventory_detail"

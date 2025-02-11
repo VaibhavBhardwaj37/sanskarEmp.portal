@@ -75,12 +75,17 @@ class NewHomeVC: UIViewController  {
     var aprove: Bool = false
     var book: Bool = false
     var bEmpcode = String()
+    
+    var EpmDetails = [[String:Any]]()
 
     //var datalist = [[String:Any]]()
   
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        MonthwiseDetailApi()
         
         tableview.dataSource = self
         tableview.delegate = self
@@ -227,7 +232,7 @@ class NewHomeVC: UIViewController  {
         var customDetent: UISheetPresentationController.Detent?
             if #available(iOS 16.0, *) {
             customDetent = UISheetPresentationController.Detent.custom { context in
-                return 540
+                return 575
             }
             sheet.detents = [customDetent!]
             sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
@@ -319,8 +324,8 @@ class NewHomeVC: UIViewController  {
 
     
     @IBAction func SearchBarBtn(_ sender: UIButton) {
-       let vc = self.storyboard?.instantiateViewController(withIdentifier: "HODAllDetailVC") as! HODAllDetailVC
-//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
+       let vc = self.storyboard?.instantiateViewController(withIdentifier: "SecondnewApprovalVc") as! SecondnewApprovalVc
+    //    let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
         if #available(iOS 15.0, *) {
         if let sheet = vc.sheetPresentationController {
         var customDetent: UISheetPresentationController.Detent?
@@ -653,7 +658,41 @@ class NewHomeVC: UIViewController  {
         }
     }
 
+    func MonthwiseDetailApi() {
+        var dict = [String: Any]()
+        dict["EmpCode"] = currentUser.EmpCode
+        dict["month"] = "02"
+        dict["year"] = "2025"
+        
+        DispatchQueue.main.async {
+            Loader.showLoader()
+        }
+        
+        APIManager.apiCall(postData: dict as NSDictionary, url: monthwisedetailapi) { result, response, error, data in
+            DispatchQueue.main.async {
+                Loader.hideLoader()
+            }
+            
+            guard let JSON = response as? [String: Any],
+                  let status = JSON["status"] as? Bool, status == true,
+                  let data = JSON["data"] as? [[String: Any]] else {
+                print("Error:", response?["error"] as Any)
+                return
+            }
+            
+            // Data ko EpmDetails mein properly store karein
+            self.EpmDetails = data
+            
+            // Debugging ke liye print karein
+            print("Employee Attendance Data:", self.EpmDetails)
+            
+            DispatchQueue.main.async {
+                // UI update ya further processing yahan karein
+            }
+        }
+    }
 
+    
     func fetchData() {
         var dict = Dictionary<String, Any>()
         dict["EmpCode"] = currentUser.EmpCode
