@@ -7,7 +7,8 @@
 
 import Foundation
 
-var BASEURL                = "https://sap.sanskargroup.in"
+var BASEURL              = "https://sap.sanskargroup.in"
+//var BASEURL                = "https://emp.sanskargroup.in"
 //var BASEURL              = "https://sap.sanskargroup.in/employee_dev/index.php"
 var BASEURL1               = "https://sap.sanskargroup.in/totalbhakti_portal"
 let getLogin               = "api_panel/login_app"
@@ -73,7 +74,7 @@ let hodBApprovalApi        = "api_panel/katha_approval"
 let kathaApprovedApi       = "api_panel/get-approve-kathalist"
 let KathaFilter            = "api_panel/search-kathalist-by-date"
 let attendanceApi          = "api_panel/employee_intime_outtime"
-let eventApi               = "api_panel/event_detail_backup"
+let eventApi               = "api_panel/event_detail"
 let clientdetailApi        = "api_panel/kathabooking_clientdetail"
 let calenderapi            = "api_panel/clientdatail"
 let receptionApi           = "api_panel/booking_lead"
@@ -102,7 +103,7 @@ let EmployeeDetailApi       = "api_panel/detailofemp"
 let visitorregistration     = "visitor_registration"
 let cancelstatus            = "api_panel/getLeaveCanDetail"
 let monthwisedetailapi      = "api_panel/get_month_wise_emp_detail"
-
+let AHistoryapi             = "api_panel_dev/aprovelistHistory"
 // inventory api
 let submitedlistapi        = "api_panel/get_inventory_detail"
 let requestdetailapi       = "api_panel/get_generate_challan_list"

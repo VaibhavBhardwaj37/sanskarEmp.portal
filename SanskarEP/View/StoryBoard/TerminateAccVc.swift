@@ -112,7 +112,7 @@ extension TerminateAccVc: UITableViewDelegate,UITableViewDataSource {
         let imgURL = imageData.replacingOccurrences(of: " ", with: "%20")
         cell.MyImage.image = nil
         cell.MyImage.sd_setImage(with: URL(string: imgURL), placeholderImage: UIImage(named: "placeholder"))
-        cell.message.isHidden = true
+   //     cell.message.isHidden = true
         cell.msgbtn.isHidden = true
         
          empcode = filteredDetailData[indexPath.row]["EmpCode"] as? String ?? ""

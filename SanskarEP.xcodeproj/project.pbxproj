@@ -126,6 +126,8 @@
 		D503E0BC2D1BE189003A0E63 /* ReportAllVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503E0BB2D1BE189003A0E63 /* ReportAllVc.swift */; };
 		D503E0C02D1BE4B9003A0E63 /* ReportCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503E0BF2D1BE4B9003A0E63 /* ReportCollectionView.swift */; };
 		D504991C2C64D5CC00F228C0 /* ApprovalLitNewVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D504991B2C64D5CC00F228C0 /* ApprovalLitNewVc.swift */; };
+		D504BDF82D5F592B005C93C9 /* BookingDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D504BDF72D5F592B005C93C9 /* BookingDetailsModel.swift */; };
+		D508D9002D5CA3EB005D7616 /* LeaveHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D508D8FF2D5CA3EB005D7616 /* LeaveHistoryModel.swift */; };
 		D50A4FC22C83470B00A13496 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50A4FC02C83470B00A13496 /* EventCell.swift */; };
 		D50A4FC32C83470B00A13496 /* EventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D50A4FC12C83470B00A13496 /* EventCell.xib */; };
 		D50C2D702BB2E84400C5C25E /* TableBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50C2D6E2BB2E84400C5C25E /* TableBookCell.swift */; };
@@ -196,6 +198,8 @@
 		D5871B422A8A241B0056ED9C /* headerCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5871B402A8A241B0056ED9C /* headerCell2.swift */; };
 		D5871B432A8A241B0056ED9C /* headerCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5871B412A8A241B0056ED9C /* headerCell2.xib */; };
 		D5880E0F2C4E5C9400E00E64 /* calenderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5880E0E2C4E5C9400E00E64 /* calenderHelper.swift */; };
+		D58AB0F82D5F1720004757C3 /* BookingtypeVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58AB0F72D5F1720004757C3 /* BookingtypeVc.swift */; };
+		D58AB0FB2D5F1A5B004757C3 /* TourReqtypeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58AB0FA2D5F1A5B004757C3 /* TourReqtypeVC.swift */; };
 		D58FCC022C8ADC8E00F22125 /* EventDetailVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58FCC012C8ADC8E00F22125 /* EventDetailVc.swift */; };
 		D59372112BE4C6890003B48F /* clientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D593720F2BE4C6890003B48F /* clientCell.swift */; };
 		D59372122BE4C6890003B48F /* clientCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D59372102BE4C6890003B48F /* clientCell.xib */; };
@@ -290,12 +294,14 @@
 		D5F7284A2C99870600488850 /* EventbookingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F728482C99870600488850 /* EventbookingCell.swift */; };
 		D5F7284B2C99870600488850 /* EventbookingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5F728492C99870600488850 /* EventbookingCell.xib */; };
 		D5F8A6FA2B231F1A00BE696F /* TourDetail'sVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F8A6F92B231F1A00BE696F /* TourDetail'sVc.swift */; };
+		D5FB09D42D5F939B0082C424 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB09D32D5F939B0082C424 /* ViewController.swift */; };
 		D5FC7FF62CC277F9002E5467 /* Request2Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FC7FF42CC277F9002E5467 /* Request2Cell.swift */; };
 		D5FC7FF72CC277F9002E5467 /* Request2Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5FC7FF52CC277F9002E5467 /* Request2Cell.xib */; };
 		D5FC9CC42AD5285700E6C198 /* ApprovalContVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FC9CC32AD5285700E6C198 /* ApprovalContVc.swift */; };
 		D5FC9CC72AD5310600E6C198 /* ApprCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FC9CC52AD5310600E6C198 /* ApprCell.swift */; };
 		D5FC9CC82AD5310600E6C198 /* ApprCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5FC9CC62AD5310600E6C198 /* ApprCell.xib */; };
 		D5FC9CCD2AD5536100E6C198 /* HTourCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FC9CCB2AD5536100E6C198 /* HTourCell.swift */; };
+		D5FE9BC12D5B2CB5004587B2 /* MonthWiseEmpDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FE9BC02D5B2CB5004587B2 /* MonthWiseEmpDetail.swift */; };
 		D5FF2E142AE1306E00262CBC /* tourdetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FF2E122AE1306E00262CBC /* tourdetCell.swift */; };
 		D5FF2E152AE1306E00262CBC /* tourdetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5FF2E132AE1306E00262CBC /* tourdetCell.xib */; };
 		D5FF2E182AE15A8B00262CBC /* AllDetail2VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FF2E172AE15A8B00262CBC /* AllDetail2VC.swift */; };
@@ -451,6 +457,8 @@
 		D503E0BB2D1BE189003A0E63 /* ReportAllVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportAllVc.swift; sourceTree = "<group>"; };
 		D503E0BF2D1BE4B9003A0E63 /* ReportCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCollectionView.swift; sourceTree = "<group>"; };
 		D504991B2C64D5CC00F228C0 /* ApprovalLitNewVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalLitNewVc.swift; sourceTree = "<group>"; };
+		D504BDF72D5F592B005C93C9 /* BookingDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingDetailsModel.swift; sourceTree = "<group>"; };
+		D508D8FF2D5CA3EB005D7616 /* LeaveHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveHistoryModel.swift; sourceTree = "<group>"; };
 		D50A4FC02C83470B00A13496 /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		D50A4FC12C83470B00A13496 /* EventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventCell.xib; sourceTree = "<group>"; };
 		D50C2D6E2BB2E84400C5C25E /* TableBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableBookCell.swift; sourceTree = "<group>"; };
@@ -521,6 +529,8 @@
 		D5871B402A8A241B0056ED9C /* headerCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = headerCell2.swift; sourceTree = "<group>"; };
 		D5871B412A8A241B0056ED9C /* headerCell2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = headerCell2.xib; sourceTree = "<group>"; };
 		D5880E0E2C4E5C9400E00E64 /* calenderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = calenderHelper.swift; sourceTree = "<group>"; };
+		D58AB0F72D5F1720004757C3 /* BookingtypeVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingtypeVc.swift; sourceTree = "<group>"; };
+		D58AB0FA2D5F1A5B004757C3 /* TourReqtypeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourReqtypeVC.swift; sourceTree = "<group>"; };
 		D58FCC012C8ADC8E00F22125 /* EventDetailVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailVc.swift; sourceTree = "<group>"; };
 		D593720F2BE4C6890003B48F /* clientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clientCell.swift; sourceTree = "<group>"; };
 		D59372102BE4C6890003B48F /* clientCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = clientCell.xib; sourceTree = "<group>"; };
@@ -615,12 +625,14 @@
 		D5F728482C99870600488850 /* EventbookingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventbookingCell.swift; sourceTree = "<group>"; };
 		D5F728492C99870600488850 /* EventbookingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventbookingCell.xib; sourceTree = "<group>"; };
 		D5F8A6F92B231F1A00BE696F /* TourDetail'sVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TourDetail'sVc.swift"; sourceTree = "<group>"; };
+		D5FB09D32D5F939B0082C424 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D5FC7FF42CC277F9002E5467 /* Request2Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request2Cell.swift; sourceTree = "<group>"; };
 		D5FC7FF52CC277F9002E5467 /* Request2Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Request2Cell.xib; sourceTree = "<group>"; };
 		D5FC9CC32AD5285700E6C198 /* ApprovalContVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalContVc.swift; sourceTree = "<group>"; };
 		D5FC9CC52AD5310600E6C198 /* ApprCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprCell.swift; sourceTree = "<group>"; };
 		D5FC9CC62AD5310600E6C198 /* ApprCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ApprCell.xib; sourceTree = "<group>"; };
 		D5FC9CCB2AD5536100E6C198 /* HTourCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTourCell.swift; sourceTree = "<group>"; };
+		D5FE9BC02D5B2CB5004587B2 /* MonthWiseEmpDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthWiseEmpDetail.swift; sourceTree = "<group>"; };
 		D5FF2E122AE1306E00262CBC /* tourdetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tourdetCell.swift; sourceTree = "<group>"; };
 		D5FF2E132AE1306E00262CBC /* tourdetCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = tourdetCell.xib; sourceTree = "<group>"; };
 		D5FF2E172AE15A8B00262CBC /* AllDetail2VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllDetail2VC.swift; sourceTree = "<group>"; };
@@ -659,6 +671,7 @@
 		0735433C278D741000D984D7 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				D5FB09D22D5F92FE0082C424 /* TosterView */,
 				07403898278BF3D3007C70CC /* AppHelper */,
 				0735433D278D743500D984D7 /* UIColor */,
 				0740389B278BF439007C70CC /* Loader */,
@@ -754,6 +767,9 @@
 				079E8C4127FAFC7800D00271 /* NotifyResponse.swift */,
 				07A559582813CF42006CEDDD /* GuestResponse.swift */,
 				D5E73E032D2E69B400A441DD /* GetLeaveRequestList.swift */,
+				D5FE9BC02D5B2CB5004587B2 /* MonthWiseEmpDetail.swift */,
+				D508D8FF2D5CA3EB005D7616 /* LeaveHistoryModel.swift */,
+				D504BDF72D5F592B005C93C9 /* BookingDetailsModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -781,7 +797,6 @@
 				077E863C278BEF32002BF76B /* Main.storyboard */,
 				D5F252752D572AFE00C321DC /* newapproCell.swift */,
 				D5F252762D572AFE00C321DC /* newapproCell.xib */,
-				D5E88CFB2D56189D00A360E3 /* LeaveTypeVc.swift */,
 				D5C39F162D535F8C00B63E68 /* SecondnewApprovalVc.swift */,
 				D53848212D3F6EC900232F58 /* ApprovalPageVc.swift */,
 				D5E73E052D2E97E700A441DD /* NewLeaveCancel.swift */,
@@ -958,6 +973,7 @@
 				077E8636278BEF32002BF76B /* AppDelegate.swift */,
 				077E8638278BEF32002BF76B /* SceneDelegate.swift */,
 				0735433C278D741000D984D7 /* Utilities */,
+				D58AB0F92D5F175E004757C3 /* Approved */,
 				D5FF2E162AE1308800262CBC /* Tour */,
 				D5345B732C75F2930038065A /* allviewnew */,
 				0740388E278BF0C3007C70CC /* Model */,
@@ -1114,6 +1130,16 @@
 			path = allviewnew;
 			sourceTree = "<group>";
 		};
+		D58AB0F92D5F175E004757C3 /* Approved */ = {
+			isa = PBXGroup;
+			children = (
+				D5E88CFB2D56189D00A360E3 /* LeaveTypeVc.swift */,
+				D58AB0F72D5F1720004757C3 /* BookingtypeVc.swift */,
+				D58AB0FA2D5F1A5B004757C3 /* TourReqtypeVC.swift */,
+			);
+			path = Approved;
+			sourceTree = "<group>";
+		};
 		D5BA0A602CEB7733000F5A59 /* DetailsTableviewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1121,6 +1147,14 @@
 				D5BA0A622CEB778B000F5A59 /* DetailsEmployCell.xib */,
 			);
 			path = DetailsTableviewCell;
+			sourceTree = "<group>";
+		};
+		D5FB09D22D5F92FE0082C424 /* TosterView */ = {
+			isa = PBXGroup;
+			children = (
+				D5FB09D32D5F939B0082C424 /* ViewController.swift */,
+			);
+			path = TosterView;
 			sourceTree = "<group>";
 		};
 		D5FF2E162AE1308800262CBC /* Tour */ = {
@@ -1497,6 +1531,7 @@
 				D52477592AA208B800214D2F /* bdayreplycell.swift in Sources */,
 				D5FC9CC42AD5285700E6C198 /* ApprovalContVc.swift in Sources */,
 				D5CBA4462B2B0F6900830E51 /* NewHealthVc.swift in Sources */,
+				D58AB0FB2D5F1A5B004757C3 /* TourReqtypeVC.swift in Sources */,
 				07A3FDBD279174CB0053B16C /* LeaveReqCell.swift in Sources */,
 				C7A536B22A41B35100D6D0EF /* AddNewEmployeeVc.swift in Sources */,
 				D5F7284A2C99870600488850 /* EventbookingCell.swift in Sources */,
@@ -1524,11 +1559,13 @@
 				070244F827DCCBA900D31C05 /* StatCell.swift in Sources */,
 				0742EC6C2792A9CA00E97D2E /* LeaveCancel.swift in Sources */,
 				0723BF9A27C3ADEB0001A4DC /* BookingCell.swift in Sources */,
+				D508D9002D5CA3EB005D7616 /* LeaveHistoryModel.swift in Sources */,
 				C7A536B02A41B33600D6D0EF /* RequestTourApprovalVc.swift in Sources */,
 				D5217AB62D4DE4A8007453B9 /* dropdownfile.swift in Sources */,
 				D51631152B6927C4002EDC7D /* NewPasswordVc.swift in Sources */,
 				D5BA0A632CEB778B000F5A59 /* DetailsEmployCell.swift in Sources */,
 				D58FCC022C8ADC8E00F22125 /* EventDetailVc.swift in Sources */,
+				D504BDF82D5F592B005C93C9 /* BookingDetailsModel.swift in Sources */,
 				C773C2DA29FBE2E300C5AC22 /* MyTableViewCell.swift in Sources */,
 				D5602C742CA812640023DC5E /* SecondAssignedVC.swift in Sources */,
 				D5E744CE2C7EF3E500C1F542 /* SavedDataCell.swift in Sources */,
@@ -1551,6 +1588,7 @@
 				077E863B278BEF32002BF76B /* LoginVc.swift in Sources */,
 				07354345278D774500D984D7 /* ProfileVc.swift in Sources */,
 				D5345B752C75F2BF0038065A /* leaveview.swift in Sources */,
+				D5FB09D42D5F939B0082C424 /* ViewController.swift in Sources */,
 				D5587EAE2AB9BC4600E03A68 /* TourAllDetailsVC.swift in Sources */,
 				D5D9BE372C2A890D00FF9CF0 /* NewRequestVc.swift in Sources */,
 				D52CD0122B0B32BF009985DB /* RejectedTourVC.swift in Sources */,
@@ -1573,6 +1611,7 @@
 				D55D44852AE40A80007D4248 /* HODAllDetailVC.swift in Sources */,
 				07D7DB7D278EAF0500DFF1C8 /* Constant.swift in Sources */,
 				075D79C627DB8C5600D95978 /* BookingData.swift in Sources */,
+				D5FE9BC12D5B2CB5004587B2 /* MonthWiseEmpDetail.swift in Sources */,
 				D56AEEBA2CAEC42E005D3B9F /* RequestCell.swift in Sources */,
 				07D7DB7F278EB61B00DFF1C8 /* LeaveMangeVc.swift in Sources */,
 				07E2D1BC27DA0916006F752E /* submitBook.swift in Sources */,
@@ -1695,6 +1734,7 @@
 				D5217AA42D4DE3BB007453B9 /* createchallanvc.swift in Sources */,
 				D568625C2D16A9BE00DA7B03 /* employeedetailCell.swift in Sources */,
 				D503E0BC2D1BE189003A0E63 /* ReportAllVc.swift in Sources */,
+				D58AB0F82D5F1720004757C3 /* BookingtypeVc.swift in Sources */,
 				072B135327D8A70800D6A4E9 /* SantData.swift in Sources */,
 				C7BA6A5E2A8756580074F9B6 /* CustomDialogVC.swift in Sources */,
 				077E8639278BEF32002BF76B /* SceneDelegate.swift in Sources */,
@@ -1891,7 +1931,8 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1936,7 +1977,8 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (

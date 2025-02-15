@@ -13,7 +13,6 @@ class bdayviewcell: UITableViewCell {
     @IBOutlet weak var MyLbl: UILabel!
     @IBOutlet weak var MyLbl2: UILabel!
     @IBOutlet weak var MyImage: UIImageView!
-    @IBOutlet weak var message: UILabel!
     @IBOutlet weak var msgbtn: UIButton!
     @IBOutlet weak var mylbl3: UILabel!
     @IBOutlet weak var terminatedbtn: UIButton!
@@ -22,8 +21,9 @@ class bdayviewcell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        message.layer.cornerRadius = 5
-        message.clipsToBounds = true
+       
+        
+        msgbtn.layer.cornerRadius = 8
         
         terminatedbtn.layer.cornerRadius = 5
         terminatedbtn.clipsToBounds = true

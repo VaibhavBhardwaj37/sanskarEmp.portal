@@ -22,8 +22,10 @@ class newapproCell: UITableViewCell {
     @IBOutlet weak var reason: UILabel!
     @IBOutlet weak var checkbtn: UIButton!
     @IBOutlet weak var imageview1: UIImageView!
-    
-    
+    @IBOutlet weak var status: UILabel!
+   // Track expanded cell index
+    var arrowButtonTapped: ((UIButton) -> Void)?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         reamrk.isHidden = true
@@ -41,12 +43,12 @@ class newapproCell: UITableViewCell {
         txtRemarkView.textColor = UIColor.lightGray
         txtRemarkView.layer.borderWidth = 1.0
         txtRemarkView.layer.borderColor = UIColor.darkGray.cgColor
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
     
     @IBAction func Approvebtn(_ sender: UIButton) {
@@ -66,11 +68,7 @@ class newapproCell: UITableViewCell {
     }
     
     @IBAction func rjectbtn(_ sender: UIButton) {
-        btnAprove.isHidden = false
-        btnreject.isHidden = false
-        
-        self.reamrk.isHidden = !self.reamrk.isHidden
-     //   self.okbtn.isHidden = !self.okbtn.isHidden
+        arrowButtonTapped?(sender)
     }
 }
 extension newapproCell : UITextViewDelegate {

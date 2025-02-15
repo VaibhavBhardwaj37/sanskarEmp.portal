@@ -22,7 +22,7 @@ class BirthPViewController: UIViewController {
     
     var datal = [[String:Any]]()
     var imaged = String()
-    var EmpCode = String()
+    var empCode = String()
     var imageurl1 = "https://ep.sanskargroup.in/uploads/"
     //"https://employee.sanskargroup.in/EmpImage/"
     
@@ -95,7 +95,7 @@ class BirthPViewController: UIViewController {
     
     func WishApi() {
         var dict = Dictionary<String,Any>()
-        dict["EmpCode"] = EmpCode
+        dict["EmpCode"] = empCode
         dict["Message"] = Btext.text!
         dict["Sent_by"] = currentUser.EmpCode
         DispatchQueue.main.async(execute: {Loader.showLoader()})
@@ -104,40 +104,19 @@ class BirthPViewController: UIViewController {
                         if let JSON = response as? NSDictionary {
                             if JSON.value(forKey: "status") as? Bool == true {
                                 AlertController.alert(message: JSON.value(forKey: "message") as! String)
+                             
                                 let data = (JSON["data"] as? [[String:Any]] ?? [[:]])
                                 print(data)
                             }
                         }
                     }
     }
-//    func WishApi() {
-//        var dict = Dictionary<String,Any>()
-//        dict["EmpCode"] = EmpCode
-//        print(dict)
-//
-//        // Set your default message here
-//        let defaultMessage = "Wish you a very Happy Birthday "
-//        dict["Message"] = defaultMessage
-//
-//        print(EmpCode)
-//        dict["Sent_by"] = currentUser.EmpCode
-//        DispatchQueue.main.async(execute: {Loader.showLoader()})
-//        APIManager.apiCall(postData: dict as NSDictionary, url: bwishApi) { result, response, error, data in
-//            DispatchQueue.main.async(execute: {Loader.hideLoader()})
-//            if let JSON = response as? NSDictionary {
-//                if JSON.value(forKey: "status") as? Bool == true {
-//                    AlertController.alert(message: JSON.value(forKey: "message") as! String)
-//                    let data = (JSON["data"] as? [[String:Any]] ?? [[:]])
-//                    print(data)
-//                }
-//            }
-//        }
-//    }
 
     
     @IBAction func WishButton(_ sender: Any) {
         WishApi()
-       
+        self.dismiss(animated: true,completion: nil)
+        self.showToast(message: "This is a toast message!")
     }
     
 }

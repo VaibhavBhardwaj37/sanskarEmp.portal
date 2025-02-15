@@ -82,31 +82,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     //MARK: - --------------------Messages------------------------------------
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        print("Firebase registration token: \(String(describing: fcmToken))")
-        
-        let dataDict: [String: String] = ["token": fcmToken ?? ""]
-        NotificationCenter.default.post(
-            name: Notification.Name("FCMToken"),
-            object: nil,
-            userInfo: dataDict
-        )
-    }
+//    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+//        print("Firebase registration token: \(String(describing: fcmToken))")
+//        
+//        let dataDict: [String: String] = ["token": fcmToken ?? ""]
+//        NotificationCenter.default.post(
+//            name: Notification.Name("FCMToken"),
+//            object: nil,
+//            userInfo: dataDict
+//        )
+//    }
     
+//    func application(_ application: UIApplication,
+//                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+//        Messaging.messaging().apnsToken = deviceToken
+//        let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+//        print(token)
+//         if token.isEmpty{
+//            UserDefaults.standard.set(fcmString, forKey: "token")
+//            idenity.kDeviceToken = token
+//        }else{
+//             UserDefaults.standard.set(token, forKey: "token")
+//            idenity.kDeviceToken = token
+//        }
+//    }
     func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
         let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
-        print(token)
-         if token.isEmpty{
-            UserDefaults.standard.set(fcmString, forKey: "token")
-            idenity.kDeviceToken = token
-        }else{
-             UserDefaults.standard.set(token, forKey: "token")
-            idenity.kDeviceToken = token
+        print("APNs Device Token: \(token)")
+
+        Messaging.messaging().token { fcmToken, error in
+            if let error = error {
+                print("Error fetching FCM registration token: \(error)")
+            } else if let fcmToken = fcmToken {
+                print("FCM Token: \(fcmToken)")
+                self.fcmString = fcmToken
+                UserDefaults.standard.set(fcmToken, forKey: "token")
+            }
         }
     }
-    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        guard let fcmToken = fcmToken else { return }
+        print("Firebase registration token received: \(fcmToken)")
+        self.fcmString = fcmToken
+        UserDefaults.standard.set(fcmToken, forKey: "token")
+    }
+
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions)

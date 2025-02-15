@@ -38,7 +38,6 @@ class SecondnewApprovalVc: UIViewController {
         switch sender.tag {
         case 0 :
             let vc = storyboard?.instantiateViewController(withIdentifier: "LeaveTypeVc") as! LeaveTypeVc
-        //  let   vc = storyboard?.instantiateViewController(withIdentifier: "BookforReceptionVc") as! BookforReceptionVc
             if #available(iOS 15.0, *) {
                 if let sheet = vc.sheetPresentationController {
                     var customDetent: UISheetPresentationController.Detent?
@@ -56,6 +55,42 @@ class SecondnewApprovalVc: UIViewController {
             }
           //  present(vc, animated: true, completion: nil)
             self.present(vc,animated: true,completion: nil)
+//        case 1 :
+//            let vc = storyboard?.instantiateViewController(withIdentifier: "BookingtypeVc") as! BookingtypeVc
+//            if #available(iOS 15.0, *) {
+//                if let sheet = vc.sheetPresentationController {
+//                    var customDetent: UISheetPresentationController.Detent?
+//                    if #available(iOS 16.0, *) {
+//                        customDetent = UISheetPresentationController.Detent.custom { context in
+//                            return 540
+//                        }
+//                        sheet.detents = [customDetent!]
+//                        sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
+//                    }
+//                    sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+//                    sheet.prefersGrabberVisible = true
+//                    sheet.preferredCornerRadius = 12
+//                }
+//            }
+//            self.present(vc,animated: true,completion: nil)
+//        case 2 :
+//            let vc = storyboard?.instantiateViewController(withIdentifier: "TourReqtypeVC") as! TourReqtypeVC
+//            if #available(iOS 15.0, *) {
+//                if let sheet = vc.sheetPresentationController {
+//                    var customDetent: UISheetPresentationController.Detent?
+//                    if #available(iOS 16.0, *) {
+//                        customDetent = UISheetPresentationController.Detent.custom { context in
+//                            return 540
+//                        }
+//                        sheet.detents = [customDetent!]
+//                        sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
+//                    }
+//                    sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+//                    sheet.prefersGrabberVisible = true
+//                    sheet.preferredCornerRadius = 12
+//                }
+//            }
+//            self.present(vc,animated: true,completion: nil)
         default:
             break
         }

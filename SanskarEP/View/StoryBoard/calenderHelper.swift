@@ -30,6 +30,12 @@ class calenderHelper
         return dateFormatter.string(from: date)
     }
     
+    func monthString1(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM"
+        return dateFormatter.string(from: date)
+    }
+    
     func YearString(date: Date) -> String
     {
         let dateFormatter = DateFormatter()

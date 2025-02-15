@@ -62,30 +62,22 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Jy-ee-IqC">
                                 <rect key="frame" x="117" y="77" width="207" height="25"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="ktJ-zp-Pmy"/>
+                                    <constraint firstAttribute="height" constant="25" id="H9I-jD-hD9"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sP1-dm-59l">
-                                <rect key="frame" x="231" y="41" width="88" height="37"/>
-                                <color key="backgroundColor" cyan="0.9399394834" magenta="0.1584360665" yellow="0.88161387499999999" black="0.083491641340000006" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="88" id="AEb-uA-uQD"/>
-                                    <constraint firstAttribute="height" constant="37" id="kf3-2F-1hY"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CkW-Nx-dh5">
-                                <rect key="frame" x="231" y="41" width="98" height="36"/>
+                                <rect key="frame" x="209" y="41" width="110" height="36"/>
+                                <color key="backgroundColor" red="0.098039215690000001" green="0.52941176469999995" blue="0.3294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="HqM-Y2-yHf"/>
-                                    <constraint firstAttribute="width" constant="98" id="Q8M-iT-8fK"/>
+                                    <constraint firstAttribute="width" constant="110" id="Qh1-PR-Kyy"/>
+                                    <constraint firstAttribute="height" constant="36" id="sTK-RK-o3M"/>
                                 </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Message"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z1J-Mw-9rV">
                                 <rect key="frame" x="234" y="40" width="90" height="38"/>
@@ -105,18 +97,16 @@
                         <constraints>
                             <constraint firstItem="iPK-K4-WRN" firstAttribute="leading" secondItem="tVJ-nW-Xas" secondAttribute="leading" constant="3" id="5EZ-sS-7lS"/>
                             <constraint firstAttribute="bottom" secondItem="iPK-K4-WRN" secondAttribute="bottom" constant="4" id="6vL-13-sNh"/>
-                            <constraint firstAttribute="trailing" secondItem="CkW-Nx-dh5" secondAttribute="trailing" id="9hb-9Y-3rv"/>
-                            <constraint firstItem="CkW-Nx-dh5" firstAttribute="top" secondItem="VA4-6T-uaV" secondAttribute="bottom" constant="1" id="ANW-dF-ezm"/>
                             <constraint firstItem="iPK-K4-WRN" firstAttribute="top" secondItem="tVJ-nW-Xas" secondAttribute="top" constant="4" id="DTC-SN-HXF"/>
-                            <constraint firstAttribute="trailing" secondItem="8Jy-ee-IqC" secondAttribute="trailing" constant="5" id="DiG-nB-H2P"/>
                             <constraint firstAttribute="bottom" secondItem="3sh-iW-Ors" secondAttribute="bottom" constant="10" id="Pfh-k1-0NS"/>
-                            <constraint firstItem="sP1-dm-59l" firstAttribute="top" secondItem="VA4-6T-uaV" secondAttribute="bottom" constant="1" id="T3r-QB-32x"/>
+                            <constraint firstAttribute="trailing" secondItem="CkW-Nx-dh5" secondAttribute="trailing" constant="10" id="UBx-yr-d9N"/>
+                            <constraint firstItem="8Jy-ee-IqC" firstAttribute="leading" secondItem="3sh-iW-Ors" secondAttribute="trailing" constant="10" id="Ufd-PE-2JI"/>
                             <constraint firstItem="VA4-6T-uaV" firstAttribute="leading" secondItem="3sh-iW-Ors" secondAttribute="trailing" constant="10" id="Vq7-5c-d8u"/>
-                            <constraint firstAttribute="trailing" secondItem="sP1-dm-59l" secondAttribute="trailing" constant="10" id="d6C-vD-bIQ"/>
-                            <constraint firstItem="8Jy-ee-IqC" firstAttribute="leading" secondItem="3sh-iW-Ors" secondAttribute="trailing" constant="10" id="gW0-oB-AoS"/>
-                            <constraint firstItem="8Jy-ee-IqC" firstAttribute="top" secondItem="CkW-Nx-dh5" secondAttribute="bottom" id="iEW-9N-bzL"/>
+                            <constraint firstItem="CkW-Nx-dh5" firstAttribute="top" secondItem="VA4-6T-uaV" secondAttribute="bottom" constant="1" id="g15-Au-MzV"/>
                             <constraint firstItem="3sh-iW-Ors" firstAttribute="top" secondItem="tVJ-nW-Xas" secondAttribute="top" constant="10" id="icH-k5-pjj"/>
+                            <constraint firstItem="8Jy-ee-IqC" firstAttribute="top" secondItem="CkW-Nx-dh5" secondAttribute="bottom" id="lTd-pM-HXK"/>
                             <constraint firstItem="AXR-o6-rM9" firstAttribute="top" secondItem="VA4-6T-uaV" secondAttribute="bottom" constant="8" id="oDG-sO-oXv"/>
+                            <constraint firstAttribute="trailing" secondItem="8Jy-ee-IqC" secondAttribute="trailing" constant="5" id="pwQ-bo-Jr8"/>
                             <constraint firstAttribute="trailing" secondItem="z1J-Mw-9rV" secondAttribute="trailing" constant="5" id="sLj-bX-BQU"/>
                             <constraint firstItem="AXR-o6-rM9" firstAttribute="leading" secondItem="3sh-iW-Ors" secondAttribute="trailing" constant="10" id="vwb-35-qcS"/>
                             <constraint firstItem="VA4-6T-uaV" firstAttribute="top" secondItem="tVJ-nW-Xas" secondAttribute="top" constant="15" id="xA2-So-zgQ"/>
@@ -145,7 +135,6 @@
                 <outlet property="MyImage" destination="3sh-iW-Ors" id="N1N-Ld-hD7"/>
                 <outlet property="MyLbl" destination="VA4-6T-uaV" id="evV-7U-Kms"/>
                 <outlet property="MyLbl2" destination="AXR-o6-rM9" id="v9O-Q7-crS"/>
-                <outlet property="message" destination="sP1-dm-59l" id="dEz-Ka-u8u"/>
                 <outlet property="msgbtn" destination="CkW-Nx-dh5" id="6MU-Ra-jA9"/>
                 <outlet property="mylbl3" destination="8Jy-ee-IqC" id="0Yn-kk-Rqw"/>
                 <outlet property="terminatedbtn" destination="z1J-Mw-9rV" id="4kZ-5i-j9R"/>

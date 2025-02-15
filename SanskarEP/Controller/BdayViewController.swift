@@ -157,8 +157,8 @@ extension BdayViewController:UITableViewDelegate,UITableViewDataSource
         EmpData = datalist[indexPath.row]["EmpCode"] as? String ?? ""
         vc.imaged = imageData
         print(vc.imaged)
-        vc.EmpCode = EmpData
-        print(vc.EmpCode)
+        vc.empCode = EmpData
+        print(vc.empCode)
         present(vc, animated: true)
          
         }

@@ -5,6 +5,29 @@
 //  Created by Surya on 12/08/23.
 //
 
+
+enum AttendanceStatus: Int {
+    case present = 0
+    case absent = 1
+    case Pending = 2
+    case approve = 3
+    
+    var color: UIColor {
+        switch self {
+        case .present:
+            return UIColor(red: 25/255, green: 135/255, blue: 84/255, alpha: 1.0) // #198754
+        case .absent:
+            return UIColor(red: 187/255, green: 45/255, blue: 59/255, alpha: 1.0) // #BB2D3B
+        case .Pending:
+            return .systemPink
+        case .approve:
+            return .systemYellow
+        }
+    }
+
+
+}
+
 import UIKit
 import SDWebImage
 import Charts
@@ -75,10 +98,8 @@ class NewHomeVC: UIViewController  {
     var aprove: Bool = false
     var book: Bool = false
     var bEmpcode = String()
-    
-    var EpmDetails = [[String:Any]]()
-
-    //var datalist = [[String:Any]]()
+    var selectedIndexPath: IndexPath?
+    var epmDetails: [EpmDetails] = []
   
     
     override func viewDidLoad() {
@@ -117,18 +138,15 @@ class NewHomeVC: UIViewController  {
         
         setCellView()
         setMonthView()
-        EventApi()
-        
-       
-        
-        
+        eventcCurrentDate()
         empimage.layer.cornerRadius = 7
         dateview.layer.cornerRadius = 10
 
         approvalpending()
         AttendanceApi()
     
-        
+        updateAttendanceForDate(selectedDate)
+
         empnamelbl.text = currentUser.Name
         empcodelbl.text = currentUser.EmpCode
         
@@ -149,7 +167,8 @@ class NewHomeVC: UIViewController  {
                 empimage.sd_setImage(with: URL(string: img), placeholderImage: UIImage(systemName: "person.circle.fill"), options: .refreshCached, completed: nil)
             }
         }
-
+     
+        
 //        let noteNo = UserDefaults.standard.value(forKey: "noteCount")
 //        if let noteNo = noteNo as? Int {
 //            notificationlbl.text = "\(noteNo)"
@@ -205,7 +224,7 @@ class NewHomeVC: UIViewController  {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-             EventApi()
+        eventcCurrentDate()
     }
     @IBAction func ButtonTapped(_ sender: Any) {
         let profile = storyboard?.instantiateViewController(withIdentifier: "ProfileVc") as! ProfileVc
@@ -289,6 +308,13 @@ class NewHomeVC: UIViewController  {
     present(vc, animated: true)
     }
    
+    
+    func eventcCurrentDate() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let currentDate = dateFormatter.string(from: Date())
+        EventApi(selectDate: currentDate)
+    }
     func setCellView() {
         let width  = (calcollectionview.frame.size.width - 2) / 8
         let height = (calcollectionview.frame.size.height - 2) / 8
@@ -324,8 +350,8 @@ class NewHomeVC: UIViewController  {
 
     
     @IBAction func SearchBarBtn(_ sender: UIButton) {
-       let vc = self.storyboard?.instantiateViewController(withIdentifier: "SecondnewApprovalVc") as! SecondnewApprovalVc
-    //    let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
+   //    let vc = self.storyboard?.instantiateViewController(withIdentifier: "SecondnewApprovalVc") as! SecondnewApprovalVc
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
         if #available(iOS 15.0, *) {
         if let sheet = vc.sheetPresentationController {
         var customDetent: UISheetPresentationController.Detent?
@@ -353,11 +379,13 @@ class NewHomeVC: UIViewController  {
     @IBAction func previousTapped(_ sender: UIButton) {
         selectedDate = calenderHelper().minusmonth(date: selectedDate)
         setMonthView()
+        MonthwiseDetailApi()
     }
     
     @IBAction func nextTapped(_ sender: UIButton) {
         selectedDate = calenderHelper().plusmonth(date: selectedDate)
         setMonthView()
+        MonthwiseDetailApi()
     }
     override open var shouldAutorotate: Bool {
         return false
@@ -398,41 +426,26 @@ class NewHomeVC: UIViewController  {
             }
         }
     }
-    
-//    func detailApi() {
-//        self.staticItems.removeAll()
-//        
-//        var dict = Dictionary<String, Any>()
-//        dict["EmpCode"] = EmpCode
-//        DispatchQueue.main.async { Loader.showLoader() }
-//        APIManager.apiCall(postData: dict as NSDictionary, url: EmployeeDetailApi) { result, response, error, data in
-//            DispatchQueue.main.async { Loader.hideLoader() }
-//         
-//            if let responseData = response, let dataArray = responseData["data"] as? [[String: Any]] {
-//                for item in dataArray {
-//                    if let monthFull = item["month"] as? String {
-//                        let monthComponents = monthFull.split(separator: " ")
-//                        let month = String(monthComponents.first ?? "")
-//                        let full = "\(item["F"] ?? "0")"
-//                        let half = "\(item["H"] ?? "0")"
-//                        let wfh = "\(item["WFH"] ?? "0")"
-//                        let tour = "\(item["Tour"] ?? "0")"
-//                        let row: [String: String] = [
-//                            "month": month,
-//                            "Full": full,
-//                            "Half": half,
-//                            "Tour": tour,
-//                            "WFH": wfh
-//                        ]
-//                        self.staticItems.append(row)
-//                    }
-//                }
-//                self.detailcollection.reloadData()
-//            } else {
-//                print(response?["error"] as Any)
-//            }
-//        }
-//    }
+    func updateAttendanceForDate(_ date: Date) {
+        let calendar = Calendar.current
+        let selectedDay = calendar.component(.day, from: date)
+        
+        // Get attendance for the selected day
+        if let attendance = epmDetails.first(where: { $0.date == selectedDay }) {
+            let inTime = attendance.inTime ?? "N/A"
+            let outTime = attendance.outTime ?? "N/A"
+            
+            DispatchQueue.main.async {
+                self.emptimelbl.text = "In: \(inTime)  |  Out: \(outTime)"
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.emptimelbl.text = "N/A"
+            }
+        }
+    }
+
+
     
     func AttendanceApi() {
         var dict = [String: Any]()
@@ -448,7 +461,7 @@ class NewHomeVC: UIViewController  {
             if let JSON = response as? NSDictionary, JSON.value(forKey: "status") as? Bool == true,
                 let dataArray = JSON["data"] as? [[String: Any]] {
                 if let firstEntry = dataArray.first, let inTime = firstEntry["InTime"] as? String, inTime != "0" {
-                    self.emptimelbl.text = inTime
+                    self.emptimelbl.text = "In:" + inTime
                 } else {
                     self.emptimelbl.text = "Absent"
                 }
@@ -590,16 +603,14 @@ class NewHomeVC: UIViewController  {
 
 
 
-    func EventApi() {
+    func EventApi(selectDate: String? = nil) {
         var dict = [String: Any]()
         dict["EmpCode"] = currentUser.EmpCode
-
-        let currentDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        let reqDate = dateFormatter.string(from: currentDate)
+        let reqDate = selectDate ?? dateFormatter.string(from: Date())
         dict["req_date"] = reqDate
+        
         DispatchQueue.main.async {
             Loader.showLoader()
         }
@@ -661,8 +672,8 @@ class NewHomeVC: UIViewController  {
     func MonthwiseDetailApi() {
         var dict = [String: Any]()
         dict["EmpCode"] = currentUser.EmpCode
-        dict["month"] = "02"
-        dict["year"] = "2025"
+        dict["month"] = "\(calenderHelper().monthString1(date: selectedDate))"
+        dict["year"] = "\(calenderHelper().YearString(date: selectedDate))"
         
         DispatchQueue.main.async {
             Loader.showLoader()
@@ -672,23 +683,28 @@ class NewHomeVC: UIViewController  {
             DispatchQueue.main.async {
                 Loader.hideLoader()
             }
-            
-            guard let JSON = response as? [String: Any],
-                  let status = JSON["status"] as? Bool, status == true,
-                  let data = JSON["data"] as? [[String: Any]] else {
-                print("Error:", response?["error"] as Any)
+            guard let responseData = data else {
+                print("Error: No data received")
                 return
             }
-            
-            // Data ko EpmDetails mein properly store karein
-            self.EpmDetails = data
-            
-            // Debugging ke liye print karein
-            print("Employee Attendance Data:", self.EpmDetails)
-            
-            DispatchQueue.main.async {
-                // UI update ya further processing yahan karein
+            do {
+                let decoder = JSONDecoder()
+                let monthWiseDetail = try decoder.decode(MonthWiseEmpDetail.self, from: responseData)
+                
+                if monthWiseDetail.status == true, let details = monthWiseDetail.data {
+                    DispatchQueue.main.async {
+                        self.epmDetails = details  // ✅ Assigning to correct property
+                        self.calcollectionview.reloadData() // ✅ Reload collection view after update
+
+                    }
+                } else {
+                    print("Error: \(monthWiseDetail.message ?? "Unknown error")")
+                }
+            } catch {
+                print("Decoding Error:", error.localizedDescription)
             }
+            
+            
         }
     }
 
@@ -780,9 +796,12 @@ class NewHomeVC: UIViewController  {
         self.detailcollection.reloadData()
         
         let indexPath = IndexPath(row: sender.tag, section: sender.superview?.superview?.tag ?? 0)
-        let sectionData = daTalist[indexPath.section]
-        let list = sectionData["list"] as? [[String: Any]]
-        let selectedData = list?[indexPath.row] ?? [:]
+//        let sectionData = daTalist[indexPath.section]
+//        let list = sectionData["list"] as? [[String: Any]]
+//        let selectedData = list?[indexPath.row] ?? [:]
+        
+        let selectedData = daTalist[indexPath.row]
+        
         
         DispatchQueue.main.async {
             self.empname.text = selectedData["Name"] as? String ?? ""
@@ -792,7 +811,7 @@ class NewHomeVC: UIViewController  {
             self.type.text = selectedData["leave_type"] as? String ?? ""
             self.requestid = selectedData["ID"] as? String ?? ""
             
-            if let leaveType = selectedData["leave_type"] as? String, leaveType.lowercased() == "half" {
+            if let leaveType = selectedData["leave_type"] as? String, leaveType.lowercased() == "Half Leave" {
                 self.fromdate.text = selectedData["from_date"] as? String ?? ""
             } else {
                 self.fromdate.text = "\(selectedData["from_date"] as? String ?? "") to \(selectedData["to_date"] as? String ?? "")"
@@ -896,26 +915,31 @@ class NewHomeVC: UIViewController  {
     @objc func Messageonclick(_ sender: UIButton) {
       //  self.bookingview.isHidden = !self.bookingview.isHidden
     }
-
+    
     
     @objc func MessageOnClick(_ sender: UIButton) {
         let point = sender.convert(CGPoint.zero, to: tableview)
         if let indexPath = tableview.indexPathForRow(at: point) {
        
-            let sectionData = daTalist[indexPath.section]
-            let list = sectionData["list"] as? [[String: Any]]
-            let cellData = list?[indexPath.row] ?? [:]
-            let type = sectionData["type"] as? String ?? ""
+//            let sectionData = daTalist[indexPath.section]
+//            let list = sectionData["list"] as? [[String: Any]]
+//            let cellData = list?[indexPath.row] ?? [:]
+//            let type = daTalist["type"] as? String ?? ""
+//            
+
+            let cellData = daTalist[indexPath.row]
+            let leaveType = cellData["event_type"] as? String ?? ""
+            
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "BirthPViewController") as! BirthPViewController
-            if type == "birthday" {
+            if leaveType == "birthday" {
                 if let imgUrl = cellData["PImg"] as? String {
                     vc.imaged = imgUrl.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
                 } else {
                     vc.imaged = ""
                 }
             }
-            bEmpcode = cellData["EmpCode"] as? String ?? ""
-            vc.EmpCode = bEmpcode
+            bEmpcode = cellData["Emp_Code"] as? String ?? ""
+            vc.empCode = bEmpcode
             
             if #available(iOS 15.0, *) {
                 if let sheet = vc.sheetPresentationController {
@@ -991,41 +1015,60 @@ extension NewHomeVC: UICollectionViewDataSource {
             let dateText = totalSquares[indexPath.item]
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "d"
-            let currentDateString = dateFormatter.string(from: Date())
-            
             if dateText.isEmpty {
                 cell.isHidden = true
             } else {
                 cell.isHidden = false
                 cell.dayofmonth.text = dateText
-                
+
+////                    if let day = Int(dateText) {
+////                        if day < currentDay {
+////                            cell.dayofmonth.textColor = .gray
+////                        } else if day == currentDay {
+////                            cell.dayofmonth.textColor = .systemGreen
+////                        } else {
+////                            cell.dayofmonth.textColor = .black
+////                        }
+////                    }
                 let calendar = Calendar.current
                 let currentDay = calendar.component(.day, from: Date())
                 let currentMonth = calendar.component(.month, from: Date())
                 let currentYear = calendar.component(.year, from: Date())
+
                 let selectedMonth = calendar.component(.month, from: selectedDate)
                 let selectedYear = calendar.component(.year, from: selectedDate)
-                
-                if selectedYear < currentYear || (selectedYear == currentYear && selectedMonth < currentMonth) {
-                    cell.dayofmonth.textColor = .gray
-                } else if selectedYear > currentYear || (selectedYear == currentYear && selectedMonth > currentMonth) {
-                    cell.dayofmonth.textColor = .black
-                } else {
-                    if let day = Int(dateText) {
-                        if day < currentDay {
-                            cell.dayofmonth.textColor = .gray
-                        } else if day == currentDay {
-                            cell.dayofmonth.textColor = .systemGreen
-                        } else {
-                            cell.dayofmonth.textColor = .black
-                        }
+
+                if let day = Int(dateText) {
+                    if selectedIndexPath == indexPath {
+                        // ✅ If selected, highlight in blue
+                        cell.backview.backgroundColor = .systemBlue
+                        cell.dayofmonth.textColor = .white
+                    }else if selectedYear == currentYear && selectedMonth == currentMonth && day == currentDay {
+                        // ✅ If today, set gray color
+                        cell.dayofmonth.textColor = .white
+                        cell.backview.backgroundColor = .gray
+                    } else if selectedYear > currentYear || (selectedYear == currentYear && selectedMonth > currentMonth) ||
+                                (selectedYear == currentYear && selectedMonth == currentMonth && day > currentDay) {
+                        // ✅ If future date, set clear color
+                        cell.dayofmonth.textColor = .black
+                        cell.backview.backgroundColor = .clear
+                    } else if let attendance = epmDetails.first(where: { $0.date == day }) {
+                        // ✅ If past date, use attendance status color
+                        let statusEnum = AttendanceStatus(rawValue: attendance.status ?? -1) ?? .absent
+                        cell.backview.backgroundColor = statusEnum.color
+                        cell.dayofmonth.textColor = .white
+                    } else {
+                        // ✅ Default to absent color if no record
+                        cell.dayofmonth.textColor = .white
+                        cell.backview.backgroundColor = AttendanceStatus.absent.color
                     }
                 }
-                
                 if indexPath.item % 7 == 0 {
-                    cell.dayofmonth.textColor = .red
+                    cell.dayofmonth.textColor = .white
+                    cell.backview.backgroundColor = .systemOrange
                 }
             }
+            //#fdcc9ea6
             
             cell.layer.cornerRadius = 8
             return cell
@@ -1049,20 +1092,44 @@ extension NewHomeVC: UICollectionViewDataSource {
         return UICollectionViewCell()
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == calcollectionview {
-            
-            
-        } else if collectionView == detailcollection {
-            
-        }
-        
-    }
+    
 }
 //MARK: - UICollectionViewDelegate
 
 extension NewHomeVC: UICollectionViewDelegate {
-
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == calcollectionview {
+            let selectedDay = totalSquares[indexPath.item]
+            guard let day = Int(selectedDay) else { return }
+            selectedIndexPath = indexPath
+            calcollectionview.reloadData()
+            let calendar = Calendar.current
+            let selectedMonth = calendar.component(.month, from: selectedDate)
+            let selectedYear = calendar.component(.year, from: selectedDate)
+            
+            print("Selected Date: \(day)-\(selectedMonth)-\(selectedYear)")
+            
+            
+            var components = calendar.dateComponents([.year, .month], from: selectedDate)
+            components.day = day
+            guard let newDate = calendar.date(from: components) else { return }
+            
+            if let attendance = epmDetails.first(where: { $0.date == day }) {
+                emptimelbl.text = "In: \(attendance.inTime ?? "N/A")"
+                emptimelbl.text = "Out: \(attendance.outTime ?? "N/A")"
+            }
+            updateAttendanceForDate(newDate)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let formattedSelectedDate = dateFormatter.string(from: newDate)
+            EventApi(selectDate: formattedSelectedDate)
+        }
+        else if collectionView == detailcollection {
+            print("Detail Collection Item Selected at index \(indexPath.item)")
+            // Handle selection in detailcollection (e.g., show more details)
+        }
+    }
+    
 }
 
 extension NewHomeVC: UICollectionViewDelegateFlowLayout {
@@ -1118,103 +1185,80 @@ extension UIColor {
 
 extension NewHomeVC: UITableViewDelegate, UITableViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-       
-        return daTalist.count
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionData = daTalist[section]
-        if let list = sectionData["list"] as? [[String: Any]] {
-            
-            return list.count
-        }
-        return 0
+            return daTalist.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let sectionData = daTalist[indexPath.section]
-        let list = sectionData["list"] as? [[String: Any]]
-        let cellData = list?[indexPath.row] ?? [:]
-
-        let type = sectionData["type"] as? String ?? ""
-
-        if type == "leave" {
+        let cellData = daTalist[indexPath.row]
+        
+        let leaveType = cellData["event_type"] as? String ?? ""
+        
+        switch leaveType.lowercased() {
+        case "leave":
             let cell = tableView.dequeueReusableCell(withIdentifier: "NewEventListCell", for: indexPath) as! NewEventListCell
             cell.eventbtn.addTarget(self, action: #selector(messageOnClick(_:)), for: .touchUpInside)
             cell.eventbtn.tag = indexPath.row
-            
-            cell.viewbtn . isHidden = true
-            
+
             cell.NameLbl.text = cellData["Name"] as? String ?? ""
-  //        cell.fromdate.text = cellData["from_date"] as? String ?? ""
- //        cell.todate.text = cellData["to_date"] as? String ?? ""
-//         cell.locationlabel.text = cellData["Dept"] as? String ?? ""
-            
-//          cell.reasonlbl.text = cellData["Reason"] as? String ?? ""
             cell.TypeLbl.text = cellData["leave_type"] as? String ?? ""
-            EmpCode =  cellData["Emp_Code"] as? String ?? ""
             
-            if let leaveType = cellData["leave_type"] as? String, leaveType.lowercased() == "half" {
-                if let fromDate = cellData["from_date"] as? String {
-                    let formattedFromDate = formatDate(fromDate)
-                    cell.Datelbl.text = "\(formattedFromDate) (1)"
-                } else {
-                    cell.Datelbl.text = ""
-                }
+            if let fromDate = cellData["from_date"] as? String, let toDate = cellData["to_date"] as? String {
+                let formattedFromDate = formatDate(fromDate)
+                let formattedToDate = formatDate(toDate)
+                let dayCount = calculateDayDifference(fromDate: fromDate, toDate: toDate)
+                cell.Datelbl.text = "\(formattedFromDate) to \(formattedToDate) (\(dayCount))"
             } else {
-                if let fromDate = cellData["from_date"] as? String, let toDate = cellData["to_date"] as? String {
-                    let formattedFromDate = formatDate(fromDate)
-                    let formattedToDate = formatDate(toDate)
-                    let dayCount = calculateDayDifference(fromDate: fromDate, toDate: toDate)
-                    cell.Datelbl.text = "\(formattedFromDate) to \(formattedToDate) (\(dayCount))"
-                } else {
-                    cell.Datelbl.text = ""
-                }
+                cell.Datelbl.text = ""
             }
-            
-    //        cell.Datelbl.text =
-            
-//            if let leaveType = cellData["leave_type"] as? String, leaveType.lowercased() == "half" {
-//                cell.todate.isHidden = true
-//                cell.to.isHidden = true
-//            } else {
-//                cell.todate.isHidden = false
-//                cell.to.isHidden = false
-//                cell.todate.text = cellData["to_date"] as? String ?? ""
-//            }
-//
-            if currentUser.Code == "H" {
-                cell.eventbtn.isHidden = false
-                cell.imageview.isHidden = false
-            } else {
-       //         cell.NameLbl.text = cellData["ID"] as? String ?? ""
-                NameLbl = cellData["leave_type"] as? String ?? ""
-                
-                cell.NameLbl.text = "Leave Request" + " " +  "(" + NameLbl + ")"
-                
-                let rowdata = cellData["status"] as? String ?? ""
-                if rowdata == "R" {
-                    cell.TypeLbl.text = "Pending"
-                    cell.TypeLbl.textColor = UIColor.red
-                }
-  //              cell.eventbtn.isHidden = true
-//                cell.type.isHidden = true
-//                cell.typelbl.isHidden = true
-                cell.imageview.isHidden = true
-                cell.Datelbl.isHidden = true
-           }
+            cell.viewbtn .isHidden = true
             
             return cell
             
-        } else if type == "booking" {
+        case "birthday":
+            let cell = tableView.dequeueReusableCell(withIdentifier: "bdayviewcell", for: indexPath) as! bdayviewcell
+            cell.msgbtn.addTarget(self, action: #selector(MessageOnClick(_:)), for: .touchUpInside)
+            cell.msgbtn.tag = indexPath.row
+            
+            cell.MyLbl.text = cellData["Name"] as? String ?? ""
+            cell.MyLbl2.text = cellData["BDay"] as? String ?? ""
+            
+            if let imageUrl = cellData["PImg"] as? String, !imageUrl.isEmpty {
+                let formattedImageUrl = imageUrl.replacingOccurrences(of: " ", with: "%20")
+                if let url = URL(string: formattedImageUrl) {
+                    cell.MyImage.sd_setImage(with: url)
+                }
+            } else {
+                cell.MyImage.image = UIImage(named: "download")
+            }
+            if let actionStatus = cellData["actionStatus"] as? Int, actionStatus == 1 {
+                cell.msgbtn.isEnabled = false
+              //  cell.msgbtn.backgroundColor = UIColor.lightGray // Ensure disabled color
+           //     cell.msgbtn.setTitleColor(UIColor.darkGray, for: .disabled)
+              
+                
+               
+            } else {
+                cell.msgbtn.isEnabled = true
+              
+            }
+
+            
+            cell.terminatedbtn.isHidden = true
+            cell.mylbl3.isHidden = true
+            return cell
+            
+        case "booking":
             let cell = tableView.dequeueReusableCell(withIdentifier: "EventbookingCell", for: indexPath) as! EventbookingCell
             cell.bookingbtn.addTarget(self, action: #selector(Messageonclick(_:)), for: .touchUpInside)
             cell.bookingbtn.tag = indexPath.row
             
             cell.santname.text = cellData["Name"] as? String ?? ""
+            cell.Location.text = cellData["Venue"] as? String ?? ""
+            cell.time.text = cellData["KathaTiming"] as? String ?? ""
             
-            // ChannelID mapping
+            cell.Date.text = "\(cellData["Katha_from_Date"] as? String ?? "") to \(cellData["katha_date"] as? String ?? "")"
+            
             if let channelID = cellData["ChannelID"] as? String {
                 switch channelID {
                 case "1":
@@ -1230,47 +1274,20 @@ extension NewHomeVC: UITableViewDelegate, UITableViewDataSource {
                 cell.Channel.text = "Unknown Channel"
             }
             
-            cell.Date.text = "\(cellData["Katha_from_Date"] as? String ?? "") to \(cellData["katha_date"] as? String ?? "")"
-            cell.Location.text = cellData["Venue"] as? String ?? ""
-            cell.time.text = cellData["KathaTiming"] as? String ?? ""
-            
             return cell
-        } else if type == "birthday" {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "bdayviewcell", for: indexPath) as! bdayviewcell
-            cell.msgbtn.addTarget(self, action: #selector(MessageOnClick(_:)), for: .touchUpInside)
-            cell.msgbtn.tag = indexPath.row
             
-            cell.MyLbl2.text = cellData["BDay"] as? String ?? ""
-            cell.MyLbl.text = cellData["Name"] as? String ?? ""
-            cell.mylbl3.isHidden = true
-            cell.terminatedbtn.isHidden = true
-            
-            EmpData = cellData["EmpCode"] as? String ?? ""
-            if let imageUrl = cellData["PImg"] as? String {
-                imageData = imageUrl.trimmingCharacters(in: .whitespaces)
-                if imageData.isEmpty {
-                    cell.MyImage.image = UIImage(named: "download")
-                } else {
-                    let formattedImageUrl = imageData.replacingOccurrences(of: "", with: "%20")
-                    if let url = URL(string: formattedImageUrl) {
-                        cell.MyImage.sd_setImage(with: url)
-                    }
-                }
-            }
-            
-            return cell
+        default:
+            return UITableViewCell()
         }
-        return UITableViewCell()
     }
+
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let sectionData = daTalist[indexPath.section]
-        let list = sectionData["list"] as? [[String: Any]]
-        let cellData = list?[indexPath.row] ?? [:]
+        let cellData = daTalist[indexPath.row]
+        
+        let leaveType = cellData["event_type"] as? String ?? ""
 
-        let type = sectionData["type"] as? String ?? ""
-
-        switch type {
+        switch leaveType {
         case "leave":
             return 70
         case "booking":
