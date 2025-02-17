@@ -40,6 +40,8 @@ class NewAllLeaveReqVc: UIViewController {
     var leaveType: String?
     var dayType: String?
     
+    var fromDate: Date?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -131,6 +133,7 @@ class NewAllLeaveReqVc: UIViewController {
         leaveType = "full"
         dayType = "full"
         wkhome = false
+        resettext()
     }
     
     @IBAction func halfbtn(_ sender: UIButton) {
@@ -170,6 +173,7 @@ class NewAllLeaveReqVc: UIViewController {
         offdayview.isHidden = true
         WFHMainView.isHidden = false
         wkhome = true
+        resettext()
     }
     
     @IBAction func firstbtn(_ sender: UIButton) {
@@ -204,16 +208,32 @@ class NewAllLeaveReqVc: UIViewController {
     
     @IBAction func dateclick(_ sender: UIButton) {
         IosDatePicker().showDate(animation: .zoomIn, pickerMode: .date) { date in
-            self.fromdate.text = Utils.dateString(date: date, format: "yyyy-MM-dd")
-        }
+               self.fromDate = date
+               self.fromdate.text = Utils.dateString(date: date, format: "yyyy-MM-dd")
+           }
     }
     
     
     @IBAction func Enddateclick(_ sender: UIButton) {
-        IosDatePicker().showDate(animation: .zoomIn, pickerMode: .date) { date in
-            self.todate.text = Utils.dateString(date: date, format: "yyyy-MM-dd")
+        guard let fromDateText = self.fromdate.text, !fromDateText.isEmpty else {
+            AlertController.alert(message: "Please select From Date first.")
+            return
         }
+          guard let fromDate = self.fromDate else {
+              IosDatePicker().showDate(animation: .zoomIn, pickerMode: .date) { date in
+                  self.todate.text = Utils.dateString(date: date, format: "yyyy-MM-dd")
+              }
+              return
+          }
+          let datePicker = IosDatePicker()
+          minimumData = fromDate
+          isMinimumDate = true
+
+          datePicker.showDate(animation: .zoomIn, pickerMode: .date) { date in
+              self.todate.text = Utils.dateString(date: date, format: "yyyy-MM-dd")
+          }
     }
+    
     @IBAction func enddateclick(_ sender: UIButton) {
         IosDatePicker().showDate(animation: .zoomIn, pickerMode: .date) { date in
             self.enddate.text = Utils.dateString(date: date, format: "yyyy-MM-dd")
@@ -261,7 +281,7 @@ class NewAllLeaveReqVc: UIViewController {
            }
     }
     
-    func wfHAPi(){
+    func wfHAPi() {
         var dict = Dictionary<String,Any>()
         dict["from_date"] = fromdate.text!
         dict["to_date"] = todate.text!
