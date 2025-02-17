@@ -5,6 +5,9 @@
 //  Created by Sanskar IOS Dev on 22/05/23.
 //
 
+protocol BirthPViewControllerDelegate: AnyObject {
+    func didFinishWishing()
+}
 import UIKit
 
 class BirthPViewController: UIViewController {
@@ -19,7 +22,7 @@ class BirthPViewController: UIViewController {
     @IBOutlet weak var wish4: UILabel!
     @IBOutlet weak var wish1: UILabel!
     
-    
+    weak var delegate: BirthPViewControllerDelegate?
     var datal = [[String:Any]]()
     var imaged = String()
     var empCode = String()
@@ -100,23 +103,23 @@ class BirthPViewController: UIViewController {
         dict["Sent_by"] = currentUser.EmpCode
         DispatchQueue.main.async(execute: {Loader.showLoader()})
         APIManager.apiCall(postData: dict as NSDictionary, url: bwishApi) { result, response, error, data in
-                        DispatchQueue.main.async(execute: {Loader.hideLoader()})
-                        if let JSON = response as? NSDictionary {
-                            if JSON.value(forKey: "status") as? Bool == true {
-                                AlertController.alert(message: JSON.value(forKey: "message") as! String)
-                             
-                                let data = (JSON["data"] as? [[String:Any]] ?? [[:]])
-                                print(data)
-                            }
-                        }
-                    }
+            DispatchQueue.main.async(execute: {Loader.hideLoader()})
+            if let JSON = response as? NSDictionary {
+                if JSON.value(forKey: "status") as? Bool == true {
+                    AlertController.alert(message: JSON.value(forKey: "message") as! String)
+                    self.delegate?.didFinishWishing()
+                    self.dismiss(animated: true, completion: nil)
+                    let data = (JSON["data"] as? [[String:Any]] ?? [[:]])
+                    print(data)
+                }
+            }
+        }
     }
 
     
     @IBAction func WishButton(_ sender: Any) {
         WishApi()
-        self.dismiss(animated: true,completion: nil)
-        self.showToast(message: "This is a toast message!")
+       
     }
     
 }

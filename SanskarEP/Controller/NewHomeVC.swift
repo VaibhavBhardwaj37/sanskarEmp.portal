@@ -920,23 +920,13 @@ class NewHomeVC: UIViewController  {
     @objc func MessageOnClick(_ sender: UIButton) {
         let point = sender.convert(CGPoint.zero, to: tableview)
         if let indexPath = tableview.indexPathForRow(at: point) {
-       
-//            let sectionData = daTalist[indexPath.section]
-//            let list = sectionData["list"] as? [[String: Any]]
-//            let cellData = list?[indexPath.row] ?? [:]
-//            let type = daTalist["type"] as? String ?? ""
-//            
-
             let cellData = daTalist[indexPath.row]
             let leaveType = cellData["event_type"] as? String ?? ""
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "BirthPViewController") as! BirthPViewController
+            vc.delegate = self  // Set delegate
             if leaveType == "birthday" {
-                if let imgUrl = cellData["PImg"] as? String {
-                    vc.imaged = imgUrl.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-                } else {
-                    vc.imaged = ""
-                }
+                vc.imaged = cellData["PImg"] as? String ?? ""
             }
             bEmpcode = cellData["Emp_Code"] as? String ?? ""
             vc.empCode = bEmpcode
@@ -1182,7 +1172,12 @@ extension UIColor {
         )
     }
 }
-
+extension NewHomeVC: BirthPViewControllerDelegate {
+    func didFinishWishing() {
+        self.showToast(message: "Birthday Wish Insert Successfully!")
+        tableview.reloadData()
+    }
+}
 extension NewHomeVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
