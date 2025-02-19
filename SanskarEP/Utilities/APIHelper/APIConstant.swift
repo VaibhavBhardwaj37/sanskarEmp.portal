@@ -7,8 +7,8 @@
 
 import Foundation
 
-var BASEURL              = "https://sap.sanskargroup.in"
-//var BASEURL                = "https://emp.sanskargroup.in"
+//var BASEURL              = "https://sap.sanskargroup.in"
+var BASEURL                = "https://emp.sanskargroup.in"
 //var BASEURL              = "https://sap.sanskargroup.in/employee_dev/index.php"
 var BASEURL1               = "https://sap.sanskargroup.in/totalbhakti_portal"
 let getLogin               = "api_panel/login_app"
@@ -39,7 +39,7 @@ let notifyList             = "api_panel/push_history"
 let vistorAccept           = "api_panel/visitor_metting"
 let removeNote             = "api_panel/remove_push_history"
 let guestHistory           = "api_panel/guest_request_list"
-let vistorHistory          = "api_panel/getEmp_visitor_list"
+let vistorHistory          = "api_panel/guest_record"
 let kbdayApi               = "api_panel/birthday"
 let bwishApi               = "api-panel/wish-birthday"
 let BdaywishesApi          = "api-panel/birthday-wish"

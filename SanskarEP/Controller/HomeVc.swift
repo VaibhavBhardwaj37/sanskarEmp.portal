@@ -172,9 +172,9 @@ class HomeVc: UIViewController {
             }
             do{
                 let result = try JSONDecoder().decode(NotifyResponse.self, from: data)
-                UserDefaults.standard.set(result.data.count, forKey: "noteCount")
+                UserDefaults.standard.set(result.data?.count, forKey: "noteCount")
                 DispatchQueue.main.async {
-                    if result.data.count == 0 {
+                    if result.data?.count == 0 {
                         self.noteLbl = true
                     }else{
                         self.noteLbl = false

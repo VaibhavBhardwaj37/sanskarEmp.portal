@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class VistorHistoryVC: UIViewController {
     
@@ -15,17 +16,14 @@ class VistorHistoryVC: UIViewController {
     @IBOutlet weak var searchHolder: UIView!
     @IBOutlet weak var detailview: UIView!
     @IBOutlet weak var namelbl: UILabel!
-    @IBOutlet weak var reqdate: UITextField!
     @IBOutlet weak var meetinglbl: UILabel!
-    @IBOutlet weak var addresslbl: UILabel!
-    @IBOutlet weak var intimelbl: UILabel!
     @IBOutlet weak var outtimelbl: UILabel!
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var guestbtn: UIButton!
     @IBOutlet weak var hidebtn: UIButton!
     @IBOutlet weak var submit: UIButton!
-    @IBOutlet weak var editstarttime: UITextField!
-    @IBOutlet weak var editendtime: UITextField!
+    @IBOutlet weak var Datetime: UITextField!
+    @IBOutlet weak var retextview: UITextView!
     
     
     var titleText: String?
@@ -37,6 +35,10 @@ class VistorHistoryVC: UIViewController {
     var searchTap: Bool = false
     var selectedIndexPath: IndexPath?
     fileprivate let edittimePicker = UIDatePicker()
+    
+    var selectedId: String?
+    var type = Int()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,43 +53,41 @@ class VistorHistoryVC: UIViewController {
         }, completion: nil)
         detailview.isHidden = true
         submit.layer.cornerRadius = 8
-        edittimePickerSetup()
+        datepicker()
+        Datetime.layer.cornerRadius = 10
+        Datetime.layer.borderWidth = 1.0
+        Datetime.layer.borderColor = UIColor.lightGray.cgColor
+        
+        retextview.delegate = self
+        
+        retextview.layer.cornerRadius = 10
+        
+        
+        retextview.clipsToBounds = true
+        retextview.layer.borderWidth = 1.0
+        retextview.layer.borderColor = UIColor.lightGray.cgColor
     }
     
-    func edittimePickerSetup() {
-        let edittoolBar = UIToolbar()
-        let edittoolBar2 = UIToolbar()
-        edittoolBar.sizeToFit()
-        edittoolBar2.sizeToFit()
-        let doneBtn1 = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(editdoneBtnClicK))
-        let doneBtn2 = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(editdoneBtnClicK1))
-        edittoolBar.items = [doneBtn1]
-        edittoolBar2.items = [doneBtn2]
-        editstarttime.inputAccessoryView = edittoolBar
-        editstarttime.inputView = edittimePicker
-        editendtime.inputAccessoryView = edittoolBar2
-        editendtime.inputView = edittimePicker
-        edittimePicker.datePickerMode = .time
-        if #available(iOS 13.4, *) {
-            edittimePicker.preferredDatePickerStyle = .wheels
+
+    
+    func datepicker () {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .dateAndTime
+        if #available(iOS 14.0, *) {
+            datePicker.preferredDatePickerStyle = .wheels
         } else {
+
         }
+        datePicker.addTarget(self, action: #selector(datePickerValue(_:)), for: .valueChanged)
+        datePicker.frame.size = CGSize(width: 0, height: 250)
+        Datetime.inputView = datePicker
     }
+    
     @objc
-    func editdoneBtnClicK() {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        formatter.dateFormat = "HH:mm a"
-        editstarttime.text = "\(formatter.string(from: edittimePicker.date))"
-        self.view.endEditing(true)
-    }
-    @objc
-    func editdoneBtnClicK1() {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        formatter.dateFormat = "HH:mm a"
-        editendtime.text = "\(formatter.string(from: edittimePicker.date))"
-        self.view.endEditing(true)
+    func datePickerValue(_ sender: UIDatePicker){
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        Datetime.text = dateFormatter.string(from: sender.date)
     }
     
     
@@ -96,11 +96,6 @@ class VistorHistoryVC: UIViewController {
     }
     
     
-    @IBAction func datebtn(_ sender: UIButton) {
-        IosDatePicker().showDate(animation: .zoomIn, pickerMode: .date) { date in
-            self.reqdate.text = Utils.dateString(date: date, format: "yyyy-MM-dd")
-        }
-    }
     
     @IBAction func hideviewbtn(_ sender: UIButton) {
         detailview.isHidden = true
@@ -108,7 +103,9 @@ class VistorHistoryVC: UIViewController {
     
    
     @IBAction func submitbtn(_ sender: UIButton) {
-        againvistorApiHit()
+        guestRequest()
+        detailview.isHidden = true
+        tableView.reloadData()
     }
     
     @IBAction func GuestBtnCLiclk(_ sender: UIButton) {
@@ -151,19 +148,19 @@ class VistorHistoryVC: UIViewController {
     
     
     func configure1(with model: VistorList ) {
-        guard let url = URL(string: model.image) else {return}
+        guard let url = URL(string: model.image ?? "") else {return}
         image.sd_setImage(
             with: url,
             placeholderImage: UIImage(systemName: "person.fill"),
             options: .refreshCached, completed: nil
         )
         namelbl.text = model.name
-        reqdate.text = model.guest_date
         meetinglbl.text = model.to_whome
-        addresslbl.text = model.address
-        editstarttime.text = model.in_time
-        editendtime.text = model.out_time
         outtimelbl.text = model.mobile
+        
+        selectedId = model.id
+       
+        
     }
     @available(iOS 15.0, *)
     @IBAction func filterBtnPressed(_ sender: UIButton ) {
@@ -181,7 +178,7 @@ class VistorHistoryVC: UIViewController {
     
     @objc
     func AcceptOnClick(_ sender: UIButton) {
-        let index = sender.tag // Get the index of the selected row from the button tag
+        let index = sender.tag
         let selectedModel: VistorList
 
         if isSearch {
@@ -192,90 +189,84 @@ class VistorHistoryVC: UIViewController {
         
         configure1(with: selectedModel) // Set the data for the labels
         detailview.isHidden = !detailview.isHidden // Toggle the visibility of detailview
+        Datetime.text?.removeAll()
+        retextview.text?.removeAll()
     }
 
-//    func guestRequest() {
-//        var dict = Dictionary<String,Any>()
-//        dict["EmpCode"] = currentUser.EmpCode   
-//        dict["Reason"] = reasonTxtView.text
-//        dict["WhomtoMeet"] = whomTxtField.text!
-//        dict["Guest_Name"] = nametextField.text!
-//        dict["Date1"] = dateTxtField.text!
-//        dict["image"] = Uimage.image?.resizeToWidth3(250)
-////        DispatchQueue.main.async(execute: {Loader.showLoader()})
-////        APIManager.apiCall(postData: dict as NSDictionary, url: kGuestApi) { result, response, error, data in
-////            DispatchQueue.main.async(execute: {Loader.hideLoader()})
-////            if let _ = data,(response?["status"] as? Bool == true), response != nil {
-////                AlertController.alert(message: (response?.validatedValue("message"))!)
-////                self.removeData()
-////            }else{
-////                print(response?["error"] as Any)
-////            }
-////        }
-//        let url =  BASEURL + "/" + kGuestApi
-//        DispatchQueue.main.async(execute: {Loader.showLoader()})
-//        Alamofire.upload(multipartFormData: { (multipartFormData) in
-//            for (key, value) in dict {
-//                if key == "image"{
-//                    let milliseconds = Int64(Date().timeIntervalSince1970 * 1000.0)
-//                    let milisIsStirng = "\(milliseconds)"
-//                    let filename = "\(milisIsStirng).png"
-//                    let imageData = (value as! UIImage).pngData() as NSData?
-//                    multipartFormData.append((imageData! as Data) as Data, withName: key , fileName: filename as String, mimeType: "image/png")
-//                } else {
-//                    multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key )
-//                }
-//            }
-//        }, usingThreshold: UInt64(), to: url, method: .post , headers: nil, encodingCompletion: { (encodingResult) in
-//            switch encodingResult {
-//            case .success(let upload, _, _):
-//                upload.uploadProgress(closure: { (Progress) in
-//                    print("Upload Progress: \(Progress.fractionCompleted)")
-//                })
-//                upload.responseJSON(completionHandler: { [self] (response) in
-//                    debugPrint(response)
-//                    switch response.result {
-//                    case .success(_):
-//                        DispatchQueue.main.async(execute: {Loader.hideLoader()})
-//                        if let JSON = response.result.value as? NSDictionary {
-//                            if JSON.value(forKey: "status") as! Bool == true {
-//                                print(JSON)
-//                                let data = (JSON["data"] as? [[String:Any]] ?? [[:]])
-//                                print(data)
-//                                AlertController.alert(message: JSON.value(forKey: "message") as! String)
-//                                self.navigationController?.popViewController(animated: true)
-//                                
-//                            } else {
-//                                AlertController.alert(message: JSON.value(forKey: "message") as! String)
-//                            }
-//                        }
-//                        
-//                        break
-//                    case .failure(let encodingError):
-//                        if let err = encodingError as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
-//                            
-//                        } else {
-//                            
-//                        }
-//                    }
-//                })
-//            case .failure(let encodingError):
-//                if let err = encodingError as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
-//                    
-//                } else {
-//                    
-//                }
-//                
-//            }
-//        })
-//        
-//    }
+    func guestRequest() {
+        var dict = Dictionary<String,Any>()
+        dict["id"] = selectedId ?? ""
+        dict["EmpCode"] = currentUser.EmpCode
+        dict["Reason"] = retextview.text
+        dict["WhomtoMeet"] = meetinglbl.text
+        dict["Guest_Name"] = namelbl.text!
+        dict["Date1"] = Datetime.text!
+        dict["image"] =  image.image?.resizeToWidth3(250)
+
+        let url =  BASEURL + "/" + kGuestApi
+        DispatchQueue.main.async(execute: {Loader.showLoader()})
+        Alamofire.upload(multipartFormData: { (multipartFormData) in
+            for (key, value) in dict {
+                if key == "image"{
+                    let milliseconds = Int64(Date().timeIntervalSince1970 * 1000.0)
+                    let milisIsStirng = "\(milliseconds)"
+                    let filename = "\(milisIsStirng).png"
+                    let imageData = (value as! UIImage).pngData() as NSData?
+                    multipartFormData.append((imageData! as Data) as Data, withName: key , fileName: filename as String, mimeType: "image/png")
+                } else {
+                    multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key )
+                }
+            }
+        }, usingThreshold: UInt64(), to: url, method: .post , headers: nil, encodingCompletion: { (encodingResult) in
+            switch encodingResult {
+            case .success(let upload, _, _):
+                upload.uploadProgress(closure: { (Progress) in
+                    print("Upload Progress: \(Progress.fractionCompleted)")
+                })
+                upload.responseJSON(completionHandler: { [self] (response) in
+                    debugPrint(response)
+                    switch response.result {
+                    case .success(_):
+                        DispatchQueue.main.async(execute: {Loader.hideLoader()})
+                        if let JSON = response.result.value as? NSDictionary {
+                            if JSON.value(forKey: "status") as! Bool == true {
+                                print(JSON)
+                                let data = (JSON["data"] as? [[String:Any]] ?? [[:]])
+                                print(data)
+                                AlertController.alert(message: JSON.value(forKey: "message") as! String)
+                                self.navigationController?.popViewController(animated: true)
+                                
+                            } else {
+                                AlertController.alert(message: JSON.value(forKey: "message") as! String)
+                            }
+                        }
+                        
+                        break
+                    case .failure(let encodingError):
+                        if let err = encodingError as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
+                            
+                        } else {
+                            
+                        }
+                    }
+                })
+            case .failure(let encodingError):
+                if let err = encodingError as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
+                    
+                } else {
+                    
+                }
+                
+            }
+        })
+        
+    }
     
     func vistorApiHit() {
         var dict = Dictionary<String,Any>()
         dict["EmpCode"] = currentUser.EmpCode
-        dict["fromDate"] = fromDate ?? ""
-        dict["toDate"] = toDate ?? ""
+//        dict["fromDate"] = fromDate ?? ""
+//        dict["toDate"] = toDate ?? ""
         DispatchQueue.main.async(execute: {Loader.showLoader()})
         vistorList.removeAll()
         newList.removeAll()
@@ -287,41 +278,11 @@ class VistorHistoryVC: UIViewController {
             }
             do{
                 let json = try JSONDecoder().decode(VistorResponse.self, from: data)
-                self.vistorList.append(contentsOf: json.data)
+                self.vistorList.append(contentsOf: json.data ?? [])
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
                 
-            }catch{
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    func againvistorApiHit() {
-        var dict = Dictionary<String,Any>()
-        dict["EmpCode"] = currentUser.EmpCode
-        dict["MOBILE"] = outtimelbl.text
-        dict["TO_WHOME"] = namelbl.text
-        dict["IN_TIME"] = editstarttime.text
-        dict["ADDRESS"] = addresslbl.text
-        dict["AROGYA_SETU_STATUS"] = "yes"
-        DispatchQueue.main.async(execute: {Loader.showLoader()})
-        vistorList.removeAll()
-        newList.removeAll()
-        APIManager.apiCall(postData: dict as NSDictionary, url: visitorregistration) { result, response, error, data in
-            DispatchQueue.main.async(execute: {Loader.hideLoader()})
-            guard let data = data, error == nil else {
-                AlertController.alert(message: error?.localizedDescription as? String ?? "")
-                return
-            }
-            do{
-                let json = try JSONDecoder().decode(VistorResponse.self, from: data)
-                self.vistorList.append(contentsOf: json.data)
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-    
             }catch{
                 print(error.localizedDescription)
             }
@@ -344,16 +305,37 @@ extension VistorHistoryVC: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "VistorCell", for: indexPath) as? VistorCell else {
             return UITableViewCell()
         }
-        if isSearch {
-            cell.configure(with: newList[indexPath.row])
-        } else {
-            cell.configure(with: vistorList[indexPath.row])
-        }
-  
-        cell.penbtn.tag = indexPath.row
-        cell.penbtn.addTarget(self, action: #selector(AcceptOnClick(_:)), for: .touchUpInside)
-        cell.selectionStyle = .none
-        return cell
+//        if isSearch {
+//            cell.configure(with: newList[indexPath.row])
+//        } else {
+//            cell.configure(with: vistorList[indexPath.row])
+//        }
+//  
+//        cell.penbtn.tag = indexPath.row
+//        cell.penbtn.addTarget(self, action: #selector(AcceptOnClick(_:)), for: .touchUpInside)
+//        cell.selectionStyle = .none
+//         
+//        type = vistorList[indexPath.row]["type"] as? Int ?? 0
+//        if type == 1 {
+//            cell.penbtn.isHidden = false
+//        } else {
+//            cell.penbtn.isHidden = true
+//        }
+//        
+//        return cell
+        let visitor: VistorList
+           if isSearch {
+               visitor = newList[indexPath.row]
+           } else {
+               visitor = vistorList[indexPath.row]
+           }
+           cell.configure(with: visitor)
+           cell.penbtn.tag = indexPath.row
+           cell.penbtn.addTarget(self, action: #selector(AcceptOnClick(_:)), for: .touchUpInside)
+           cell.selectionStyle = .none
+           cell.penbtn.isHidden = visitor.type != 1
+
+           return cell
     }
 
 
@@ -405,7 +387,7 @@ extension VistorHistoryVC: UISearchBarDelegate {
             self.tableView.reloadData()
         }else{
             newList = vistorList.filter({ text in
-                let temp: NSString = text.name as NSString
+                let temp: NSString = text.name as! NSString
                 let range = temp.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
                 return range.location != NSNotFound
             })
@@ -415,6 +397,31 @@ extension VistorHistoryVC: UISearchBarDelegate {
                 isSearch = true
             }
             self.tableView.reloadData()
+        }
+    }
+}
+extension VistorHistoryVC : UITextViewDelegate {
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (retextview.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        return numberOfChars < 200
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+
+        if retextview.textColor == UIColor.lightGray {
+            retextview.text = ""
+            retextview.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+
+        if retextview.text == "" {
+
+            retextview.text = "Remark ..."
+            retextview.textColor = UIColor.lightGray
         }
     }
 }

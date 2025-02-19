@@ -104,6 +104,8 @@
 		6C756444161DCE68E022641B /* Pods_SanskarEP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B11E0BD4B13AE843F8C659 /* Pods_SanskarEP.framework */; };
 		7DF7DA8829EE958C00D59552 /* approveCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF7DA8629EE958C00D59552 /* approveCollectionViewCell.swift */; };
 		7DF7DA8929EE958C00D59552 /* approveCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DF7DA8729EE958C00D59552 /* approveCollectionViewCell.xib */; };
+		80DCF6D42D6499E800475988 /* LeaveNotificationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DCF6D22D6499E800475988 /* LeaveNotificationAlert.swift */; };
+		80DCF6D52D6499E800475988 /* LeaveNotificationAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80DCF6D32D6499E800475988 /* LeaveNotificationAlert.xib */; };
 		C70CE9F12A83BED5001DC970 /* GuestManageVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70CE9F02A83BED5001DC970 /* GuestManageVc.swift */; };
 		C70CE9F42A83C080001DC970 /* GuestManageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70CE9F22A83C080001DC970 /* GuestManageCell.swift */; };
 		C70CE9F52A83C080001DC970 /* GuestManageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C70CE9F32A83C080001DC970 /* GuestManageCell.xib */; };
@@ -435,6 +437,8 @@
 		6F4A14C8CC07AA140057C503 /* Pods-SanskarEPTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SanskarEPTests.debug.xcconfig"; path = "Target Support Files/Pods-SanskarEPTests/Pods-SanskarEPTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7DF7DA8629EE958C00D59552 /* approveCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = approveCollectionViewCell.swift; sourceTree = "<group>"; };
 		7DF7DA8729EE958C00D59552 /* approveCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = approveCollectionViewCell.xib; sourceTree = "<group>"; };
+		80DCF6D22D6499E800475988 /* LeaveNotificationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveNotificationAlert.swift; sourceTree = "<group>"; };
+		80DCF6D32D6499E800475988 /* LeaveNotificationAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeaveNotificationAlert.xib; sourceTree = "<group>"; };
 		8966C5E381405DAB219CB62A /* Pods_SanskarEPTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SanskarEPTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C70CE9F02A83BED5001DC970 /* GuestManageVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestManageVc.swift; sourceTree = "<group>"; };
 		C70CE9F22A83C080001DC970 /* GuestManageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestManageCell.swift; sourceTree = "<group>"; };
@@ -1134,6 +1138,8 @@
 			isa = PBXGroup;
 			children = (
 				D5E88CFB2D56189D00A360E3 /* LeaveTypeVc.swift */,
+				80DCF6D22D6499E800475988 /* LeaveNotificationAlert.swift */,
+				80DCF6D32D6499E800475988 /* LeaveNotificationAlert.xib */,
 				D58AB0F72D5F1720004757C3 /* BookingtypeVc.swift */,
 				D58AB0FA2D5F1A5B004757C3 /* TourReqtypeVC.swift */,
 			);
@@ -1365,6 +1371,7 @@
 				D5C3595A2C69E0D90069E784 /* NewApprovalBookingCell.xib in Resources */,
 				C7CDB89229EA89120094848C /* Storyboard.storyboard in Resources */,
 				079E8C4627FB030800D00271 /* NotifyCell.xib in Resources */,
+				80DCF6D52D6499E800475988 /* LeaveNotificationAlert.xib in Resources */,
 				077E8640278BEF33002BF76B /* Assets.xcassets in Resources */,
 				07A559612813E4D0006CEDDD /* VistorCell.xib in Resources */,
 				0742EC772792E22200E97D2E /* PLCell.xib in Resources */,
@@ -1606,6 +1613,7 @@
 				D5B6B06A2BA9910700209CC9 /* NewBooking1Vc.swift in Sources */,
 				D5880E0F2C4E5C9400E00E64 /* calenderHelper.swift in Sources */,
 				07354343278D773200D984D7 /* HomeVc.swift in Sources */,
+				80DCF6D42D6499E800475988 /* LeaveNotificationAlert.swift in Sources */,
 				07A559632813E79D006CEDDD /* VistorHistoryVC.swift in Sources */,
 				D5E88CFC2D56189D00A360E3 /* LeaveTypeVc.swift in Sources */,
 				D55D44852AE40A80007D4248 /* HODAllDetailVC.swift in Sources */,

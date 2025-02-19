@@ -39,7 +39,7 @@ class VistorCell: UITableViewCell {
     }
     
     func configure(with model: VistorList ) {
-        guard let url = URL(string: model.image) else {return}
+        guard let url = URL(string: model.image ?? "") else {return}
         posterImg.sd_setImage(
             with: url,
             placeholderImage: UIImage(systemName: "person.fill"),
