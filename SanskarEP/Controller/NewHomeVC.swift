@@ -104,7 +104,7 @@ class NewHomeVC: UIViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationItem.hidesBackButton = true
         
         MonthwiseDetailApi()
         
@@ -206,7 +206,7 @@ class NewHomeVC: UIViewController  {
 //    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-   
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         let noteCount = UserDefaults.standard.value(forKey: "noteCount") as? Int ?? 0
         if noteCount > 0 {
             noteLbl = false
@@ -224,6 +224,7 @@ class NewHomeVC: UIViewController  {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         eventcCurrentDate()
     }
     @IBAction func ButtonTapped(_ sender: Any) {
@@ -393,10 +394,10 @@ class NewHomeVC: UIViewController  {
   
     
     @IBAction func notificationbtn(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NotificationVc") as! NotificationVc
-        vc.titleTxt = "Notification"
-        present(vc, animated: true)
-    }
+        if  let vc = self.storyboard?.instantiateViewController(withIdentifier: "NotificationVc") as? NotificationVc {
+            vc.titleTxt = "Notification"
+            present(vc, animated: true)
+        }}
     
  
     func approvalpending() {

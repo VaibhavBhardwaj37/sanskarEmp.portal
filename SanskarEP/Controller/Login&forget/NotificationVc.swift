@@ -44,7 +44,12 @@ class NotificationVc: UIViewController {
     }
     
     @IBAction func backBtnPressed(_ sender: UIButton) {
-        dismiss(animated: true,completion: nil)
+       // dismiss(animated: true,completion: nil)
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewHomeVC") as? NewHomeVC {
+            
+            navigationController?.pushViewController(vc, animated: true)
+        }
+        
     }
     
     @IBAction func clearBtnPressed(_ sender: UIButton) {

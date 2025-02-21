@@ -81,7 +81,6 @@
 		07A559632813E79D006CEDDD /* VistorHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A559622813E79D006CEDDD /* VistorHistoryVC.swift */; };
 		07AA116728290CCC000E904E /* FilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AA116628290CCB000E904E /* FilterVC.swift */; };
 		07AA116928293BA4000E904E /* BookingFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AA116828293BA4000E904E /* BookingFilterVC.swift */; };
-		07AA37BA27994552002021F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 07AA37B927994552002021F7 /* GoogleService-Info.plist */; };
 		07B4AD4A2797D6E600A81EF8 /* AppListVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B4AD492797D6E600A81EF8 /* AppListVc.swift */; };
 		07BC62A32790538700D03DB7 /* HealthVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BC62A22790538700D03DB7 /* HealthVc.swift */; };
 		07BC62A52790605500D03DB7 /* GuestVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BC62A42790605500D03DB7 /* GuestVc.swift */; };
@@ -109,6 +108,9 @@
 		C70CE9F12A83BED5001DC970 /* GuestManageVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70CE9F02A83BED5001DC970 /* GuestManageVc.swift */; };
 		C70CE9F42A83C080001DC970 /* GuestManageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70CE9F22A83C080001DC970 /* GuestManageCell.swift */; };
 		C70CE9F52A83C080001DC970 /* GuestManageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C70CE9F32A83C080001DC970 /* GuestManageCell.xib */; };
+		C740AFAB2D65E24300EAC23E /* bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C740AFAA2D65E24300EAC23E /* bell.mp3 */; };
+		C740AFAD2D660BC800EAC23E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C740AFAC2D660BC800EAC23E /* GoogleService-Info.plist */; };
+		C740AFB42D67530600EAC23E /* bell2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C740AFB32D67530600EAC23E /* bell2.mp3 */; };
 		C773C2D829FBDE1300C5AC22 /* BdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C773C2D729FBDE1300C5AC22 /* BdayViewController.swift */; };
 		C773C2DA29FBE2E300C5AC22 /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C773C2D929FBE2E300C5AC22 /* MyTableViewCell.swift */; };
 		C79EB1C82A4C5D7F00151259 /* droptourTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79EB1C72A4C5D7F00151259 /* droptourTableViewCell.swift */; };
@@ -407,7 +409,6 @@
 		07A559622813E79D006CEDDD /* VistorHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VistorHistoryVC.swift; sourceTree = "<group>"; };
 		07AA116628290CCB000E904E /* FilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterVC.swift; sourceTree = "<group>"; };
 		07AA116828293BA4000E904E /* BookingFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingFilterVC.swift; sourceTree = "<group>"; };
-		07AA37B927994552002021F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		07AA37BB27994F94002021F7 /* SanskarEP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SanskarEP.entitlements; sourceTree = "<group>"; };
 		07B4AD492797D6E600A81EF8 /* AppListVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppListVc.swift; sourceTree = "<group>"; };
 		07BC62A22790538700D03DB7 /* HealthVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthVc.swift; sourceTree = "<group>"; };
@@ -443,6 +444,9 @@
 		C70CE9F02A83BED5001DC970 /* GuestManageVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestManageVc.swift; sourceTree = "<group>"; };
 		C70CE9F22A83C080001DC970 /* GuestManageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestManageCell.swift; sourceTree = "<group>"; };
 		C70CE9F32A83C080001DC970 /* GuestManageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GuestManageCell.xib; sourceTree = "<group>"; };
+		C740AFAA2D65E24300EAC23E /* bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bell.mp3; sourceTree = "<group>"; };
+		C740AFAC2D660BC800EAC23E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C740AFB32D67530600EAC23E /* bell2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bell2.mp3; sourceTree = "<group>"; };
 		C773C2D729FBDE1300C5AC22 /* BdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BdayViewController.swift; sourceTree = "<group>"; };
 		C773C2D929FBE2E300C5AC22 /* MyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
 		C79EB1C72A4C5D7F00151259 /* droptourTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = droptourTableViewCell.swift; sourceTree = "<group>"; };
@@ -973,7 +977,7 @@
 			isa = PBXGroup;
 			children = (
 				07AA37BB27994F94002021F7 /* SanskarEP.entitlements */,
-				07AA37B927994552002021F7 /* GoogleService-Info.plist */,
+				C740AFAC2D660BC800EAC23E /* GoogleService-Info.plist */,
 				077E8636278BEF32002BF76B /* AppDelegate.swift */,
 				077E8638278BEF32002BF76B /* SceneDelegate.swift */,
 				0735433C278D741000D984D7 /* Utilities */,
@@ -985,6 +989,8 @@
 				07403890278BF0E6007C70CC /* ViewModel */,
 				0740388D278BF0A1007C70CC /* Controller */,
 				077E863F278BEF33002BF76B /* Assets.xcassets */,
+				C740AFB32D67530600EAC23E /* bell2.mp3 */,
+				C740AFAA2D65E24300EAC23E /* bell.mp3 */,
 				077E8644278BEF33002BF76B /* Info.plist */,
 				D51631142B6927C4002EDC7D /* NewPasswordVc.swift */,
 				D5F153DE2B6B786F00E12BAB /* SearcHvC.swift */,
@@ -1335,6 +1341,7 @@
 				D524775A2AA208B800214D2F /* bdayreplycell.xib in Resources */,
 				D5E608F12CDCF57900978854 /* apptourCell.xib in Resources */,
 				D5C20CC22BB8450200A65E8C /* BookingApprCell.xib in Resources */,
+				C740AFAB2D65E24300EAC23E /* bell.mp3 in Resources */,
 				D57E1D6D2CF4AC330043777B /* NewEventListCell.xib in Resources */,
 				070244F927DCCBA900D31C05 /* StatCell.xib in Resources */,
 				D5DE95242B160193005DA0FC /* TourStCell.xib in Resources */,
@@ -1362,10 +1369,10 @@
 				07D7DB8D278EF96A00DFF1C8 /* IosDatePicker.xib in Resources */,
 				D5F0DE5E2CA5667100B0DDAB /* ReceptionListCell.xib in Resources */,
 				078826A32796FA3C0047ED4A /* AcceptCell.xib in Resources */,
+				C740AFAD2D660BC800EAC23E /* GoogleService-Info.plist in Resources */,
 				D56AEEBB2CAEC42E005D3B9F /* RequestCell.xib in Resources */,
 				07D7DB85278EC34500DFF1C8 /* leaveMgCell.xib in Resources */,
 				D55046B82BBEBC2B0089EBB5 /* KathaCell.xib in Resources */,
-				07AA37BA27994552002021F7 /* GoogleService-Info.plist in Resources */,
 				D5F3FCDE2CA68FC600C9D4CA /* AssignListCell.xib in Resources */,
 				D5345B772C75F2D70038065A /* leaveview.xib in Resources */,
 				D5C3595A2C69E0D90069E784 /* NewApprovalBookingCell.xib in Resources */,
@@ -1388,6 +1395,7 @@
 				D5C39F242D5374CF00B63E68 /* ApprvlCollCell.xib in Resources */,
 				075E4B382812A50E003B54E8 /* CustomAlert.xib in Resources */,
 				0723BF9B27C3ADEB0001A4DC /* BookingCell.xib in Resources */,
+				C740AFB42D67530600EAC23E /* bell2.mp3 in Resources */,
 				0788269F2796EA210047ED4A /* ApprovalCell.xib in Resources */,
 				077E863E278BEF32002BF76B /* Main.storyboard in Resources */,
 				D50A4FC32C83470B00A13496 /* EventCell.xib in Resources */,
