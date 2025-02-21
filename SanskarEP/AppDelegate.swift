@@ -4,14 +4,18 @@
 //
 //  Created by Warln on 10/01/22.
 //
-
-import UIKit
 import Firebase
+import UserNotifications
+import FirebaseMessaging
+import FirebaseCore
+import UIKit
 import IQKeyboardManagerSwift
-
+import AVFoundation
+import FirebaseMessaging
+import FirebaseCore
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate,MessagingDelegate  {
-    
+    var audioPlayer: AVAudioPlayer?
     var window: UIWindow?
     let gcmMessageIDKey = "sanskarEp"
     var fcmString: String = ""
@@ -27,13 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
      }()
      
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         FirebaseApp.configure()
         FirebaseConfiguration.shared.setLoggerLevel(.min)
+        UNUserNotificationCenter.current().delegate = self
         if #available(iOS 10.0, *) {
-            // For iOS 10 display notification (sent via APNS)
-            UNUserNotificationCenter.current().delegate = self
-            
             let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
             UNUserNotificationCenter.current().requestAuthorization(
                 options: authOptions,
@@ -44,19 +45,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
             application.registerUserNotificationSettings(settings)
         }
-        
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            print("Notification settings: \(settings.authorizationStatus.rawValue)")
+        }
         application.registerForRemoteNotifications()
         Messaging.messaging().delegate = self
-        
         Messaging.messaging().token { token, error in
             if let error = error {
                 print("Error fetching FCM registration token: \(error)")
             } else if let token = token {
-                print("FCM registration token: \(token)")
-                print( "Remote FCM registration token: \(token)")
+                print("FCM Token: \(token)")
                 self.fcmString = token
-//                UserDefaults.standard.set(token, forKey: "token")
-//                idenity.kDeviceToken = token
+                UserDefaults.standard.set(token, forKey: "token")
+                idenity.kDeviceToken = token
             }
         }
         AppFlow()
@@ -81,31 +82,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
-    //MARK: - --------------------Messages------------------------------------
-//    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-//        print("Firebase registration token: \(String(describing: fcmToken))")
-//        
-//        let dataDict: [String: String] = ["token": fcmToken ?? ""]
-//        NotificationCenter.default.post(
-//            name: Notification.Name("FCMToken"),
-//            object: nil,
-//            userInfo: dataDict
-//        )
-//    }
-    
-//    func application(_ application: UIApplication,
-//                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-//        Messaging.messaging().apnsToken = deviceToken
-//        let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
-//        print(token)
-//         if token.isEmpty{
-//            UserDefaults.standard.set(fcmString, forKey: "token")
-//            idenity.kDeviceToken = token
-//        }else{
-//             UserDefaults.standard.set(token, forKey: "token")
-//            idenity.kDeviceToken = token
-//        }
-//    }
     func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
@@ -118,7 +94,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             } else if let fcmToken = fcmToken {
                 print("FCM Token: \(fcmToken)")
                 self.fcmString = fcmToken
-                UserDefaults.standard.set(fcmToken, forKey: "token")
+                UserDefaults.standard.set(token, forKey: "token")
+                idenity.kDeviceToken = token
             }
         }
     }
@@ -126,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         guard let fcmToken = fcmToken else { return }
         print("Firebase registration token received: \(fcmToken)")
         self.fcmString = fcmToken
-        UserDefaults.standard.set(fcmToken, forKey: "token")
+      //  UserDefaults.standard.set(fcmToken, forKey: "token")
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
@@ -135,7 +112,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                                 -> Void) {
         let userInfo = notification.request.content.userInfo
         print(userInfo)
-        completionHandler([[.alert,.sound]])
+       // playNotificationSound()
+        if let notificationType = userInfo["data"] as? [String: Any],
+              let type = notificationType["notification_type"] as? Int {
+               playNotificationSound(type: type)
+           } else {
+               playNotificationSound(type: nil)
+           }
+        if #available(iOS 14.0, *) {
+            completionHandler([[.banner,.alert,.sound]])
+        } else {
+            completionHandler([[.alert,.sound]])
+        }
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter,
@@ -147,6 +135,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             NotificationCenter.default.post(name: NSNotification.Name("Note"), object: nil)
             note = true
         }
+        if let aps = userInfo["aps"] as? [String: Any],
+           let alert = aps["alert"] as? [String: Any],
+           let notificationTitle = alert["title"] as? String {
+            DispatchQueue.main.async {
+                if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
+                    if let navigationController = rootViewController as? UINavigationController {
+                        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NotificationVc") as? NotificationVc {
+                            vc.titleTxt = "Notification"
+                            navigationController.pushViewController(vc, animated: true)
+                        }
+                    } else {
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        if let vc = storyboard.instantiateViewController(withIdentifier: "NotificationVc") as? NotificationVc {
+                            vc.titleTxt = "Notification"
+                            let navController = UINavigationController(rootViewController: vc)
+                            UIApplication.shared.windows.first?.rootViewController = navController
+                            UIApplication.shared.windows.first?.makeKeyAndVisible()
+                        }
+                    }
+                }
+            }
+        }
+
         completionHandler()
     }
     
@@ -155,13 +166,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult)
                      -> Void) {
         Messaging.messaging().appDidReceiveMessage(userInfo)
-        
-        // Print message ID.
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
         }
-        
-        // Print full message.
         print(userInfo)
         completionHandler(UIBackgroundFetchResult.newData)
         
@@ -183,8 +190,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             AppDelegate.shared?.window?.makeKeyAndVisible()
         }
     }
-    
-    
+
+    func playNotificationSound(type: Int?) {
+        var soundFileName: String
+
+        switch type {
+        case 8:
+            soundFileName = "bell" // Replace with actual file name
+        case 7:
+            soundFileName = "bell2/7" // Replace with actual file name
+        default:
+            soundFileName = "bell2" // Default sound
+        }
+
+        guard let soundURL = Bundle.main.url(forResource: soundFileName, withExtension: "mp3") else {
+            print("Sound file not found!")
+            return
+        }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.play()
+        } catch {
+            print("Error playing sound: \(error.localizedDescription)")
+        }
+    }
+
 }
 
 
