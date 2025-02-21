@@ -63,8 +63,6 @@ class NotificationVc: UIViewController {
             if let JSON = response as? NSDictionary {
                 if JSON.value(forKey: "status") as? Bool == true {
                     print(JSON)
-
-                    // Convert response JSON into data
                     if let jsonData = try? JSONSerialization.data(withJSONObject: JSON, options: []) {
                         do {
                             let decodedResponse = try JSONDecoder().decode(NotifyResponse.self, from: jsonData)
@@ -74,29 +72,27 @@ class NotificationVc: UIViewController {
                             print("Decoding error: \(error)")
                         }
                     }
-
                 } else {
                     print(response?["error"] as Any)
                 }
-
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                     self.updateNoNotificationLabel()
-                    self.updateClearButtonVisibility() // Update label based on data availability
+                    self.updateClearButtonVisibility()
                 }
             }
         }
     }
 
-
-        // Add this method to update the label based on data availability
-        private func updateNoNotificationLabel() {
-            if datalist.isEmpty {
-                notLabel.text = "No Notifications Available"
-            } else {
-                notLabel.text = ""
-            }
+    func updateNoNotificationLabel() {
+        if notifyData.isEmpty {
+            notLabel.text = "No data available"
+            notLabel.isHidden = false
+        } else {
+            notLabel.isHidden = true
         }
+    }
+
     private func updateClearButtonVisibility() {
             let shouldShowClearButton = !datalist.isEmpty
             clearButton.isHidden = !shouldShowClearButton

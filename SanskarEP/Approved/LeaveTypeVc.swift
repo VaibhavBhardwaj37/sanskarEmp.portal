@@ -22,7 +22,9 @@ class LeaveTypeVc: UIViewController {
     @IBOutlet weak var searchview: UIView!
     @IBOutlet weak var filtertable: UITableView!
     @IBOutlet weak var notlbl: UILabel!
-    
+    @IBOutlet weak var searchValue: NSLayoutConstraint!
+    @IBOutlet weak var tableheight: NSLayoutConstraint!
+    @IBOutlet weak var remarksview: UITextView!
     
     
     var selectedOption: String = ""
@@ -35,7 +37,7 @@ class LeaveTypeVc: UIViewController {
     var filteredLeaveDetails: [LeaveHistory] = []
     var filteredapproveM =  [[String:Any]]()
     var isSearching = false
-    var remarksHeight = 0
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         selectbtn.isHidden = true
@@ -44,7 +46,9 @@ class LeaveTypeVc: UIViewController {
         oneview.isHidden = true
         getDetails()
         ListAPi()
-        tabletop.constant = -45
+        tabletop.constant = 8
+        
+        tableheight.constant = 8
         
         selected.selectedSegmentIndex = 0
         selectedbtn(selected)
@@ -55,7 +59,13 @@ class LeaveTypeVc: UIViewController {
         rejectall.layer.cornerRadius = 8
         search.delegate =  self
       
-       
+        remarksview.delegate = self
+        remarksview.layer.cornerRadius = 10
+        remarksview.layer.borderWidth = 1.0
+        remarksview.clipsToBounds = true
+        remarksview.text = "Remark ..."
+        remarksview.textColor = UIColor.lightGray
+        rejectall.isEnabled = false
     }
     
     @IBAction func backbtn(_ sender: UIButton) {
@@ -68,35 +78,41 @@ class LeaveTypeVc: UIViewController {
             filterbtn.isHidden = true
             searchview.isHidden = false
             oneview.isHidden = true
-            tabletop.constant = -50
+            tabletop.constant = 5
+            tableheight.constant = 500
+            
+            searchValue.constant = -40
             type = "1"
             ListAPi()
             tableview.reloadData()
-//            if LeaveDetails.isEmpty  {
-//                notlbl.text = "No Data Available"
- //           }
         } else if selected.selectedSegmentIndex == 1 {
             selectbtn.isHidden = false
             filterbtn.isHidden = true
             searchview.isHidden = false
-            tabletop.constant = -50
+            tabletop.constant = 5
+            tableheight.constant = 290
+            oneview.isHidden = false
+            
+            if approveM.isEmpty {
+                oneview.isHidden = true
+                selectbtn.isHidden = true
+                searchview.isHidden = true
+            }
             tableview.reloadData()
-//            if approveM.isEmpty  {
-//                notlbl.text = "No Data Available"
-    //        }
+            searchValue.constant = 8
         } else if selected.selectedSegmentIndex == 2 {
             selectbtn.isHidden = true
             filterbtn.isHidden = false
             searchview.isHidden = true
-            tabletop.constant = -100
+            tabletop.constant = -50
+            tableheight.constant = 500
+            oneview.isHidden = true
             type = "2"
             ListAPi()
             tableview.reloadData()
-//            if LeaveDetails.isEmpty  {
-//                notlbl.text = "No Data Available"
-   //         }
+          
         }
-       // updateNoNotificationLabel()
+        updateNoNotificationLabel()
     }
     
     @IBAction func approveallbtn(_ sender: UIButton) {
@@ -110,80 +126,68 @@ class LeaveTypeVc: UIViewController {
             getGrant(ids, "granted")
         }
         approveM = approveM.enumerated().filter { !selectedRows.contains($0.offset) }.map { $0.element }
+        
+        
+        if approveM.isEmpty {
+            oneview.isHidden = true
+            selectbtn.isHidden = true
+        }
         selectedRows.removeAll()
         tableview.reloadData()
     }
     
     @IBAction func rejectalllbtn(_ sender: UIButton) {
-        if selectedRows.isEmpty {
-               AlertController.alert(message: "Please select at least one request to reject.")
-               return
-           }
-           let alert = UIAlertController(title: "Reject Requests", message: "Enter rejection reason", preferredStyle: .alert)
-           alert.addTextField { textField in
-               textField.placeholder = "Enter reason"
-           }
-           let rejectAction = UIAlertAction(title: "Reject", style: .destructive) { _ in
-               guard let reason = alert.textFields?.first?.text, !reason.isEmpty else {
-                   AlertController.alert(message: "Rejection reason cannot be empty.")
-                   return
-               }
-               var ids: [String] = []
-               for index in self.selectedRows {
-                   if let id = self.approveM[index]["ID"] as? String {
-                       ids.append(id)
-                   }
-               }
-               if !ids.isEmpty {
-                   self.getGrant(ids, "declined", reason)
-               }
-               self.approveM = self.approveM.enumerated().filter { !self.selectedRows.contains($0.offset) }.map { $0.element }
-               self.selectedRows.removeAll()
-               self.tableview.reloadData()
-           }
-           let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-           
-           alert.addAction(rejectAction)
-           alert.addAction(cancelAction)
-           present(alert, animated: true, completion: nil)
-       
-    }
-    
-    func updateApproveAllButtonTitle() {
-        if selectedRows.count == approveM.count {
-            approveall.setTitle("Approve All", for: .normal)
-            rejectall.setTitle("Reject All", for: .normal)
-        } else {
-            approveall.setTitle("Approve", for: .normal)
-            rejectall.setTitle("Reject", for: .normal)
+        var ids: [String] = []
+        for index in self.selectedRows {
+            if let id = self.approveM[index]["ID"] as? String {
+                ids.append(id)
+            }
+        }
+        if !ids.isEmpty {
+            let reasonText = remarksview.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            let reason = (reasonText.isEmpty || reasonText == "Remark ...") ? "No reason provided" : reasonText
+            self.getGrant(ids, "declined", reason)
+        }
+        
+        self.approveM = self.approveM.enumerated()
+            .filter { !self.selectedRows.contains($0.offset) }
+            .map { $0.element }
+        
+        self.selectedRows.removeAll()
+        self.tableview.reloadData()
+        
+        if approveM.isEmpty {
+            oneview.isHidden = true
+            selectbtn.isHidden = true
+        }
+        
+        DispatchQueue.main.async {
+            Loader.showLoader()
         }
     }
     
-//     func updateNoNotificationLabel() {
-//        else if  LeaveDetails.isEmpty{
-//            notlbl.isHidden = true
-//            notlbl.text = "No Data Available"
-//            
-//        }else {
-//            notlbl.isHidden = false
-//            notlbl.text = ""
-//        }
-//    }
     
+   
+    func updateNoNotificationLabel() {
+        if selected.selectedSegmentIndex == 1 {
+            notlbl.isHidden = !approveM.isEmpty
+            notlbl.text = approveM.isEmpty ? "No Data Available" : ""
+        } else {
+            notlbl.isHidden = !LeaveDetails.isEmpty
+            notlbl.text = LeaveDetails.isEmpty ? "No Data Available" : ""
+        }
+    }
+
     
     @IBAction func allselectbtn(_ sender: UIButton) {
-        self.oneview.isHidden = !self.oneview.isHidden
+        oneview.isHidden = false
         if selectedRows.count == approveM.count {
                selectedRows.removeAll()
             sender.setImage(UIImage(named: "Uncheck"), for: .normal)
-               oneview.isHidden = true
-            tabletop.constant = -50
             
            } else {
                selectedRows = Set(0..<approveM.count)
                sender.setImage(UIImage(named: "check"), for: .normal)
-               oneview.isHidden = false
-              tabletop.constant = 8
            }
            tableview.reloadData()
     }
@@ -191,15 +195,7 @@ class LeaveTypeVc: UIViewController {
     
     @IBAction func filteronclick(_ sender: UIButton) {
        self.filterview.isHidden = !self.filterview.isHidden
-//        tabletop.constant = 28
-        
-//        if filterview.isHidden == true {
-//            tabletop.constant = -100
-//        } else if filterview.isHidden == false {
-//            tabletop.constant = 28
-//        } else {
-//            
-//        }
+
     }
     
     func ListAPi() {
@@ -216,22 +212,26 @@ class LeaveTypeVc: UIViewController {
                 return
             }
             do {
-                let decoder = JSONDecoder()
-                let monthWiseDetail = try decoder.decode(LeaveHistoryModel.self, from: responseData)
-                
-                if monthWiseDetail.status == true, let details = monthWiseDetail.data {
-                    DispatchQueue.main.async {
-                        self.LeaveDetails = details
-                        
-                        self.tableview.reloadData()
-                      
-                    }
-                } else {
-                    print("Error: \(monthWiseDetail.message ?? "Unknown error")")
-                }
-            } catch {
-                print("Decoding Error:", error.localizedDescription)
-            }
+                  let decoder = JSONDecoder()
+                  let monthWiseDetail = try decoder.decode(LeaveHistoryModel.self, from: responseData)
+                  
+                  if monthWiseDetail.status == true, let details = monthWiseDetail.data {
+                      DispatchQueue.main.async {
+                          self.LeaveDetails = details
+                          self.updateNoNotificationLabel()
+                          self.tableview.reloadData()
+                      }
+                  } else {
+                      DispatchQueue.main.async {
+                          self.LeaveDetails.removeAll()
+                          self.updateNoNotificationLabel()
+                          self.tableview.reloadData()
+                      }
+                      print("Error: \(monthWiseDetail.message ?? "Unknown error")")
+                  }
+              } catch {
+                  print("Decoding Error:", error.localizedDescription)
+              }      
         }
     }
     
@@ -245,7 +245,6 @@ class LeaveTypeVc: UIViewController {
         DispatchQueue.main.async {
             Loader.showLoader()
         }
-
         APIManager.apiCall(postData: dict as NSDictionary, url: kAprrove) { result, response, error, data in
             DispatchQueue.main.async {
                 Loader.hideLoader()
@@ -261,6 +260,7 @@ class LeaveTypeVc: UIViewController {
             }
 
             DispatchQueue.main.async {
+                self.updateNoNotificationLabel()
                 self.tableview.reloadData()
             }
         }
@@ -313,29 +313,7 @@ class LeaveTypeVc: UIViewController {
         tableview.reloadData()
     }
 
-    
-    @objc
-    func LeaverejectOnClick(_ sender: UIButton ) {
-        remarksHeight =  (remarksHeight == 45) ? 0 : 45
-    }
-    
-    @objc
-    func finalrejectOnClick(_ sender: UIButton) {
-        let index = approveM[sender.tag]
-        if let id = index["ID"] as? String,
-           let cell = tableview.cellForRow(at: IndexPath(row: sender.tag, section: 0)) as? newapproCell {
-            let reason = cell.txtRemarkView.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-            if reason.isEmpty || reason == "Remark ..."  {
-                let alert = UIAlertController(title: "Error", message: "Please enter a rejection reason.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self.present(alert, animated: true)
-                return
-            }
-            self.getGrant([id], "declined", reason)
-            self.approveM.remove(at: sender.tag)
-            self.tableview.reloadData()
-        }
-    }
+
     
 }
 extension LeaveTypeVc: UITableViewDelegate,UITableViewDataSource {
@@ -380,10 +358,7 @@ extension LeaveTypeVc: UITableViewDelegate,UITableViewDataSource {
                     cell.status.text = ""
                 }
                 cell.checkbtn.isHidden = true
-                cell.btnAprove.isHidden = true
-                cell.txtRemarkView.isHidden = true
-                cell.okbtn.isHidden = true
-                cell.btnreject.isHidden = true
+                
 
             case 1:
                 
@@ -395,8 +370,6 @@ extension LeaveTypeVc: UITableViewDelegate,UITableViewDataSource {
                 cell.type.text = item["leave_type"] as? String ?? ""
 
                 let leaveType = item["leave_type"] as? String ?? ""
-            
-
                 if leaveType == "half" {
                     cell.datelbl.text = item["from_date"] as? String ?? ""
                 } else {
@@ -411,29 +384,11 @@ extension LeaveTypeVc: UITableViewDelegate,UITableViewDataSource {
                 }
                 cell.checkbtn.tag = indexPath.row
                 cell.checkbtn.addTarget(self, action: #selector(checkboxTapped(_:)), for: .touchUpInside)
-                cell.btnAprove.tag = indexPath.row
-                cell.btnAprove.addTarget(self, action: #selector(LeaveAcceptOnClick(_:)), for: .touchUpInside)
-                cell.reamrk.isHidden = (indexPath.row != expandedRowIndex)
-                cell.okbtn.tag = indexPath.row
-                cell.okbtn.addTarget(self, action: #selector(finalrejectOnClick(_:)), for: .touchUpInside)
-                updateApproveAllButtonTitle()
+             //   updateApproveAllButtonTitle()
                 
                 cell.status.isHidden = true
                 cell.checkbtn.isHidden = false
-                cell.btnAprove.isHidden = false
-                cell.txtRemarkView.isHidden = false
-                cell.okbtn.isHidden = false
-                cell.btnreject.isHidden = false
-                cell.arrowButtonTapped = { button in
-                    if self.expandedRowIndex == indexPath.row {
-                        self.expandedRowIndex = nil
-                    } else {
-                        self.expandedRowIndex = indexPath.row
-                    }
-                    self.tableview.beginUpdates()
-                    self.tableview.reloadRows(at: [indexPath], with: .automatic)
-                    self.tableview.endUpdates()
-                }
+               
 
             default:
                 break
@@ -454,7 +409,7 @@ extension LeaveTypeVc: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if tableView == tableview {
             if selected.selectedSegmentIndex == 1 {
-                return (indexPath.row == expandedRowIndex) ? 235 : 180  // Adjust height when expanded
+                return 150
             } else {
                 return 145
             }
@@ -493,6 +448,7 @@ extension LeaveTypeVc: UISearchBarDelegate {
                 return empCode.contains(searchText.lowercased()) || name.contains(searchText.lowercased())
             }
         }
+        updateNoNotificationLabel()
         tableview.reloadData()
     }
     
@@ -505,3 +461,27 @@ extension LeaveTypeVc: UISearchBarDelegate {
         searchBar.resignFirstResponder()
     }
 }
+extension LeaveTypeVc: UITextViewDelegate {
+
+    func textViewDidChange(_ textView: UITextView) {
+      
+        let text = remarksview.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        rejectall.isEnabled = !text.isEmpty && text != "Remark ..."
+    }
+
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if remarksview.textColor == UIColor.lightGray {
+            remarksview.text = ""
+            remarksview.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if remarksview.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            remarksview.text = "Remark ..."
+            remarksview.textColor = UIColor.lightGray
+            rejectall.isEnabled = false
+        }
+    }
+}
+

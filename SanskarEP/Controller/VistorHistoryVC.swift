@@ -191,6 +191,7 @@ class VistorHistoryVC: UIViewController {
         detailview.isHidden = !detailview.isHidden // Toggle the visibility of detailview
         Datetime.text?.removeAll()
         retextview.text?.removeAll()
+        tableView.reloadData()
     }
 
     func guestRequest() {

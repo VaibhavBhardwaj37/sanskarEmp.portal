@@ -350,24 +350,27 @@ class NewHomeVC: UIViewController  {
 
     
     @IBAction func SearchBarBtn(_ sender: UIButton) {
-   //    let vc = self.storyboard?.instantiateViewController(withIdentifier: "SecondnewApprovalVc") as! SecondnewApprovalVc
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
-        if #available(iOS 15.0, *) {
-        if let sheet = vc.sheetPresentationController {
-        var customDetent: UISheetPresentationController.Detent?
-            if #available(iOS 16.0, *) {
-            customDetent = UISheetPresentationController.Detent.custom { context in
-                return 550
-            }
-            sheet.detents = [customDetent!]
-            sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
-                }
-            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            sheet.prefersGrabberVisible = true
-            sheet.preferredCornerRadius = 12
-                            }
-                        }
-        present(vc, animated: true)
+        //    let vc = self.storyboard?.instantiateViewController(withIdentifier: "SecondnewApprovalVc") as! SecondnewApprovalVc
+        //        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
+        //        if #available(iOS 15.0, *) {
+        //        if let sheet = vc.sheetPresentationController {
+        //        var customDetent: UISheetPresentationController.Detent?
+        //            if #available(iOS 16.0, *) {
+        //            customDetent = UISheetPresentationController.Detent.custom { context in
+        //                return 550
+        //            }
+        //            sheet.detents = [customDetent!]
+        //            sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
+        //                }
+        //            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+        //            sheet.prefersGrabberVisible = true
+        //            sheet.preferredCornerRadius = 12
+        //                            }
+        //                        }
+        //        present(vc, animated: true)
+        //    }
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "BdayViewController") as! BdayViewController
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func upcomingbdaybtn(_ sender: UIButton) {
@@ -1174,9 +1177,14 @@ extension UIColor {
 }
 extension NewHomeVC: BirthPViewControllerDelegate {
     func didFinishWishing() {
-        self.showToast(message: "Birthday Wish Insert Successfully!")
-        tableview.reloadData()
-    }
+           self.showToast(message: "Birthday Wish Insert Successfully!")
+
+           if let selectedIndex = daTalist.firstIndex(where: { $0["Emp_Code"] as? String == bEmpcode }) {
+               daTalist[selectedIndex]["actionStatus"] = 1
+           }
+
+           tableview.reloadData()
+       }
 }
 extension NewHomeVC: UITableViewDelegate, UITableViewDataSource {
     
