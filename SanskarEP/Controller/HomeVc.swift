@@ -286,27 +286,27 @@ extension HomeVc {
                vc.titleSt = task[index].taskName
                 print(vc.titleSt)
                // self.navigationController?.pushViewController(vc, animated: true)
-                self.present(vc,animated: true,completion: nil)
-      //         self.navigationController?.pushViewController(vc, animated: true)
+       //         self.present(vc,animated: true,completion: nil)
+               self.navigationController?.pushViewController(vc, animated: true)
             case 1 :
                 let vc = storyboard?.instantiateViewController(withIdentifier: idenity.leave ) as! LeaveMangeVc
                 vc.titletext = task[index].taskName
-              // self.navigationController?.pushViewController(vc, animated: true)
-                self.present(vc,animated: true,completion: nil)
+               self.navigationController?.pushViewController(vc, animated: true)
+              //  self.present(vc,animated: true,completion: nil)
 //                let vc = CalenderVC()
 ////                vc.title = "Calender"
 //                self.navigationController?.pushViewController(vc, animated: true)
             case 2 :
                 let vc = storyboard?.instantiateViewController(withIdentifier: idenity.healthVc) as! HealthVc
               //  vc.titleTxt = task[index].taskName
-                self.present(vc,animated: true,completion: nil)
-            //    self.navigationController?.pushViewController(vc, animated: true)
+             //   self.present(vc,animated: true,completion: nil)
+                self.navigationController?.pushViewController(vc, animated: true)
             case 3 :
                let vc = storyboard?.instantiateViewController(withIdentifier: idenity.GuestManage) as! GuestManageVc
                vc.titleText = task[index].taskName
                 
-                self.present(vc,animated: true,completion: nil)
-            //    self.navigationController?.pushViewController(vc, animated: true)
+            //    self.present(vc,animated: true,completion: nil)
+                self.navigationController?.pushViewController(vc, animated: true)
             case 4 :
                 let vc = storyboard?.instantiateViewController(withIdentifier: idenity.kApprove) as! ApprovalVc
                 vc.titleTxt = task[index].taskName
@@ -349,20 +349,20 @@ extension HomeVc {
             case 1:
                 let vc = storyboard?.instantiateViewController(withIdentifier: idenity.leave) as! LeaveMangeVc
                 vc.titletext = task[index].taskName
-                self.present(vc,animated: true,completion: nil)
-            //    self.navigationController?.pushViewController(vc, animated: true)
+         //       self.present(vc,animated: true,completion: nil)
+               self.navigationController?.pushViewController(vc, animated: true)
             case 2 :
                let vc = storyboard?.instantiateViewController(withIdentifier: idenity.healthVc) as! HealthVc
                vc.titleTxt = task[index].taskName
                 
-                self.present(vc,animated: true,completion: nil)
-            //    self.navigationController?.pushViewController(vc, animated: true)
+            //    self.present(vc,animated: true,completion: nil)
+                self.navigationController?.pushViewController(vc, animated: true)
             case 3 :
                 let vc = storyboard?.instantiateViewController(withIdentifier: idenity.GuestManage) as! GuestManageVc
                 vc.titleText = task[index].taskName
-                self.present(vc,animated: true,completion: nil)
+         //       self.present(vc,animated: true,completion: nil)
                 
-              // self.navigationController?.pushViewController(vc, animated: true)
+               self.navigationController?.pushViewController(vc, animated: true)
 //           case 4 :
 //               let vc = storyboard?.instantiateViewController(withIdentifier: idenity.tour ) as! TourManageVc
 //               vc.titleTxt = task[index].taskName

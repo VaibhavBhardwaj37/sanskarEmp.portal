@@ -44,11 +44,11 @@ class NotificationVc: UIViewController {
     }
     
     @IBAction func backBtnPressed(_ sender: UIButton) {
-       // dismiss(animated: true,completion: nil)
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewHomeVC") as? NewHomeVC {
-            
-            navigationController?.pushViewController(vc, animated: true)
-        }
+        dismiss(animated: true,completion: nil)
+//        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewHomeVC") as? NewHomeVC {
+//            
+//            navigationController?.pushViewController(vc, animated: true)
+//        }
         
     }
     
@@ -103,54 +103,30 @@ class NotificationVc: UIViewController {
             clearButton.isHidden = !shouldShowClearButton
         }
 
-        // ... (other methods)
+
     
 
-    func getGrant(id: String, noteId: String, reply: String) {
-        var dict: [String: Any] = [
-            "req_id": id,
-            "reply": reply,
-            "push_id": noteId
-        ]
-        
-        DispatchQueue.main.async { Loader.showLoader() }
-        
-        APIManager.apiCall(postData: dict as NSDictionary, url: kgrant) { result, response, error, data in
-            DispatchQueue.main.async { Loader.hideLoader() }
-            
-            guard let response = response, let status = response["status"] as? Bool, status else {
-                print(response?["error"] ?? "Unknown error")
-                return
-            }
-
-            if let message = response["message"] as? String {
-                AlertController.alert(message: message)
-            }
-
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
     
-    func visitorGrant( id: String,loc: String,rply: String ) {
-        var dict = Dictionary<String,Any>()
+    func GuestAction(id: String,status: String,selectid: String? = nil,reason: String? = nil) {
+        var dict = [String: Any]()
         dict["id"] = id
-        dict["reply"] = rply
-        dict["location"] = loc
-        dict["EmpCode"] = currentUser.EmpCode
-        DispatchQueue.main.async(execute: {Loader.showLoader()})
-        APIManager.apiCall(postData: dict as NSDictionary, url: vistorAccept) { result, response, error, data in
-            DispatchQueue.main.async(execute: {Loader.hideLoader()})
-            if let _ = data,(response?["status"] as? Bool == true), response != nil {
-                AlertController.alert(message: (response?.validatedValue("message"))!)
-                self.grantView.isHidden = true
-            }else{
+        dict["status"] = status
+        dict["floor"] = selectid
+        dict["reason"] = reason
+
+        DispatchQueue.main.async { Loader.showLoader() }
+        APIManager.apiCall(postData: dict as NSDictionary, url: guestAction) { result, response, error, data in
+            DispatchQueue.main.async { Loader.hideLoader() }
+            if let response = response, response["status"] as? Bool == true {
+                AlertController.alert(message: response.validatedValue("message") as! String)
+               
+            } else {
                 print(response?["error"] as Any)
             }
-            self.tableView.reloadData()
         }
     }
+    
+
     
     func removeNotify() {
         var dict = Dictionary<String,Any>()
@@ -172,69 +148,6 @@ class NotificationVc: UIViewController {
     }
     
     
-    @IBAction func buttonActionDone(_ sender: UIButton) {
-//        switch sender.tag {
-//        case 90:
-//            let index = datalist[selectNo]
-//            guard let location = locationTxt.text else { return }
-//            visitorGrant(id: index["id"] as? String ?? "", loc: location, rply: "grant")
-//            datalist.remove(at: selectNo)
-//        case 91:
-//            grantView.isHidden = true
-//        default:
-//            break
-//        }
-    
-
-//    extension NotificationVc: GuestRequestDelegate {
-//        func fetchRequest(_ status: Bool, _ location: String) {
-//            let index = datalist[selectNo]
-//            if status {
-//                visitorGrant(id: index["id"] as? String ?? "", loc: location, rply: "grant")
-//                datalist.remove(at: selectNo)
-//            } else {
-//                visitorGrant(id: index["id"] as? String ?? "", loc: "", rply: "declined")
-//                datalist.remove(at: selectNo)
-//            }
-//        }
-//    }
-
-        switch sender.tag {
-        case 90:
-            let index = notifyData[selectNo]
-            guard let loaction = locationTxt.text else {return}
-            visitorGrant(id: index.id ?? "", loc: loaction, rply: "grant")
-            notifyData.remove(at: selectNo)
-        case 91:
-            grantView.isHidden = true
-        default:
-            break
-        }
-    }
-}
-        extension NotificationVc: GuestRequestDelegate {
-            func fetchRequest(_ status: Bool, _ location: String) {
-                let index = notifyData[selectNo]
-                if status == true {
-                    visitorGrant(id: index.id ?? "", loc: location, rply: "grant")
-                    notifyData.remove(at: selectNo)
-                }else {
-                    visitorGrant(id: index.id ?? "", loc: "", rply: "declined")
-                    notifyData.remove(at: selectNo)
-                }
-            }
-}
-
-extension NotificationVc: LeaveRequestDelegate {
-    func FetchRequest(_ status: Bool, _ noteId: String) {
-        guard selectNo < notifyData.count else { return }
-        
-        let index = notifyData[selectNo]
-        let reply = status ? "grant" : "declined"
-
-        getGrant(id: index.req_id ?? "", noteId: noteId, reply: reply)
-        notifyData.remove(at: selectNo)
-    }
 }
 
 extension NotificationVc: UITableViewDataSource {
@@ -252,12 +165,7 @@ extension NotificationVc: UITableViewDataSource {
                 }else{
         
                 }
-//        let amountdata = datalist[indexPath.row]["notification_title"] as? String ?? ""
-//        print(amountdata)
-//        cell.titleLbl.text = amountdata
-//        let amountdata1 = datalist[indexPath.row]["notification_content"] as? String ?? ""
-//        print(amountdata1)
-//        cell.subTitleLbl.text = amountdata1
+
         return cell
     }
 }
@@ -269,13 +177,13 @@ extension NotificationVc: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let appAction = UIContextualAction(style: .destructive, title: "Approve") {  (contextualAction, view, boolValue) in
-            self.editData(at: indexPath)
-        }
-        appAction.backgroundColor = .green
-        appAction.image = UIImage(named: "check-mark")
-        let swipeActions = UISwipeActionsConfiguration(actions: [appAction])
-
-        return swipeActions
+               self.editData(at: indexPath)
+           }
+           appAction.backgroundColor = .green
+           appAction.image = UIImage(named: "check-mark")
+           
+           let swipeActions = UISwipeActionsConfiguration(actions: [appAction])
+           return swipeActions
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -291,103 +199,64 @@ extension NotificationVc: UITableViewDelegate {
      }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        let index = notifyData[indexPath.row]
-        if index.note_type == "visitor"{
-            selectNo = indexPath.row
-            guard let url = URL(string: "https://sap.sanskargroup.in//uploads/visitor/\(index.notification_thumbnail)") else {return}
-            profileImg.sd_setImage(with: url, placeholderImage: UIImage(systemName: "person.fill"), options: .refreshCached, completed: nil)
-            nameLbl.text = index.from_EmpCode
-        //    grantView.isHidden = false
-            let vc = CustomAlert(nibName: "CustomAlert", bundle: nil)
-            vc.imgName = index.notification_thumbnail
-            vc.nameTxt = index.from_EmpCode
-            vc.delegate = self
-            vc.modalPresentationStyle = .overCurrentContext
-            vc.modalTransitionStyle = .flipHorizontal
-            present(vc, animated: true)
-        }else if index.note_type == "full" {
-            selectNo = indexPath.row
-            nameLbl.text = index.from_EmpCode
-            let vc = LeaveNotificationAlert(nibName: "LeaveNotificationAlert", bundle: nil)
-            vc.imgName = index.notification_thumbnail
-            vc.nameTxt = index.from_EmpCode
-            vc.delegate = self
-            vc.modalPresentationStyle = .overCurrentContext
-            vc.modalTransitionStyle = .flipHorizontal
-            present(vc, animated: true)
-        //    let vc = storyboard?.instantiateViewController(withIdentifier: idenity.kAPPList) as! AppListVc
-       //     vc.type = index.note_type
-       //     navigationController?.pushViewController(vc, animated: true)
-     //      present(vc, animated: true)
-        } else {
-            
-        }
 
+        tableView.deselectRow(at: indexPath, animated: true)
+
+           let index = notifyData[indexPath.row]
+           
+           if index.notification_type == "8" || index.notification_type == "9" {
+               let vc = CustomAlert(nibName: "CustomAlert", bundle: nil)
+               vc.imgName = index.notification_thumbnail
+               vc.nameTxt = index.notification_content
+               vc.type = index.notification_type
+               vc.inoutkey = index.inOrOut
+               vc.reqid = index.req_id
+               vc.modalPresentationStyle = .overCurrentContext
+               vc.modalTransitionStyle = .flipHorizontal
+               present(vc, animated: true)
+           } else if index.notification_type == "14" {
+               let vc = LeaveNotificationAlert(nibName: "LeaveNotificationAlert", bundle: nil)
+               vc.imgName = index.notification_thumbnail
+               vc.nameTxt = index.notification_content
+               vc.type = index.notification_type
+               vc.leavetype = index.note_type
+               vc.reqid = index.req_id
+               vc.date = index.creation_date
+
+               vc.modalPresentationStyle = .overCurrentContext
+               vc.modalTransitionStyle = .flipHorizontal
+               present(vc, animated: true)
+           }
     }
-//        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//            tableView.deselectRow(at: indexPath, animated: true)
-//            let index = datalist[indexPath.row] // Use datalist instead of notifyData
-//            if index["note_type"] as? String == "visitor" {
-//                selectNo = indexPath.row
-//                let vc = CustomAlert(nibName: "CustomAlert", bundle: nil)
-//                vc.imgName = index["notification_thumbnail"] as? String ?? ""
-//                vc.nameTxt = index["from_EmpCode"] as? String ?? ""
-//                vc.delegate = self
-//                vc.modalPresentationStyle = .overCurrentContext
-//                vc.modalTransitionStyle = .flipHorizontal
-//                present(vc, animated: true)
-//            } else {
-//                let vc = storyboard?.instantiateViewController(withIdentifier: "EventDetailVc") as! EventDetailVc
-//           //     vc.type = index["note_type"] as? String ?? ""
-//             //   navigationController?.pushViewController(vc, animated: true)
-//                present(vc, animated: true, completion: nil)
-//            }
-//        }
-    
+   
     func deleteData(at indexPath: IndexPath) {
         let index = notifyData[indexPath.row]
-        if index.note_type == "visitor"{
-            visitorGrant(id: index.id ?? "", loc: "", rply: "declined")
-            notifyData.remove(at: indexPath.row)
-        }else{
-            getGrant(id: index.req_id!, noteId: "declined", reply: index.id ?? "")
-            notifyData.remove(at: indexPath.row)
-        }
+        if index.notification_type == "9"  {
+            let requestId = index.req_id != nil ? String(index.req_id!) : ""
 
+            GuestAction(id: requestId, status: "2", reason: "Not Aavaible")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.notifyData.remove(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        } else {
+            AlertController.alert(message: "You can not reject notifications.")
+        }
     }
-//    func deleteData(at indexPath: IndexPath) {
-//            let index = datalist[indexPath.row]
-//            if index["note_type"] as? String == "visitor" {
-//                visitorGrant(id: index["id"] as? String ?? "", loc: "", rply: "declined")
-//                datalist.remove(at: indexPath.row)
-//            } else {
-//                getGrant(index["req_id"] as? String ?? "", "declined", index["id"] as? String ?? "")
-//                datalist.remove(at: indexPath.row)
-//            }
-//            
-//            tableView.reloadData()
-//        }
+    
     func editData(at indexPath: IndexPath) {
         let index = notifyData[indexPath.row]
-        if index.note_type == "visitor" {
-            selectNo = indexPath.row
-            grantView.isHidden = false
-        }else{
-            getGrant(id: index.req_id ?? "", noteId: "grant", reply: index.id ?? "")
-            notifyData.remove(at: indexPath.row)
+        if index.notification_type == "9" {
+            if let requestId = index.req_id {
+                GuestAction(id: String(requestId), status: "1", selectid: "1")
+                self.notifyData.remove(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
+            } else {
+                print("Error: req_id is nil")
+            }
+        } else {
+            print("You can not approve notifications .")
         }
-
     }
-//    func editData(at indexPath: IndexPath) {
-//            let index = datalist[indexPath.row]
-//            if index["note_type"] as? String == "visitor" {
-//                selectNo = indexPath.row
-//                grantView.isHidden = false
-//            } else {
-//                getGrant(index["req_id"] as? String ?? "", "grant", index["id"] as? String ?? "")
-//                datalist.remove(at: indexPath.row)
-//                tableView.reloadData()
-//            }
-//        }
+
 }

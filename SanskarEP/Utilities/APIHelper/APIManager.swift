@@ -99,10 +99,10 @@ class APIManager: NSObject {
     class func apiCall(postData:NSDictionary, url: String, identifire : String = "",  completionHandler: @escaping responseHandler) {
         let path: String = APIManager.getFullPath(path: url)
      
-        print("Request URL ->  \(path)")
-        print("Request parameter ->  \(postData.jsonStringRepresentation?.description ?? "")")
+        NSLog("Request URL ->  \(path)")
+        NSLog("Request parameter ->  \(postData.jsonStringRepresentation?.description ?? "")")
         
-        print("Request Header ->  \(APIManager.setHeader().jsonStringRepresentation?.description ?? "")")
+        NSLog("Request Header ->  \(APIManager.setHeader().jsonStringRepresentation?.description ?? "")")
 
         Alamofire.upload(
             multipartFormData: { multipartFormData in
@@ -122,19 +122,19 @@ class APIManager: NSObject {
                 switch encodingResult {
                 case .success(let upload, _, _):
                     upload.uploadProgress(closure: { (Progress) in
-                        print("Upload Progress: \(Progress.fractionCompleted)")
+                        NSLog("Upload Progress: \(Progress.fractionCompleted)")
                     })
                     upload.responseJSON { response in
                       //  print("HTTP URLResponse -> \(String(describing: response.response))")
 
                         if response.result.value is NSDictionary
                         {
-                            print("HTTP Response Value -> \((response.result.value as! NSDictionary).jsonStringRepresentation ?? "")")
+                            NSLog("HTTP Response Value -> \((response.result.value as! NSDictionary).jsonStringRepresentation ?? "")")
                             
                             completionHandler(true,response.result.value as! NSDictionary?,nil,response.data)
                         }
                         else{
-                            print("HTTP Response Value -> \(String(describing: response.result.value))")
+                            NSLog("HTTP Response Value -> \(String(describing: response.result.value))")
                             
                             completionHandler(true,nil,nil,response.data)
                         }

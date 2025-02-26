@@ -219,7 +219,6 @@ class NewHomeVC: UIViewController  {
                 self.datacoll.reloadData()
             }
         }
-
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -227,6 +226,7 @@ class NewHomeVC: UIViewController  {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         eventcCurrentDate()
     }
+    
     @IBAction func ButtonTapped(_ sender: Any) {
         let profile = storyboard?.instantiateViewController(withIdentifier: "ProfileVc") as! ProfileVc
         self.present(profile,animated: true,completion: nil)
@@ -307,6 +307,7 @@ class NewHomeVC: UIViewController  {
     }
    }
     present(vc, animated: true)
+        
     }
    
     
@@ -331,7 +332,6 @@ class NewHomeVC: UIViewController  {
         let firstDayOfMonth = calenderHelper().firstOfMonth(date: selectedDate)
         let startingSpaces = calenderHelper().weekDay(date: firstDayOfMonth)
         
-        
         var count: Int = 2
         while(count <= 42)
         {
@@ -351,27 +351,27 @@ class NewHomeVC: UIViewController  {
 
     
     @IBAction func SearchBarBtn(_ sender: UIButton) {
-        //    let vc = self.storyboard?.instantiateViewController(withIdentifier: "SecondnewApprovalVc") as! SecondnewApprovalVc
-        //        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
-        //        if #available(iOS 15.0, *) {
-        //        if let sheet = vc.sheetPresentationController {
-        //        var customDetent: UISheetPresentationController.Detent?
-        //            if #available(iOS 16.0, *) {
-        //            customDetent = UISheetPresentationController.Detent.custom { context in
-        //                return 550
-        //            }
-        //            sheet.detents = [customDetent!]
-        //            sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
-        //                }
-        //            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-        //            sheet.prefersGrabberVisible = true
-        //            sheet.preferredCornerRadius = 12
-        //                            }
-        //                        }
-        //        present(vc, animated: true)
-        //    }
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "BdayViewController") as! BdayViewController
-        self.navigationController?.pushViewController(vc, animated: true)
+       //     let vc = self.storyboard?.instantiateViewController(withIdentifier: "SecondnewApprovalVc") as! SecondnewApprovalVc
+               let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
+                if #available(iOS 15.0, *) {
+                if let sheet = vc.sheetPresentationController {
+                var customDetent: UISheetPresentationController.Detent?
+                    if #available(iOS 16.0, *) {
+                    customDetent = UISheetPresentationController.Detent.custom { context in
+                        return 550
+                    }
+                    sheet.detents = [customDetent!]
+                    sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
+                        }
+                    sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+                    sheet.prefersGrabberVisible = true
+                    sheet.preferredCornerRadius = 12
+                                    }
+                                }
+                present(vc, animated: true)
+            
+    //    let vc = self.storyboard?.instantiateViewController(withIdentifier: "BdayViewController") as! BdayViewController
+     //   self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func upcomingbdaybtn(_ sender: UIButton) {
@@ -382,14 +382,16 @@ class NewHomeVC: UIViewController  {
     
     @IBAction func previousTapped(_ sender: UIButton) {
         selectedDate = calenderHelper().minusmonth(date: selectedDate)
-        setMonthView()
-        MonthwiseDetailApi()
+           selectedIndexPath = nil  // Reset selected date
+           setMonthView()
+           MonthwiseDetailApi()
     }
     
     @IBAction func nextTapped(_ sender: UIButton) {
         selectedDate = calenderHelper().plusmonth(date: selectedDate)
-        setMonthView()
-        MonthwiseDetailApi()
+            selectedIndexPath = nil
+            setMonthView()
+            MonthwiseDetailApi()
     }
     override open var shouldAutorotate: Bool {
         return false
@@ -400,7 +402,8 @@ class NewHomeVC: UIViewController  {
         if  let vc = self.storyboard?.instantiateViewController(withIdentifier: "NotificationVc") as? NotificationVc {
             vc.titleTxt = "Notification"
             present(vc, animated: true)
-        }}
+        }
+    }
     
  
     func approvalpending() {
@@ -424,17 +427,15 @@ class NewHomeVC: UIViewController  {
                 } else {
                     print(response?["error"] as Any)
                     DispatchQueue.main.async {
-                        // Handle error case if needed
                     }
                 }
             }
         }
     }
+    
     func updateAttendanceForDate(_ date: Date) {
         let calendar = Calendar.current
         let selectedDay = calendar.component(.day, from: date)
-        
-        // Get attendance for the selected day
         if let attendance = epmDetails.first(where: { $0.date == selectedDay }) {
             let inTime = attendance.inTime ?? "N/A"
             let outTime = attendance.outTime ?? "N/A"
@@ -594,7 +595,7 @@ class NewHomeVC: UIViewController  {
         }
     }
 
-    // Helper function to convert month name to month number
+  
     func monthToNumber(_ month: String) -> Int {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM"
@@ -602,7 +603,7 @@ class NewHomeVC: UIViewController  {
             let calendar = Calendar.current
             return calendar.component(.month, from: monthDate)
         }
-        return 1 // Default to January if the month is invalid
+        return 1
     }
 
 
@@ -682,7 +683,6 @@ class NewHomeVC: UIViewController  {
         DispatchQueue.main.async {
             Loader.showLoader()
         }
-        
         APIManager.apiCall(postData: dict as NSDictionary, url: monthwisedetailapi) { result, response, error, data in
             DispatchQueue.main.async {
                 Loader.hideLoader()
@@ -697,9 +697,8 @@ class NewHomeVC: UIViewController  {
                 
                 if monthWiseDetail.status == true, let details = monthWiseDetail.data {
                     DispatchQueue.main.async {
-                        self.epmDetails = details  // ✅ Assigning to correct property
-                        self.calcollectionview.reloadData() // ✅ Reload collection view after update
-
+                        self.epmDetails = details
+                        self.calcollectionview.reloadData()
                     }
                 } else {
                     print("Error: \(monthWiseDetail.message ?? "Unknown error")")
@@ -999,7 +998,6 @@ extension NewHomeVC: UICollectionViewDataSource {
         return 0
     }
     
-    // Cell for item at index path
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == calcollectionview {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalCell", for: indexPath) as? calenderCell else {
@@ -1015,15 +1013,15 @@ extension NewHomeVC: UICollectionViewDataSource {
                 cell.isHidden = false
                 cell.dayofmonth.text = dateText
 
-////                    if let day = Int(dateText) {
-////                        if day < currentDay {
-////                            cell.dayofmonth.textColor = .gray
-////                        } else if day == currentDay {
-////                            cell.dayofmonth.textColor = .systemGreen
-////                        } else {
-////                            cell.dayofmonth.textColor = .black
-////                        }
-////                    }
+//                    if let day = Int(dateText) {
+//                        if day < currentDay {
+//                            cell.dayofmonth.textColor = .gray
+//                        } else if day == currentDay {
+//                            cell.dayofmonth.textColor = .systemGreen
+//                        } else {
+//                            cell.dayofmonth.textColor = .black
+//                        }
+//                    }
                 let calendar = Calendar.current
                 let currentDay = calendar.component(.day, from: Date())
                 let currentMonth = calendar.component(.month, from: Date())
@@ -1062,7 +1060,7 @@ extension NewHomeVC: UICollectionViewDataSource {
                     cell.backview.backgroundColor = .systemOrange
                 }
             }
-            //#fdcc9ea6
+         
             
             cell.layer.cornerRadius = 8
             return cell
@@ -1120,7 +1118,6 @@ extension NewHomeVC: UICollectionViewDelegate {
         }
         else if collectionView == detailcollection {
             print("Detail Collection Item Selected at index \(indexPath.item)")
-            // Handle selection in detailcollection (e.g., show more details)
         }
     }
     
@@ -1178,12 +1175,10 @@ extension UIColor {
 }
 extension NewHomeVC: BirthPViewControllerDelegate {
     func didFinishWishing() {
-           self.showToast(message: "Birthday Wish Insert Successfully!")
-
+           self.showToast(message: "Birthday Wish Successfully!")
            if let selectedIndex = daTalist.firstIndex(where: { $0["Emp_Code"] as? String == bEmpcode }) {
                daTalist[selectedIndex]["actionStatus"] = 1
            }
-
            tableview.reloadData()
        }
 }
@@ -1239,15 +1234,12 @@ extension NewHomeVC: UITableViewDelegate, UITableViewDataSource {
                 cell.msgbtn.isEnabled = false
               //  cell.msgbtn.backgroundColor = UIColor.lightGray // Ensure disabled color
            //     cell.msgbtn.setTitleColor(UIColor.darkGray, for: .disabled)
-              
-                
-               
+ 
             } else {
                 cell.msgbtn.isEnabled = true
               
             }
-
-            
+ 
             cell.terminatedbtn.isHidden = true
             cell.mylbl3.isHidden = true
             return cell
@@ -1284,7 +1276,6 @@ extension NewHomeVC: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
     }
-
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let cellData = daTalist[indexPath.row]
@@ -1302,5 +1293,4 @@ extension NewHomeVC: UITableViewDelegate, UITableViewDataSource {
             return 150
         }
     }
-
 }

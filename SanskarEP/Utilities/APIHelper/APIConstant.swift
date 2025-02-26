@@ -104,6 +104,10 @@ let visitorregistration     = "visitor_registration"
 let cancelstatus            = "api_panel/getLeaveCanDetail"
 let monthwisedetailapi      = "api_panel/get_month_wise_emp_detail"
 let AHistoryapi             = "api_panel_dev/aprovelistHistory"
+let GuestTime               = "api_panel/guest_in"
+let guestFloor              = "api_panel/get_floor"
+let guestAction             = "api_panel/emp_action_guest"
+
 // inventory api
 let submitedlistapi        = "api_panel/get_inventory_detail"
 let requestdetailapi       = "api_panel/get_generate_challan_list"

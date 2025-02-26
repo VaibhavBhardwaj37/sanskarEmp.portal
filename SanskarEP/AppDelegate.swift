@@ -112,9 +112,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                                 -> Void) {
         let userInfo = notification.request.content.userInfo
         print(userInfo)
-       // playNotificationSound()
         if let notificationType = userInfo["data"] as? [String: Any],
-              let type = notificationType["notification_type"] as? Int {
+              let type = notificationType["notification_type"] as? String {
                playNotificationSound(type: type)
            } else {
                playNotificationSound(type: nil)
@@ -131,35 +130,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
         print(userInfo)
-        if currentUser.EmpCode != "" {
-            NotificationCenter.default.post(name: NSNotification.Name("Note"), object: nil)
-            note = true
-        }
-        if let aps = userInfo["aps"] as? [String: Any],
-           let alert = aps["alert"] as? [String: Any],
-           let notificationTitle = alert["title"] as? String {
-            DispatchQueue.main.async {
-                if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
-                    if let navigationController = rootViewController as? UINavigationController {
-                        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NotificationVc") as? NotificationVc {
-                            vc.titleTxt = "Notification"
-                            navigationController.pushViewController(vc, animated: true)
-                        }
-                    } else {
-                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                        if let vc = storyboard.instantiateViewController(withIdentifier: "NotificationVc") as? NotificationVc {
-                            vc.titleTxt = "Notification"
-                            let navController = UINavigationController(rootViewController: vc)
-                            UIApplication.shared.windows.first?.rootViewController = navController
-                            UIApplication.shared.windows.first?.makeKeyAndVisible()
-                        }
-                    }
+
+        DispatchQueue.main.async {
+            if let rootViewController = UIApplication.shared.windows.first?.rootViewController,
+               let userInfoDict = userInfo as? [String: Any],
+               let notificationData = userInfoDict["data"] as? [String: Any],
+               let notificationType = notificationData["notification_type"] as? String {
+
+                var viewControllerToPresent: UIViewController?
+
+                if notificationType == "8" {
+                    let customAlertVC = CustomAlert(nibName: "CustomAlert", bundle: nil)
+                    customAlertVC.userInfo = userInfoDict
+                    viewControllerToPresent = customAlertVC
+                } else if notificationType == "9" {
+                    let leaveNotificationVC = CustomAlert(nibName: "CustomAlert", bundle: nil)
+                    leaveNotificationVC.userInfo = userInfoDict
+                    viewControllerToPresent = leaveNotificationVC
+                }
+
+                if let viewController = viewControllerToPresent {
+                    viewController.modalPresentationStyle = .overFullScreen
+                    rootViewController.present(viewController, animated: true)
                 }
             }
         }
 
         completionHandler()
     }
+
+
+    
+
     
     func application(_ application: UIApplication,
                      didReceiveRemoteNotification userInfo: [AnyHashable: Any],
@@ -191,16 +193,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
 
-    func playNotificationSound(type: Int?) {
+    func playNotificationSound(type: String?) {
         var soundFileName: String
 
         switch type {
-        case 8:
-            soundFileName = "bell" // Replace with actual file name
-        case 7:
-            soundFileName = "bell2/7" // Replace with actual file name
+        case "8":
+            soundFileName = "bell3"
+        case "9":
+            soundFileName = "bell3"
         default:
-            soundFileName = "bell2" // Default sound
+            soundFileName = "bell2"
         }
 
         guard let soundURL = Bundle.main.url(forResource: soundFileName, withExtension: "mp3") else {

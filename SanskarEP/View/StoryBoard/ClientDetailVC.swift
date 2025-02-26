@@ -72,15 +72,16 @@ class ClientDetailVC: UIViewController, UIImagePickerControllerDelegate & UINavi
         Submitapi()
     }
   
+
     @IBAction func backbtn(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-
+    
     func Submitapi() {
         var dict = [String: Any]()
         dict["EmpCode"] = currentUser.EmpCode
         dict["katha_id"] = kathaId
-        dict["address"] = ""       // Set static values
+        dict["address"] = ""
         dict["addharcard"] = ""
 
         // Extract cell values

@@ -122,8 +122,10 @@ class CalenderOnClick: UIViewController {
        }
     @IBAction func RequestBtnclick(_ sender: UIButton) {
         hideAllContainerViews()
-        requestTypeView.isHidden = false
-        requestTableview.isHidden = false
+//        requestTypeView.isHidden = false
+//        requestTableview.isHidden = false
+        self.requestTypeView.isHidden = !self.requestTypeView.isHidden
+        self.requestTableview.isHidden = !self.requestTableview.isHidden
     }
 }
 

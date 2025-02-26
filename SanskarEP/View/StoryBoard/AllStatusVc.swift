@@ -24,6 +24,7 @@ class AllStatusVc: UIViewController {
 @IBOutlet weak var reasonview: UIView!
 @IBOutlet weak var submit: UIButton!
 @IBOutlet weak var reasontext: UITextView!
+@IBOutlet weak var msglbl: UILabel!
     
     
     
@@ -53,7 +54,6 @@ class AllStatusVc: UIViewController {
         tableview.dataSource = self
         tableview.delegate = self
         tableview.register(UINib(nibName: "TourStCell", bundle: nil), forCellReuseIdentifier: "TourStCell")
-  //      tableview.register(UINib(nibName: "statusTableViewCell", bundle: nil), forCellReuseIdentifier: "statusTableViewCell")
         tableview.register(UINib(nibName: "PLCell", bundle: nil), forCellReuseIdentifier: "PLCell")
         tableview.register(UINib(nibName: "bdayviewcell", bundle: nil), forCellReuseIdentifier: "bdayviewcell")
         searchbar.delegate = self
@@ -152,36 +152,54 @@ class AllStatusVc: UIViewController {
             myreportview.isHidden =  true
             tableviewheight.constant = 10
         }
-            
+        updateNoNotificationLabel()
         tableview.reloadData()
        
     }
     
         
-        func EmployeeDetailAPi() {
-            var dict = Dictionary<String, Any>()
-            dict["EmpCode"] = currentUser.EmpCode
-            DispatchQueue.main.async(execute: {Loader.showLoader()})
-            APIManager.apiCall(postData: dict as NSDictionary, url: EmployeeListApi) { result, response, error, data in
-                DispatchQueue.main.async(execute: {Loader.hideLoader()})
-                if  let responseData = response, responseData["status"] as? Bool == true {
-                    if let JSON = responseData["data"] as? [[String: Any]] {
-                        self.DetailData = JSON
-                        self.filteredDetailData = JSON
-                     
-                        DispatchQueue.main.async {
-                          
-                        }
+    func EmployeeDetailAPi() {
+        var dict = Dictionary<String, Any>()
+        dict["EmpCode"] = currentUser.EmpCode
+        
+        DispatchQueue.main.async { Loader.showLoader() }
+        
+        APIManager.apiCall(postData: dict as NSDictionary, url: EmployeeListApi) { result, response, error, data in
+            DispatchQueue.main.async { Loader.hideLoader() }
+            
+            if let responseData = response, responseData["status"] as? Bool == true {
+                if let JSON = responseData["data"] as? [[String: Any]] {
+                    self.DetailData = JSON
+                    self.filteredDetailData = JSON
+                    
+                    DispatchQueue.main.async {
+                        self.updateNoNotificationLabel()
                         self.tableview.reloadData()
                     }
-                } else {
-                   AlertController.alert(message: (response?.validatedValue("message"))!)
-                    print(response?["error"] as Any)
                 }
-                
+            } else {
+                AlertController.alert(message: (response?.validatedValue("message"))!)
+                print(response?["error"] as Any)
             }
         }
+    }
+
         
+    func updateNoNotificationLabel() {
+        DispatchQueue.main.async {
+            if self.Selected.selectedSegmentIndex == 1 {
+                let isEmpty = self.filteredDetailData.isEmpty
+                self.msglbl.isHidden = !isEmpty
+                self.msglbl.text = isEmpty ? "No Data Available" : ""
+            } else if  self.Selected.selectedSegmentIndex == 0 {
+                let isEmpty = self.getLeaveRequestList.isEmpty
+                self.msglbl.isHidden = !isEmpty
+                self.msglbl.text = isEmpty ? "No Data Available" : ""
+            }
+        }
+    }
+
+    
     func cancelApi() {
         var dict = Dictionary<String,Any>()
         dict["EmpCode"] = currentUser.EmpCode

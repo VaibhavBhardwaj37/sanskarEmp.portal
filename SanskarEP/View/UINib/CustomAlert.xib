@@ -11,15 +11,20 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomAlert" customModule="SanskarEP" customModuleProvider="target">
             <connections>
+                <outlet property="acceptbtn" destination="usp-1H-X3F" id="A1W-A6-ZKy"/>
+                <outlet property="contentview" destination="ABT-bN-Drb" id="Vm1-ao-L3m"/>
                 <outlet property="holderView" destination="MbR-Il-fP2" id="abX-m6-VrN"/>
                 <outlet property="locateTxt" destination="guh-Bj-0SB" id="88n-xv-cBI"/>
                 <outlet property="nameLbL" destination="j2X-br-oTa" id="Q5X-gU-fwR"/>
+                <outlet property="okbtn" destination="jl8-Zf-0Yl" id="u97-AK-lrT"/>
                 <outlet property="posterImg" destination="Raj-rP-YGz" id="nwW-7t-M2s"/>
+                <outlet property="rejectbtn" destination="B06-lz-jcM" id="Aet-xn-qge"/>
+                <outlet property="remarktext" destination="hrR-rS-B4B" id="XA8-Dn-Hg5"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" restorationIdentifier="CustomAlert" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -50,6 +55,43 @@
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ABT-bN-Drb">
+                            <rect key="frame" x="8" y="185" width="224" height="40"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Gl3-fQ-PLC">
+                                    <rect key="frame" x="0.0" y="0.0" width="224" height="40"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Reason" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hrR-rS-B4B">
+                                            <rect key="frame" x="0.0" y="0.0" width="179" height="40"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jl8-Zf-0Yl">
+                                            <rect key="frame" x="184" y="0.0" width="40" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="40" id="C2o-Kn-vHb"/>
+                                                <constraint firstAttribute="height" constant="40" id="S22-LO-Iv9"/>
+                                            </constraints>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" image="paperplane.fill" catalog="system"/>
+                                            <connections>
+                                                <action selector="okbtn:" destination="-1" eventType="touchUpInside" id="2eH-DB-iYB"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="Gl3-fQ-PLC" firstAttribute="leading" secondItem="ABT-bN-Drb" secondAttribute="leading" id="2bO-TX-g0T"/>
+                                <constraint firstItem="Gl3-fQ-PLC" firstAttribute="leading" secondItem="ABT-bN-Drb" secondAttribute="leading" id="8jE-DC-0JO"/>
+                                <constraint firstAttribute="bottom" secondItem="Gl3-fQ-PLC" secondAttribute="bottom" id="Bvp-SS-Rh9"/>
+                                <constraint firstAttribute="trailing" secondItem="Gl3-fQ-PLC" secondAttribute="trailing" id="Oc2-Y5-aNh"/>
+                                <constraint firstAttribute="height" constant="40" id="beY-vW-uGo"/>
+                                <constraint firstItem="Gl3-fQ-PLC" firstAttribute="top" secondItem="ABT-bN-Drb" secondAttribute="top" id="fYG-IE-zjt"/>
+                                <constraint firstAttribute="trailing" secondItem="Gl3-fQ-PLC" secondAttribute="trailing" id="mqd-AQ-Equ"/>
+                            </constraints>
+                        </view>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="NKx-6e-cBc">
                             <rect key="frame" x="20" y="245" width="200" height="45"/>
                             <subviews>
@@ -86,6 +128,7 @@
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="Raj-rP-YGz" firstAttribute="centerX" secondItem="MbR-Il-fP2" secondAttribute="centerX" id="1xA-r6-00y"/>
+                        <constraint firstAttribute="trailing" secondItem="ABT-bN-Drb" secondAttribute="trailing" constant="8" id="FUQ-8F-jfj"/>
                         <constraint firstItem="Raj-rP-YGz" firstAttribute="top" secondItem="MbR-Il-fP2" secondAttribute="top" constant="20" id="Nem-y1-1KG"/>
                         <constraint firstAttribute="trailing" secondItem="guh-Bj-0SB" secondAttribute="trailing" constant="20" id="Ow1-oa-xZH"/>
                         <constraint firstItem="j2X-br-oTa" firstAttribute="leading" secondItem="MbR-Il-fP2" secondAttribute="leading" constant="20" id="P0b-Gy-Kb8"/>
@@ -97,7 +140,9 @@
                         <constraint firstItem="NKx-6e-cBc" firstAttribute="leading" secondItem="MbR-Il-fP2" secondAttribute="leading" constant="20" id="fSi-ip-bWh"/>
                         <constraint firstAttribute="width" constant="240" id="gDF-BI-sgn"/>
                         <constraint firstItem="guh-Bj-0SB" firstAttribute="top" secondItem="j2X-br-oTa" secondAttribute="bottom" constant="15" id="nRt-oF-6yY"/>
+                        <constraint firstItem="ABT-bN-Drb" firstAttribute="top" secondItem="j2X-br-oTa" secondAttribute="bottom" constant="15" id="rFf-X4-UYh"/>
                         <constraint firstItem="guh-Bj-0SB" firstAttribute="leading" secondItem="MbR-Il-fP2" secondAttribute="leading" constant="20" id="tK9-Gs-JXt"/>
+                        <constraint firstItem="ABT-bN-Drb" firstAttribute="leading" secondItem="MbR-Il-fP2" secondAttribute="leading" constant="8" id="xPg-pI-tgu"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qVM-Fm-Ks2">
@@ -127,6 +172,7 @@
     </objects>
     <resources>
         <image name="multiply.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="paperplane.fill" catalog="system" width="128" height="119"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
