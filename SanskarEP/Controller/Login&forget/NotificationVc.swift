@@ -9,7 +9,7 @@ import UIKit
 import SDWebImage
 import iOSDropDown
 
-class NotificationVc: UIViewController {
+class NotificationVc: UIViewController , CustomAlertDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var headerLbl: UILabel!
@@ -20,13 +20,15 @@ class NotificationVc: UIViewController {
     @IBOutlet weak var tabview: UIView!
     @IBOutlet weak var notLabel: UILabel!
     @IBOutlet weak var clearButton: UIButton!
+    @IBOutlet weak var searchbar: UISearchBar!
     
     var titleTxt: String?
     var notifyData : [Notify] = []
+    var filteredDetails: [Notify] = []
     var locDetails = ["Ground Floor","Reception","Conference Room","Second Floor"]
     var selectNo: Int = 0
     var datalist = [[String:Any]]()
-    
+    var isSearching = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,10 +47,10 @@ class NotificationVc: UIViewController {
     
     @IBAction func backBtnPressed(_ sender: UIButton) {
         dismiss(animated: true,completion: nil)
-//        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewHomeVC") as? NewHomeVC {
-//            
-//            navigationController?.pushViewController(vc, animated: true)
-//        }
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewHomeVC") as? NewHomeVC {
+            
+            navigationController?.pushViewController(vc, animated: true)
+        }
         
     }
     
@@ -146,19 +148,22 @@ class NotificationVc: UIViewController {
             }
         }
     }
-    
-    
+    func didCompleteAction(with message: String) {
+            self.navigationController?.popViewController(animated: true)
+            showToast(message: message)
+        self.tableView.reloadData()
+        }
 }
 
 extension NotificationVc: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notifyData.count
-        
+        return  isSearching ? filteredDetails.count : notifyData.count
+       
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationCell", for: indexPath) as! NotificationCell
-                let data = notifyData[indexPath.row]
+                let data =  isSearching ? filteredDetails[indexPath.row] : notifyData[indexPath.row]
                 if data.status == true {
                     cell.titleLbl.text = data.notification_title
                     cell.subTitleLbl.text = data.notification_content
@@ -211,6 +216,7 @@ extension NotificationVc: UITableViewDelegate {
                vc.type = index.notification_type
                vc.inoutkey = index.inOrOut
                vc.reqid = index.req_id
+               vc.delegate = self
                vc.modalPresentationStyle = .overCurrentContext
                vc.modalTransitionStyle = .flipHorizontal
                present(vc, animated: true)
@@ -222,6 +228,7 @@ extension NotificationVc: UITableViewDelegate {
                vc.leavetype = index.note_type
                vc.reqid = index.req_id
                vc.date = index.creation_date
+               
 
                vc.modalPresentationStyle = .overCurrentContext
                vc.modalTransitionStyle = .flipHorizontal
@@ -259,4 +266,29 @@ extension NotificationVc: UITableViewDelegate {
         }
     }
 
+}
+extension NotificationVc: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            isSearching = false
+            filteredDetails = notifyData
+          
+        } else {
+            isSearching = true
+            filteredDetails = notifyData.filter { data in
+                return (data.notification_content?.lowercased() ?? "").contains(searchText.lowercased()) ||
+                       (data.notification_title?.lowercased() ?? "").contains(searchText.lowercased())
+            }
+        }
+        updateNoNotificationLabel()
+        tableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        isSearching = false
+        searchBar.text = ""
+        filteredDetails = notifyData
+        tableView.reloadData()
+        searchBar.resignFirstResponder()
+    }
 }

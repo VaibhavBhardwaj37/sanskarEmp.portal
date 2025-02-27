@@ -9,7 +9,6 @@ import UIKit
 
 class ApprvlCollCell: UICollectionViewCell {
 
-    @IBOutlet weak var imageview: UIImageView!
     @IBOutlet weak var namelabel: UILabel!
     @IBOutlet weak var actionbtn: UIButton!
     @IBOutlet weak var roundview: UIView!

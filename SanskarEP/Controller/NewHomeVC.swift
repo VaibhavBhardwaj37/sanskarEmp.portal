@@ -194,8 +194,8 @@ class NewHomeVC: UIViewController  {
 //            self.view.addGestureRecognizer(tapGesture)
         
         getListData()
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-           calcollectionview.addGestureRecognizer(longPressGesture)
+//        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+//           calcollectionview.addGestureRecognizer(longPressGesture)
         
         
     }
@@ -553,47 +553,47 @@ class NewHomeVC: UIViewController  {
 //        }
 //    }
     
-    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
-        if gestureRecognizer.state == .began {
-            let location = gestureRecognizer.location(in: calcollectionview)
-            if let indexPath = calcollectionview.indexPathForItem(at: location) {
-               let  selectedData = totalSquares[indexPath.item]
-                
-              
-                let monthYearText = MonthLabel.text?.split(separator: " ")
-                let month = monthYearText?.first ?? ""
-                let year = monthYearText?.last ?? ""
-                
-           
-                let selectedDay = totalSquares[indexPath.item]
-                 selectedDateString = ""
-                if let day = Int(selectedDay) {
-                    selectedDateString = "\(year)-\(String(format: "%02d", monthToNumber(String(month))))-\(String(format: "%02d", day))"
-                }
-                
-                let vc = storyboard!.instantiateViewController(withIdentifier: "ApprovalPageVc") as! ApprovalPageVc
-            //    vc.data = selectedData
-                vc.selectedDateFormatted = selectedDateString
-                
-                if #available(iOS 15.0, *) {
-                    if let sheet = vc.sheetPresentationController {
-                        var customDetent: UISheetPresentationController.Detent?
-                        if #available(iOS 16.0, *) {
-                            customDetent = UISheetPresentationController.Detent.custom { context in
-                                return 540
-                            }
-                            sheet.detents = [customDetent!]
-                            sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
-                        }
-                        sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-                        sheet.prefersGrabberVisible = true
-                        sheet.preferredCornerRadius = 12
-                    }
-                }
-                self.present(vc, animated: true)
-            }
-        }
-    }
+//    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+//        if gestureRecognizer.state == .began {
+//            let location = gestureRecognizer.location(in: calcollectionview)
+//            if let indexPath = calcollectionview.indexPathForItem(at: location) {
+//               let  selectedData = totalSquares[indexPath.item]
+//                
+//              
+//                let monthYearText = MonthLabel.text?.split(separator: " ")
+//                let month = monthYearText?.first ?? ""
+//                let year = monthYearText?.last ?? ""
+//                
+//           
+//                let selectedDay = totalSquares[indexPath.item]
+//                 selectedDateString = ""
+//                if let day = Int(selectedDay) {
+//                    selectedDateString = "\(year)-\(String(format: "%02d", monthToNumber(String(month))))-\(String(format: "%02d", day))"
+//                }
+//                
+//                let vc = storyboard!.instantiateViewController(withIdentifier: "ApprovalPageVc") as! ApprovalPageVc
+//            //    vc.data = selectedData
+//                vc.selectedDateFormatted = selectedDateString
+//                
+//                if #available(iOS 15.0, *) {
+//                    if let sheet = vc.sheetPresentationController {
+//                        var customDetent: UISheetPresentationController.Detent?
+//                        if #available(iOS 16.0, *) {
+//                            customDetent = UISheetPresentationController.Detent.custom { context in
+//                                return 540
+//                            }
+//                            sheet.detents = [customDetent!]
+//                            sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
+//                        }
+//                        sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+//                        sheet.prefersGrabberVisible = true
+//                        sheet.preferredCornerRadius = 12
+//                    }
+//                }
+//                self.present(vc, animated: true)
+//            }
+//        }
+//    }
 
   
     func monthToNumber(_ month: String) -> Int {
@@ -706,8 +706,6 @@ class NewHomeVC: UIViewController  {
             } catch {
                 print("Decoding Error:", error.localizedDescription)
             }
-            
-            
         }
     }
 

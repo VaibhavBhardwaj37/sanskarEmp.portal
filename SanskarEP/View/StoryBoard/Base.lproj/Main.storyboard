@@ -1708,8 +1708,18 @@
                                     <constraint firstItem="N2I-eE-7jd" firstAttribute="leading" secondItem="wtf-wk-fu6" secondAttribute="leading" constant="8" id="wLX-DE-jAl"/>
                                 </constraints>
                             </view>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="Rvj-sK-aPJ">
+                                <rect key="frame" x="8" y="90" width="304" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="kMf-aN-jL8"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="20y-1j-Fn9" id="EZN-MI-kRf"/>
+                                </connections>
+                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="QrW-LL-H7x">
-                                <rect key="frame" x="0.0" y="80" width="320" height="488"/>
+                                <rect key="frame" x="0.0" y="150" width="320" height="418"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ztb-Si-Yim" customClass="RoundUIView" customModule="SanskarEP" customModuleProvider="target">
@@ -1888,19 +1898,22 @@
                             <constraint firstItem="MPe-u3-GVu" firstAttribute="bottom" secondItem="wtf-wk-fu6" secondAttribute="bottom" constant="150" id="3qj-XB-Xsm"/>
                             <constraint firstItem="VTt-Xu-Wfk" firstAttribute="leading" secondItem="MPe-u3-GVu" secondAttribute="leading" id="3ty-J7-CMt"/>
                             <constraint firstItem="MPe-u3-GVu" firstAttribute="trailing" secondItem="vQJ-H2-ki3" secondAttribute="trailing" id="66a-No-NXw"/>
-                            <constraint firstItem="MPe-u3-GVu" firstAttribute="bottom" secondItem="QrW-LL-H7x" secondAttribute="bottom" id="8h9-L0-J3x"/>
-                            <constraint firstItem="QrW-LL-H7x" firstAttribute="top" secondItem="vQJ-H2-ki3" secondAttribute="bottom" id="A1D-nT-ex4"/>
                             <constraint firstItem="Ztb-Si-Yim" firstAttribute="centerX" secondItem="2C9-Ki-ET5" secondAttribute="centerX" id="Fgu-Nw-7GX"/>
                             <constraint firstItem="VTt-Xu-Wfk" firstAttribute="trailing" secondItem="MPe-u3-GVu" secondAttribute="trailing" id="Fnn-an-4A9"/>
                             <constraint firstItem="vQJ-H2-ki3" firstAttribute="leading" secondItem="MPe-u3-GVu" secondAttribute="leading" id="Nca-FF-noE"/>
+                            <constraint firstItem="QrW-LL-H7x" firstAttribute="trailing" secondItem="MPe-u3-GVu" secondAttribute="trailing" id="O0R-y6-nEw"/>
                             <constraint firstAttribute="bottom" secondItem="VTt-Xu-Wfk" secondAttribute="bottom" constant="-50" id="aaz-KT-d8n"/>
                             <constraint firstItem="Ztb-Si-Yim" firstAttribute="centerY" secondItem="2C9-Ki-ET5" secondAttribute="centerY" id="cVk-Q3-S4C"/>
+                            <constraint firstItem="QrW-LL-H7x" firstAttribute="bottom" secondItem="MPe-u3-GVu" secondAttribute="bottom" id="dUf-9Y-8wy"/>
+                            <constraint firstItem="Rvj-sK-aPJ" firstAttribute="leading" secondItem="MPe-u3-GVu" secondAttribute="leading" constant="8" id="h46-le-xaf"/>
                             <constraint firstItem="wtf-wk-fu6" firstAttribute="leading" secondItem="MPe-u3-GVu" secondAttribute="leading" constant="16" id="hoC-nR-1En"/>
                             <constraint firstItem="VTt-Xu-Wfk" firstAttribute="top" secondItem="MPe-u3-GVu" secondAttribute="top" id="kWD-EQ-K0V"/>
+                            <constraint firstItem="Rvj-sK-aPJ" firstAttribute="top" secondItem="vQJ-H2-ki3" secondAttribute="bottom" constant="10" id="nfN-ux-2fu"/>
+                            <constraint firstItem="MPe-u3-GVu" firstAttribute="trailing" secondItem="Rvj-sK-aPJ" secondAttribute="trailing" constant="8" id="rGw-6N-hbv"/>
                             <constraint firstItem="MPe-u3-GVu" firstAttribute="trailing" secondItem="wtf-wk-fu6" secondAttribute="trailing" constant="16" id="uEc-dK-gi1"/>
-                            <constraint firstItem="QrW-LL-H7x" firstAttribute="leading" secondItem="MPe-u3-GVu" secondAttribute="leading" id="wh3-Rp-wKx"/>
-                            <constraint firstItem="MPe-u3-GVu" firstAttribute="trailing" secondItem="QrW-LL-H7x" secondAttribute="trailing" id="woH-eV-846"/>
+                            <constraint firstItem="QrW-LL-H7x" firstAttribute="leading" secondItem="MPe-u3-GVu" secondAttribute="leading" id="umq-qH-XGQ"/>
                             <constraint firstItem="vQJ-H2-ki3" firstAttribute="top" secondItem="MPe-u3-GVu" secondAttribute="top" id="zTE-eP-oIL"/>
+                            <constraint firstItem="QrW-LL-H7x" firstAttribute="top" secondItem="Rvj-sK-aPJ" secondAttribute="bottom" id="zbT-I0-ncc"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1911,6 +1924,7 @@
                         <outlet property="nameLbl" destination="Srz-es-g54" id="hl9-Zt-ne4"/>
                         <outlet property="notLabel" destination="N2I-eE-7jd" id="ggO-pZ-db9"/>
                         <outlet property="profileImg" destination="lki-VM-TyJ" id="T7T-Ur-e7n"/>
+                        <outlet property="searchbar" destination="Rvj-sK-aPJ" id="dLP-gu-77K"/>
                         <outlet property="tableView" destination="QrW-LL-H7x" id="yT5-AV-wdp"/>
                         <outlet property="tabview" destination="wtf-wk-fu6" id="zft-Wl-eqW"/>
                     </connections>
@@ -11545,12 +11559,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ima-Tb-ERc">
-                                        <rect key="frame" x="54" y="20" width="212" height="36"/>
+                                        <rect key="frame" x="42" y="20" width="236" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="SZv-iT-7m4"/>
                                         </constraints>
                                         <segments>
-                                            <segment title="Approve"/>
+                                            <segment title="Approved"/>
                                             <segment title="Pending"/>
                                             <segment title="History"/>
                                         </segments>
@@ -11776,12 +11790,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="56Q-We-wRe">
-                                        <rect key="frame" x="54" y="17.5" width="212" height="36"/>
+                                        <rect key="frame" x="42" y="17.5" width="236" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="x6t-9i-HsL"/>
                                         </constraints>
                                         <segments>
-                                            <segment title="Approve"/>
+                                            <segment title="Approved"/>
                                             <segment title="Pending"/>
                                             <segment title="History"/>
                                         </segments>
@@ -11976,12 +11990,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ZcC-Gx-2O7">
-                                        <rect key="frame" x="54" y="17.5" width="212" height="36"/>
+                                        <rect key="frame" x="42" y="17.5" width="236" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="cdk-bV-pBA"/>
                                         </constraints>
                                         <segments>
-                                            <segment title="Approve"/>
+                                            <segment title="Approved"/>
                                             <segment title="Pending"/>
                                             <segment title="History"/>
                                         </segments>
@@ -14099,11 +14113,11 @@
                                             <action selector="ButtonTapped:" destination="KfF-eY-Uw4" eventType="touchUpInside" id="067-Dg-1A9"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BWb-X9-M9e">
-                                        <rect key="frame" x="270" y="112" width="30" height="30"/>
+                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BWb-X9-M9e">
+                                        <rect key="frame" x="260" y="112" width="40" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="bGV-3P-v0r"/>
-                                            <constraint firstAttribute="width" constant="30" id="hRS-eN-h8Z"/>
+                                            <constraint firstAttribute="width" constant="40" id="hRS-eN-h8Z"/>
                                         </constraints>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" image="dots icon">

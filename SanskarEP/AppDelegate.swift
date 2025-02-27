@@ -165,16 +165,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ application: UIApplication,
                      didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult)
-                     -> Void) {
-        Messaging.messaging().appDidReceiveMessage(userInfo)
-        if let messageID = userInfo[gcmMessageIDKey] {
-            print("Message ID: \(messageID)")
-        }
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print(userInfo)
-        completionHandler(UIBackgroundFetchResult.newData)
-        
+        Messaging.messaging().appDidReceiveMessage(userInfo)
+        completionHandler(.newData)
     }
+
     
     
     //MARK: - App Flow

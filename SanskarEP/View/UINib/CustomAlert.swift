@@ -9,6 +9,9 @@ import UIKit
 import SDWebImage
 import iOSDropDown
 
+protocol CustomAlertDelegate: AnyObject {
+    func didCompleteAction(with message: String)
+}
 
 
 class CustomAlert: UIViewController {
@@ -33,6 +36,7 @@ class CustomAlert: UIViewController {
     var type: String?
     var reqid: Int?
     var inoutkey: String?
+    weak var delegate: CustomAlertDelegate?
 
     
     override func viewDidLoad() {
@@ -251,7 +255,11 @@ class CustomAlert: UIViewController {
         APIManager.apiCall(postData: dict as NSDictionary, url: GuestTime) { result, response, error, data in
             DispatchQueue.main.async { Loader.hideLoader() }
             if let response = response, response["status"] as? Bool == true {
-                AlertController.alert(message: response.validatedValue("message") as! String)
+              //  AlertController.alert(message: )
+                DispatchQueue.main.async {
+                  self.delegate?.didCompleteAction(with: response.validatedValue("message") as! String)
+                  self.dismiss(animated: true)
+              }
             } else {
                 print(response?["error"] as Any)
             }
@@ -270,7 +278,9 @@ class CustomAlert: UIViewController {
         APIManager.apiCall(postData: dict as NSDictionary, url: guestAction) { result, response, error, data in
             DispatchQueue.main.async { Loader.hideLoader() }
             if let response = response, response["status"] as? Bool == true {
-                AlertController.alert(message: response.validatedValue("message") as! String)
+            //    AlertController.alert(message: response.validatedValue("message") as! String)
+                self.delegate?.didCompleteAction(with: response.validatedValue("message") as! String)
+                self.dismiss(animated: true)
                
             } else {
                 print(response?["error"] as Any)

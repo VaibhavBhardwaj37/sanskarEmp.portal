@@ -12,25 +12,42 @@ class SecondnewApprovalVc: UIViewController {
 
     @IBOutlet weak var collectionview: UICollectionView!
     
- //   let staticItems = ["Leave", "Booking", "Tour", "Re"]
     
-    var task = [
-        TaskManagement(taskName: "Leave ", taskImg: "Request (1)"),
-        TaskManagement(taskName: "Booking", taskImg: "Reports"),
-        TaskManagement(taskName: "Tour", taskImg: "Guest"),
-        TaskManagement(taskName: "Tour Bill", taskImg: "Guest"),
-        TaskManagement(taskName: "Re", taskImg: ""),
-        
-     //   TaskManagement(taskName: "Tour Management", taskImg: "world-map"),
-    ]
+    var ReqType  = [[String:Any]]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        SideBarApi()
         collectionview.register(UINib(nibName: "ApprvlCollCell" , bundle: nil), forCellWithReuseIdentifier: "Cell")
         collectionview.delegate = self
         collectionview.dataSource = self
     }
+    
+    
+    func SideBarApi() {
+            var dict = Dictionary<String, Any>()
+            dict["EmpCode"] = currentUser.EmpCode
+            dict["id"] = "1"
+            DispatchQueue.main.async { Loader.showLoader() }
+            APIManager.apiCall(postData: dict as NSDictionary, url: sidebarapi) { result, response, error, data in
+                DispatchQueue.main.async { Loader.hideLoader() }
+                if let JSON = response as? NSDictionary, let status = JSON["status"] as? Bool, status == true,
+                   let data = JSON["data"] as? [[String: Any]] {
+                    self.ReqType = data
+                    DispatchQueue.main.async {
+                        self.collectionview.reloadData()
+                       
+                    }
+                } else {
+                    if let message = response?.validatedValue("message") as? String {
+                        AlertController.alert(message: message)
+                    } else {
+                        AlertController.alert(message: "An unexpected error occurred.")
+                    }
+                }
+            }
+        }
     
     @objc func onClickedMapButton(_ sender: UIButton) {
         print(sender.tag)
@@ -96,20 +113,19 @@ class SecondnewApprovalVc: UIViewController {
         }
     }
 }
+
 extension SecondnewApprovalVc: UICollectionViewDelegate,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       return task.count
+       return ReqType.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? ApprvlCollCell else {
             return UICollectionViewCell()
         }
-        let image = task[indexPath.row].taskImg
-        cell.imageview.image = UIImage(named: image)
-        cell.namelabel.text = task[indexPath.row].taskName
+        cell.namelabel.text = ReqType[indexPath.row]["name"] as? String ?? ""
+   
     
-      //  cell.imageview =
         cell.actionbtn.tag = indexPath.row
         cell.actionbtn.addTarget(self, action: #selector(SecondnewApprovalVc.onClickedMapButton(_:)), for: .touchUpInside)
        
