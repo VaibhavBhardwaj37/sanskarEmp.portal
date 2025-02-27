@@ -142,10 +142,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 if notificationType == "8" {
                     let customAlertVC = CustomAlert(nibName: "CustomAlert", bundle: nil)
                     customAlertVC.userInfo = userInfoDict
+                    customAlertVC.delegate = customAlertVC as? CustomAlertDelegate
                     viewControllerToPresent = customAlertVC
                 } else if notificationType == "9" {
                     let leaveNotificationVC = CustomAlert(nibName: "CustomAlert", bundle: nil)
                     leaveNotificationVC.userInfo = userInfoDict
+                    leaveNotificationVC.delegate = notificationType as? CustomAlertDelegate
                     viewControllerToPresent = leaveNotificationVC
                 }
 

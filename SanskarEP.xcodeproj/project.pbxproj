@@ -103,7 +103,6 @@
 		6C756444161DCE68E022641B /* Pods_SanskarEP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B11E0BD4B13AE843F8C659 /* Pods_SanskarEP.framework */; };
 		7DF7DA8829EE958C00D59552 /* approveCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF7DA8629EE958C00D59552 /* approveCollectionViewCell.swift */; };
 		7DF7DA8929EE958C00D59552 /* approveCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DF7DA8729EE958C00D59552 /* approveCollectionViewCell.xib */; };
-		80CED07A2D6DBA5A00D706DF /* bell3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 80CED0792D6DBA5900D706DF /* bell3.mp3 */; };
 		80DCF6D42D6499E800475988 /* LeaveNotificationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DCF6D22D6499E800475988 /* LeaveNotificationAlert.swift */; };
 		80DCF6D52D6499E800475988 /* LeaveNotificationAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80DCF6D32D6499E800475988 /* LeaveNotificationAlert.xib */; };
 		80FDC8492D6C6ACF00F703C4 /* NotificationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FDC8482D6C6ACF00F703C4 /* NotificationMode.swift */; };
@@ -124,6 +123,7 @@
 		C7AFF85E2A5597900043B186 /* mywishbdayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFF85D2A5597900043B186 /* mywishbdayTableViewCell.swift */; };
 		C7BA6A5E2A8756580074F9B6 /* CustomDialogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BA6A5C2A8756580074F9B6 /* CustomDialogVC.swift */; };
 		C7BA6A5F2A8756580074F9B6 /* CustomDialogVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7BA6A5D2A8756580074F9B6 /* CustomDialogVC.xib */; };
+		C7C404052D70976A00CF8702 /* bell3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C7C404042D70976A00CF8702 /* bell3.mp3 */; };
 		C7C7403E2C7C771400EE27C1 /* inventoryhome.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C7403D2C7C771400EE27C1 /* inventoryhome.swift */; };
 		C7CDB89229EA89120094848C /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7CDB89129EA89120094848C /* Storyboard.storyboard */; };
 		C7DB78512A61228000B61339 /* tpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DB78502A61228000B61339 /* tpViewController.swift */; };
@@ -440,7 +440,6 @@
 		6F4A14C8CC07AA140057C503 /* Pods-SanskarEPTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SanskarEPTests.debug.xcconfig"; path = "Target Support Files/Pods-SanskarEPTests/Pods-SanskarEPTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7DF7DA8629EE958C00D59552 /* approveCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = approveCollectionViewCell.swift; sourceTree = "<group>"; };
 		7DF7DA8729EE958C00D59552 /* approveCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = approveCollectionViewCell.xib; sourceTree = "<group>"; };
-		80CED0792D6DBA5900D706DF /* bell3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bell3.mp3; path = ../../../bell3.mp3; sourceTree = "<group>"; };
 		80DCF6D22D6499E800475988 /* LeaveNotificationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveNotificationAlert.swift; sourceTree = "<group>"; };
 		80DCF6D32D6499E800475988 /* LeaveNotificationAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeaveNotificationAlert.xib; sourceTree = "<group>"; };
 		80FDC8482D6C6ACF00F703C4 /* NotificationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationMode.swift; sourceTree = "<group>"; };
@@ -462,6 +461,7 @@
 		C7AFF85D2A5597900043B186 /* mywishbdayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mywishbdayTableViewCell.swift; sourceTree = "<group>"; };
 		C7BA6A5C2A8756580074F9B6 /* CustomDialogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialogVC.swift; sourceTree = "<group>"; };
 		C7BA6A5D2A8756580074F9B6 /* CustomDialogVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomDialogVC.xib; sourceTree = "<group>"; };
+		C7C404042D70976A00CF8702 /* bell3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bell3.mp3; sourceTree = "<group>"; };
 		C7C7403D2C7C771400EE27C1 /* inventoryhome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = inventoryhome.swift; sourceTree = "<group>"; };
 		C7CDB89129EA89120094848C /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		C7DB78502A61228000B61339 /* tpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tpViewController.swift; sourceTree = "<group>"; };
@@ -994,7 +994,7 @@
 				07403890278BF0E6007C70CC /* ViewModel */,
 				0740388D278BF0A1007C70CC /* Controller */,
 				077E863F278BEF33002BF76B /* Assets.xcassets */,
-				80CED0792D6DBA5900D706DF /* bell3.mp3 */,
+				C7C404042D70976A00CF8702 /* bell3.mp3 */,
 				C740AFB32D67530600EAC23E /* bell2.mp3 */,
 				C740AFAA2D65E24300EAC23E /* bell.mp3 */,
 				077E8644278BEF33002BF76B /* Info.plist */,
@@ -1381,6 +1381,7 @@
 				D55046B82BBEBC2B0089EBB5 /* KathaCell.xib in Resources */,
 				D5F3FCDE2CA68FC600C9D4CA /* AssignListCell.xib in Resources */,
 				D5345B772C75F2D70038065A /* leaveview.xib in Resources */,
+				C7C404052D70976A00CF8702 /* bell3.mp3 in Resources */,
 				D5C3595A2C69E0D90069E784 /* NewApprovalBookingCell.xib in Resources */,
 				C7CDB89229EA89120094848C /* Storyboard.storyboard in Resources */,
 				079E8C4627FB030800D00271 /* NotifyCell.xib in Resources */,
@@ -1403,7 +1404,6 @@
 				0723BF9B27C3ADEB0001A4DC /* BookingCell.xib in Resources */,
 				C740AFB42D67530600EAC23E /* bell2.mp3 in Resources */,
 				0788269F2796EA210047ED4A /* ApprovalCell.xib in Resources */,
-				80CED07A2D6DBA5A00D706DF /* bell3.mp3 in Resources */,
 				077E863E278BEF32002BF76B /* Main.storyboard in Resources */,
 				D50A4FC32C83470B00A13496 /* EventCell.xib in Resources */,
 				D5F7284B2C99870600488850 /* EventbookingCell.xib in Resources */,

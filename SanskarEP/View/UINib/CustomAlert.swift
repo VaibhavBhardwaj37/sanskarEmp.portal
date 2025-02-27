@@ -14,6 +14,7 @@ protocol CustomAlertDelegate: AnyObject {
 }
 
 
+
 class CustomAlert: UIViewController {
     
     @IBOutlet weak var posterImg: UIImageView!
@@ -57,8 +58,12 @@ class CustomAlert: UIViewController {
             if let data = userInfo["data"] as? [String: Any] {
                 print("Extracted data: \(data)")
                 
-                if let requestId = data["req_id"] as? Int {
-                    self.reqid = requestId
+                if let requestId = data["req_id"] as? String {
+                    if let reqIdInt = requestId as? Int {
+                        self.reqid = reqIdInt
+                    } else if let reqIdString = requestId as? String, let reqIdInt = Int(reqIdString) {
+                        self.reqid = reqIdInt
+                    }
                 }
                 
                 if let inoutkey = data["inOrOut"] as? String {
@@ -72,10 +77,7 @@ class CustomAlert: UIViewController {
                 }
             }
         }
-
             update()
-
-       
     }
     
     func setdetail() {
@@ -251,15 +253,23 @@ class CustomAlert: UIViewController {
         dict["status"] = status
         dict["time"] = time
 
+        
         DispatchQueue.main.async { Loader.showLoader() }
         APIManager.apiCall(postData: dict as NSDictionary, url: GuestTime) { result, response, error, data in
             DispatchQueue.main.async { Loader.hideLoader() }
             if let response = response, response["status"] as? Bool == true {
               //  AlertController.alert(message: )
+//                DispatchQueue.main.async {
+//                  self.delegate?.didCompleteAction(with: response.validatedValue("message") as! String)
+//                  self.dismiss(animated: true)
+//              }
                 DispatchQueue.main.async {
-                  self.delegate?.didCompleteAction(with: response.validatedValue("message") as! String)
-                  self.dismiss(animated: true)
-              }
+                    self.delegate?.didCompleteAction(with:response.validatedValue("message") as! String)
+                    self.showToast(message: response.validatedValue("message") as! String) 
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        self.dismiss(animated: true)
+                    }
+                }
             } else {
                 print(response?["error"] as Any)
             }
@@ -279,9 +289,15 @@ class CustomAlert: UIViewController {
             DispatchQueue.main.async { Loader.hideLoader() }
             if let response = response, response["status"] as? Bool == true {
             //    AlertController.alert(message: response.validatedValue("message") as! String)
-                self.delegate?.didCompleteAction(with: response.validatedValue("message") as! String)
-                self.dismiss(animated: true)
-               
+//                self.delegate?.didCompleteAction(with: response.validatedValue("message") as! String)
+//                self.dismiss(animated: true)
+                DispatchQueue.main.async {
+                    self.delegate?.didCompleteAction(with:response.validatedValue("message") as! String)
+                    self.showToast(message: response.validatedValue("message") as! String)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        self.dismiss(animated: true)
+                    }
+                }
             } else {
                 print(response?["error"] as Any)
             }
@@ -290,3 +306,34 @@ class CustomAlert: UIViewController {
 
     }
 
+extension UIViewController {
+    func showToast(message: String) {
+        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width / 2 - 100, y: self.view.frame.size.height - 100, width: 200, height: 35))
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center
+        toastLabel.font = UIFont.systemFont(ofSize: 14)
+        toastLabel.text = message
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 10
+        toastLabel.clipsToBounds = true
+        self.view.addSubview(toastLabel)
+
+        UIView.animate(withDuration: 3.0, delay: 0.5, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 0.0
+        }) { _ in
+            toastLabel.removeFromSuperview()
+        }
+    }
+
+    static func getTopViewController() -> UIViewController? {
+        if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
+            var topController = rootViewController
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            return topController
+        }
+        return nil
+    }
+}

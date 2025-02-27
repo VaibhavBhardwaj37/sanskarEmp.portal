@@ -975,6 +975,11 @@ class NewHomeVC: UIViewController  {
     }
 }
 
+extension NewHomeVC: CustomAlertDelegate {
+    func didCompleteAction(with message: String) {
+        showToast(message: message)
+    }
+}
 
 extension NewHomeVC: UICollectionViewDataSource {
     

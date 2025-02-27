@@ -188,6 +188,7 @@ class HomeVc: UIViewController {
         }
     }
 }
+
 //MARK: - UICollectionViewDataSource
 extension HomeVc: UICollectionViewDataSource {
     
