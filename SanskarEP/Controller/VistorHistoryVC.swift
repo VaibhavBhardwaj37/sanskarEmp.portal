@@ -8,7 +8,7 @@
 import UIKit
 import Alamofire
 
-class VistorHistoryVC: UIViewController {
+class VistorHistoryVC: UIViewController, GuestformDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var headerTxt: UILabel!
@@ -68,7 +68,11 @@ class VistorHistoryVC: UIViewController {
         retextview.layer.borderColor = UIColor.lightGray.cgColor
     }
     
-
+    func didCompleteAction(with message: String) {
+            self.navigationController?.popViewController(animated: true)
+            showToast(message: message)
+       
+        }
     
     func datepicker () {
         let datePicker = UIDatePicker()
@@ -94,14 +98,11 @@ class VistorHistoryVC: UIViewController {
     @IBAction func BackBtn(_ sender: UIButton) {
         dismiss(animated: true,completion: nil)
     }
-    
-    
-    
+
     @IBAction func hideviewbtn(_ sender: UIButton) {
         detailview.isHidden = true
     }
-    
-   
+
     @IBAction func submitbtn(_ sender: UIButton) {
         guestRequest()
         detailview.isHidden = true
@@ -109,8 +110,10 @@ class VistorHistoryVC: UIViewController {
     }
     
     @IBAction func GuestBtnCLiclk(_ sender: UIButton) {
-        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "GuestVc") as! GuestVc
+
+      
+        
         if #available(iOS 15.0, *) {
         if let sheet = vc.sheetPresentationController {
         var customDetent: UISheetPresentationController.Detent?
@@ -144,9 +147,7 @@ class VistorHistoryVC: UIViewController {
     @IBAction func hidebtn(_ sender: UIButton) {
         searchHolder.isHidden = true
     }
-    
-    
-    
+
     func configure1(with model: VistorList ) {
         guard let url = URL(string: model.image ?? "") else {return}
         image.sd_setImage(
@@ -159,9 +160,8 @@ class VistorHistoryVC: UIViewController {
         outtimelbl.text = model.mobile
         
         selectedId = model.id
-       
-        
     }
+    
     @available(iOS 15.0, *)
     @IBAction func filterBtnPressed(_ sender: UIButton ) {
         let vc = FilterVC()
@@ -186,7 +186,6 @@ class VistorHistoryVC: UIViewController {
         } else {
             selectedModel = vistorList[index]
         }
-        
         configure1(with: selectedModel) // Set the data for the labels
         detailview.isHidden = !detailview.isHidden // Toggle the visibility of detailview
         Datetime.text?.removeAll()
@@ -426,3 +425,4 @@ extension VistorHistoryVC : UITextViewDelegate {
         }
     }
 }
+

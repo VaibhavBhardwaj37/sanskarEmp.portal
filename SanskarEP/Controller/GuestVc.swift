@@ -5,6 +5,11 @@
 //  Created by Warln on 13/01/22.
 //
 
+
+protocol GuestformDelegate: AnyObject {
+    func didCompleteAction(with message: String)
+}
+
 import UIKit
 import Alamofire
 
@@ -19,6 +24,7 @@ class GuestVc: UIViewController,UIImagePickerControllerDelegate, UINavigationCon
     
     //Mark:- Variable
     var titleTxt: String?
+    weak var delegate: GuestformDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,18 +34,10 @@ class GuestVc: UIViewController,UIImagePickerControllerDelegate, UINavigationCon
         whomTxtField.textColor == UIColor.lightGray
         setup()
         reasonTxtView.delegate = self
-//        if #available(iOS 15.0, *) {
-//            sheetPresentationController?.prefersGrabberVisible = true
-//        } else {
-//            // Fallback on earlier versions
-//        }
-//        if #available(iOS 15.0, *) {
-//            sheetPresentationController?.detents = [.large()]
-//        } else {
-//            // Fallback on earlier versions
-//        }
 
-        
+            whomTxtField.text = " " + currentUser.Name
+            whomTxtField.isUserInteractionEnabled = false
+         
     }
     
     @IBAction func Backbtn(_ sender: UIButton) {
@@ -120,11 +118,6 @@ class GuestVc: UIViewController,UIImagePickerControllerDelegate, UINavigationCon
     }
     
     @IBAction func submitBtnPressed(_ sender: UIButton) {
-//        if (dateTxtField.text! == "") && (nametextField.text! == "") && (whomTxtField.text! == "")  {
-//            AlertController.alert(message: "Please Enter the details")
-//        }else{
-//            guestRequest()
-//        }
      
         if dateTxtField.text?.isEmpty ?? true {
                AlertController.alert(message: "Please enter the Date and Time")
@@ -138,7 +131,6 @@ class GuestVc: UIViewController,UIImagePickerControllerDelegate, UINavigationCon
                AlertController.alert(message: "Please enter Whom to Meet")
                return
            }
-           // Check for both empty and placeholder text for the reason field
            if reasonTxtView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || reasonTxtView.text == "Reason For Meeting..." {
                AlertController.alert(message: "Please enter the Reason")
                return
@@ -176,81 +168,72 @@ class GuestVc: UIViewController,UIImagePickerControllerDelegate, UINavigationCon
 extension GuestVc {
     
     func guestRequest() {
-        var dict = Dictionary<String,Any>()
+        var dict = [String: Any]()
         dict["EmpCode"] = currentUser.EmpCode
         dict["Reason"] = reasonTxtView.text
-        dict["WhomtoMeet"] = whomTxtField.text!
-        dict["Guest_Name"] = nametextField.text!
-        dict["Date1"] = dateTxtField.text!
+        dict["WhomtoMeet"] = currentUser.Name
+     //   whomTxtField.text ?? ""
+        dict["Guest_Name"] = nametextField.text ?? ""
+        dict["Date1"] = dateTxtField.text ?? ""
         dict["image"] = Uimage.image?.resizeToWidth3(250)
-//        DispatchQueue.main.async(execute: {Loader.showLoader()})
-//        APIManager.apiCall(postData: dict as NSDictionary, url: kGuestApi) { result, response, error, data in
-//            DispatchQueue.main.async(execute: {Loader.hideLoader()})
-//            if let _ = data,(response?["status"] as? Bool == true), response != nil {
-//                AlertController.alert(message: (response?.validatedValue("message"))!)
-//                self.removeData()
-//            }else{
-//                print(response?["error"] as Any)
-//            }
-//        }
-        let url =  BASEURL + "/" + kGuestApi
-        DispatchQueue.main.async(execute: {Loader.showLoader()})
-        Alamofire.upload(multipartFormData: { (multipartFormData) in
+
+        let url = BASEURL + "/" + kGuestApi
+        DispatchQueue.main.async { Loader.showLoader() }
+
+        Alamofire.upload(multipartFormData: { multipartFormData in
             for (key, value) in dict {
-                if key == "image"{
-                    let milliseconds = Int64(Date().timeIntervalSince1970 * 1000.0)
-                    let milisIsStirng = "\(milliseconds)"
-                    let filename = "\(milisIsStirng).png"
-                    let imageData = (value as! UIImage).pngData() as NSData?
-                    multipartFormData.append((imageData! as Data) as Data, withName: key , fileName: filename as String, mimeType: "image/png")
-                } else {
-                    multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key )
+                if key == "image", let image = value as? UIImage, let imageData = image.pngData() {
+                    let filename = "\(Int64(Date().timeIntervalSince1970 * 1000)).png"
+                    multipartFormData.append(imageData, withName: key, fileName: filename, mimeType: "image/png")
+                } else if let stringValue = value as? String, let data = stringValue.data(using: .utf8) {
+                    multipartFormData.append(data, withName: key)
                 }
             }
-        }, usingThreshold: UInt64(), to: url, method: .post , headers: nil, encodingCompletion: { (encodingResult) in
+        }, to: url, method: .post, headers: nil) { encodingResult in
             switch encodingResult {
             case .success(let upload, _, _):
-                upload.uploadProgress(closure: { (Progress) in
-                    print("Upload Progress: \(Progress.fractionCompleted)")
-                })
-                upload.responseJSON(completionHandler: { [self] (response) in
-                    debugPrint(response)
+                upload.uploadProgress { progress in
+                    print("Upload Progress: \(progress.fractionCompleted)")
+                }
+                upload.responseJSON { response in
+                    DispatchQueue.main.async { Loader.hideLoader() }
+
                     switch response.result {
-                    case .success(_):
-                        DispatchQueue.main.async(execute: {Loader.hideLoader()})
-                        if let JSON = response.result.value as? NSDictionary {
-                            if JSON.value(forKey: "status") as! Bool == true {
-                                print(JSON)
-                                let data = (JSON["data"] as? [[String:Any]] ?? [[:]])
-                                print(data)
-                                AlertController.alert(message: JSON.value(forKey: "message") as! String)
-                                self.navigationController?.popViewController(animated: true)
-                                
+                    case .success(let value):
+                        if let jsonResponse = value as? [String: Any] {
+                            let status = jsonResponse["status"] as? Bool ?? false
+                            let message = jsonResponse["message"] as? String ?? "Unknown error"
+                            
+                            if status {
+                                DispatchQueue.main.async {
+                                    self.delegate?.didCompleteAction(with: message)
+                                    self.showToast(message: message)
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                        self.dismiss(animated: true)
+                                    }
+                                }
                             } else {
-                                AlertController.alert(message: JSON.value(forKey: "message") as! String)
+                                AlertController.alert(message: message)
                             }
-                        }
-                        
-                        break
-                    case .failure(let encodingError):
-                        if let err = encodingError as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
-                            
                         } else {
-                            
+                            AlertController.alert(message: "Invalid response format")
+                        }
+
+                    case .failure(let error):
+                        if let urlError = error as? URLError, urlError.code == .notConnectedToInternet || urlError.code == .timedOut {
+                            print("Network error: \(urlError.localizedDescription)")
+                        } else {
+                            print("Upload failed: \(error.localizedDescription)")
                         }
                     }
-                })
-            case .failure(let encodingError):
-                if let err = encodingError as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
-                    
-                } else {
-                    
                 }
-                
+
+            case .failure(let encodingError):
+                print("Encoding failed: \(encodingError.localizedDescription)")
             }
-        })
-        
+        }
     }
+
     
     func removeData() {
         whomTxtField.text?.removeAll()

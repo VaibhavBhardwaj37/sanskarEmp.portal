@@ -58,13 +58,18 @@ class CustomAlert: UIViewController {
             if let data = userInfo["data"] as? [String: Any] {
                 print("Extracted data: \(data)")
                 
-                if let requestId = data["req_id"] as? String {
-                    if let reqIdInt = requestId as? Int {
-                        self.reqid = reqIdInt
-                    } else if let reqIdString = requestId as? String, let reqIdInt = Int(reqIdString) {
-                        self.reqid = reqIdInt
-                    }
-                }
+                if let requestId = data["req_id"] {
+                           if let reqIdInt = requestId as? Int {
+                               self.reqid = reqIdInt
+                           } else if let reqIdString = requestId as? String, let reqIdInt = Int(reqIdString) {
+                               self.reqid = reqIdInt
+                           } else {
+                               print("req_id is neither Int nor String: \(requestId)")
+                           }
+                       } else {
+                           print("req_id not found in data")
+                       }
+                   
                 
                 if let inoutkey = data["inOrOut"] as? String {
                     self.inoutkey = inoutkey
@@ -147,11 +152,18 @@ class CustomAlert: UIViewController {
             locateTxt.isHidden = true
             
             if inoutkey == "0" {
+                acceptbtn.setTitle("Accept", for: .normal)
+                acceptbtn.setTitleColor(.white, for: .normal)
+                rejectbtn.isHidden = true
+                acceptbtn.isHidden = false
+            }
+            
+            if inoutkey == "1" {
                 acceptbtn.setTitle("In Time", for: .normal)
                 acceptbtn.setTitleColor(.white, for: .normal)
                 rejectbtn.isHidden = true
                 acceptbtn.isHidden = false
-            } else {
+            } else if inoutkey == "2" {
                 rejectbtn.setTitle("Out Time", for: .normal)
                 rejectbtn.setTitleColor(.white, for: .normal)
                 acceptbtn.isHidden = true
@@ -222,10 +234,15 @@ class CustomAlert: UIViewController {
         guard let type = type else { return }
         switch type {
          case "8":
-            let currentTime = getCurrentTime()
-               if let reqid = reqid {
-                getGrant(String(reqid), "1", currentTime)
-               }
+            if let inoutkey = self.inoutkey, let reqid = self.reqid {
+                            let currentTime = getCurrentTime()
+                            
+                            if inoutkey == "0" {
+                                getGrant(String(reqid), "0", currentTime)
+                            } else if inoutkey == "1" {
+                                getGrant(String(reqid), "1", currentTime)
+                            }
+                        }
             case "9":
             contentview.isHidden = true
             if let reqid = reqid, let selectedID = selectedLocationID {
@@ -306,34 +323,3 @@ class CustomAlert: UIViewController {
 
     }
 
-extension UIViewController {
-    func showToast(message: String) {
-        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width / 2 - 100, y: self.view.frame.size.height - 100, width: 200, height: 35))
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.7)
-        toastLabel.textColor = UIColor.white
-        toastLabel.textAlignment = .center
-        toastLabel.font = UIFont.systemFont(ofSize: 14)
-        toastLabel.text = message
-        toastLabel.alpha = 1.0
-        toastLabel.layer.cornerRadius = 10
-        toastLabel.clipsToBounds = true
-        self.view.addSubview(toastLabel)
-
-        UIView.animate(withDuration: 3.0, delay: 0.5, options: .curveEaseOut, animations: {
-            toastLabel.alpha = 0.0
-        }) { _ in
-            toastLabel.removeFromSuperview()
-        }
-    }
-
-    static func getTopViewController() -> UIViewController? {
-        if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
-            var topController = rootViewController
-            while let presentedViewController = topController.presentedViewController {
-                topController = presentedViewController
-            }
-            return topController
-        }
-        return nil
-    }
-}

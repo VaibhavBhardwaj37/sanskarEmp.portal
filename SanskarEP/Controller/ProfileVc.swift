@@ -94,16 +94,41 @@ class ProfileVc: UIViewController,UIImagePickerControllerDelegate, UINavigationC
     //MARK: - Logout Button Pressed
     
     @IBAction func logoutBtnPressed(_ sender: UIButton) {
+        LogoutApi()
         
-        
-        currentUser.removeData()
-        if #available(iOS 13.0, *) {
-            SceneDelegate.shared?.AppFlow()
-        }else{
-            AppDelegate.shared?.AppFlow()
-        }
+//        currentUser.removeData()
+//        if #available(iOS 13.0, *) {
+//            SceneDelegate.shared?.AppFlow()
+//        }else{
+//            AppDelegate.shared?.AppFlow()
+//        }
     }
 
+    func LogoutApi() {
+        var dict = Dictionary<String, Any>()
+        dict["EmpCode"] = currentUser.EmpCode
+        DispatchQueue.main.async { Loader.showLoader() }
+        APIManager.apiCall(postData: dict as NSDictionary, url: logOutApi) { result, response, error, data in
+            DispatchQueue.main.async { Loader.hideLoader() }
+            if let JSON = response as? NSDictionary, let status = JSON["status"] as? Bool, status == true {
+                currentUser.removeData()
+                DispatchQueue.main.async {
+                    if #available(iOS 13.0, *) {
+                        SceneDelegate.shared?.AppFlow()
+                    } else {
+                        AppDelegate.shared?.AppFlow()
+                    }
+                }
+            } else {
+                if let message = response?.validatedValue("message") as? String {
+                    AlertController.alert(message: message)
+                } else {
+                    AlertController.alert(message: "An unexpected error occurred.")
+                }
+            }
+        }
+    }
+    
     func newDetailApi(){
         var dict = Dictionary<String,Any>()
         

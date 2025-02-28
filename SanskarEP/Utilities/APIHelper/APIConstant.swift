@@ -107,7 +107,7 @@ let AHistoryapi             = "api_panel_dev/aprovelistHistory"
 let GuestTime               = "api_panel/guest_in"
 let guestFloor              = "api_panel/get_floor"
 let guestAction             = "api_panel/emp_action_guest"
-
+let logOutApi               = "api_panel/logout"
 // inventory api
 let submitedlistapi        = "api_panel/get_inventory_detail"
 let requestdetailapi       = "api_panel/get_generate_challan_list"

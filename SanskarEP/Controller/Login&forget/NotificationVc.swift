@@ -101,13 +101,9 @@ class NotificationVc: UIViewController , CustomAlertDelegate {
     }
 
     private func updateClearButtonVisibility() {
-            let shouldShowClearButton = !datalist.isEmpty
+            let shouldShowClearButton = !notifyData.isEmpty
             clearButton.isHidden = !shouldShowClearButton
         }
-
-
-    
-
     
     func GuestAction(id: String,status: String,selectid: String? = nil,reason: String? = nil) {
         var dict = [String: Any]()
@@ -128,7 +124,14 @@ class NotificationVc: UIViewController , CustomAlertDelegate {
         }
     }
     
-
+    func resizedImage(named name: String, size: CGSize) -> UIImage? {
+        guard let image = UIImage(named: name) else { return nil }
+        
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { _ in
+            image.draw(in: CGRect(origin: .zero, size: size))
+        }
+    }
     
     func removeNotify() {
         var dict = Dictionary<String,Any>()
@@ -184,23 +187,24 @@ extension NotificationVc: UITableViewDelegate {
         let appAction = UIContextualAction(style: .destructive, title: "Approve") {  (contextualAction, view, boolValue) in
                self.editData(at: indexPath)
            }
-           appAction.backgroundColor = .green
-           appAction.image = UIImage(named: "check-mark")
+           
+           appAction.backgroundColor = .systemBlue
+           appAction.image = resizedImage(named: "check-mark", size: CGSize(width: 35, height: 35))
            
            let swipeActions = UISwipeActionsConfiguration(actions: [appAction])
            return swipeActions
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-         let deleteAction = UIContextualAction(style: .destructive, title: "Reject") {  (contextualAction, view, boolValue) in
-             self.deleteData(at: indexPath)
-         }
-
-        deleteAction.backgroundColor = .red
-        deleteAction.image = UIImage(named: "remove")
-         let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])
-
-         return swipeActions
+        let deleteAction = UIContextualAction(style: .destructive, title: "Reject") {  (contextualAction, view, boolValue) in
+               self.deleteData(at: indexPath)
+           }
+           
+           deleteAction.backgroundColor = .red
+           deleteAction.image = resizedImage(named: "remove", size: CGSize(width: 35, height: 35))
+           
+           let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])
+           return swipeActions
      }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
