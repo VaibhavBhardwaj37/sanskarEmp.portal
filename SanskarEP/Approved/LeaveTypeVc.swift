@@ -40,13 +40,17 @@ class LeaveTypeVc: UIViewController {
  
     override func viewDidLoad() {
         super.viewDidLoad()
-        selectbtn.isHidden = true
+        
+        selectbtn.isHidden = false
         filterbtn.isHidden = true
         filterview.isHidden = true
-        oneview.isHidden = true
+        
+        oneview.isHidden = false
+        
         getDetails()
         ListAPi()
         tabletop.constant = 8
+        searchview.isHidden =  false
         
         tableheight.constant = 8
         
@@ -74,18 +78,6 @@ class LeaveTypeVc: UIViewController {
     
     @IBAction func selectedbtn(_ sender: UISegmentedControl) {
         if selected.selectedSegmentIndex == 0 {
-            selectbtn.isHidden = true
-            filterbtn.isHidden = true
-            searchview.isHidden = false
-            oneview.isHidden = true
-            tabletop.constant = 5
-            tableheight.constant = 500
-            
-            searchValue.constant = -40
-            type = "1"
-            ListAPi()
-            tableview.reloadData()
-        } else if selected.selectedSegmentIndex == 1 {
             selectbtn.isHidden = false
             filterbtn.isHidden = true
             searchview.isHidden = false
@@ -100,12 +92,26 @@ class LeaveTypeVc: UIViewController {
             }
             tableview.reloadData()
             searchValue.constant = 8
+        } else if selected.selectedSegmentIndex == 1 {
+           
+            selectbtn.isHidden = true
+            filterbtn.isHidden = true
+            searchview.isHidden = false
+            oneview.isHidden = true
+            tabletop.constant = 5
+            tableheight.constant = 400
+            
+            searchValue.constant = -40
+            type = "1"
+            ListAPi()
+            tableview.reloadData()
+            
         } else if selected.selectedSegmentIndex == 2 {
             selectbtn.isHidden = true
             filterbtn.isHidden = false
             searchview.isHidden = true
             tabletop.constant = -50
-            tableheight.constant = 500
+            tableheight.constant = 460
             oneview.isHidden = true
             type = "2"
             ListAPi()
@@ -148,6 +154,7 @@ class LeaveTypeVc: UIViewController {
             let reason = (reasonText.isEmpty || reasonText == "Remark ...") ? "No reason provided" : reasonText
             self.getGrant(ids, "declined", reason)
         }
+        remarksview.text = ""
         
         self.approveM = self.approveM.enumerated()
             .filter { !self.selectedRows.contains($0.offset) }
@@ -169,7 +176,7 @@ class LeaveTypeVc: UIViewController {
     
    
     func updateNoNotificationLabel() {
-        if selected.selectedSegmentIndex == 1 {
+        if selected.selectedSegmentIndex == 0 {
             notlbl.isHidden = !approveM.isEmpty
             notlbl.text = approveM.isEmpty ? "No Data Available" : ""
         } else {
@@ -262,6 +269,16 @@ class LeaveTypeVc: UIViewController {
             DispatchQueue.main.async {
                 self.updateNoNotificationLabel()
                 self.tableview.reloadData()
+                self.oneview.isHidden = false
+                self.selectbtn.isHidden = false
+                self.searchview.isHidden = false
+                
+                if self.approveM.isEmpty {
+                    self.oneview.isHidden = true
+                    self.selectbtn.isHidden = true
+                    self.searchview.isHidden = true
+                }
+                
             }
         }
     }
@@ -320,9 +337,9 @@ extension LeaveTypeVc: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == tableview {
             switch selected.selectedSegmentIndex {
-            case 0, 2:
+            case 1, 2:
                 return isSearching ? filteredLeaveDetails.count : LeaveDetails.count
-            case 1:
+            case 0:
                 return isSearching ? filteredapproveM.count : approveM.count
             default:
                 return 0
@@ -339,7 +356,7 @@ extension LeaveTypeVc: UITableViewDelegate,UITableViewDataSource {
                 return UITableViewCell()
             }
             switch selected.selectedSegmentIndex {
-            case 0, 2:
+            case 1, 2:
                 let item = isSearching ? filteredLeaveDetails[indexPath.row] : LeaveDetails[indexPath.row]
                 cell.name.text = item.name
                 cell.reason.text = item.lReason
@@ -360,7 +377,7 @@ extension LeaveTypeVc: UITableViewDelegate,UITableViewDataSource {
                 cell.checkbtn.isHidden = true
                 
 
-            case 1:
+            case 0:
                 
                 let item = isSearching ? filteredapproveM[indexPath.row] : approveM[indexPath.row]
           
@@ -408,7 +425,7 @@ extension LeaveTypeVc: UITableViewDelegate,UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if tableView == tableview {
-            if selected.selectedSegmentIndex == 1 {
+            if selected.selectedSegmentIndex == 0 {
                 return 150
             } else {
                 return 145

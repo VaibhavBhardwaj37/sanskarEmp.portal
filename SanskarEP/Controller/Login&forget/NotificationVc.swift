@@ -210,8 +210,7 @@ extension NotificationVc: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         tableView.deselectRow(at: indexPath, animated: true)
-
-           let index = notifyData[indexPath.row]
+        let index = isSearching ? filteredDetails[indexPath.row] : notifyData[indexPath.row]
            
            if index.notification_type == "8" || index.notification_type == "9" {
                let vc = CustomAlert(nibName: "CustomAlert", bundle: nil)
