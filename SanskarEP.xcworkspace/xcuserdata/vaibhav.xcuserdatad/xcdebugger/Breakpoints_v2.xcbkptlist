@@ -82,38 +82,6 @@
             endingLineNumber = "277"
             landmarkName = "getGrant(_:_:_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "844FCD2F-E209-46BC-97E1-D39B3192822B - 5a12baa13aece19"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (Swift.Bool, Swift.Optional&lt;__C.NSDictionary&gt;, Swift.Optional&lt;__C.NSError&gt;, Swift.Optional&lt;Foundation.Data&gt;) -&gt; () in SanskarEP.CustomAlert.getGrant(Swift.String, Swift.String, Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
-                  moduleName = "SanskarEP"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vaibhav/Desktop/Sanskar/SanskarEP/SanskarEP/View/UINib/CustomAlert.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "278"
-                  endingLineNumber = "278"
-                  offsetFromSymbolStart = "1228">
-               </Location>
-               <Location
-                  uuid = "844FCD2F-E209-46BC-97E1-D39B3192822B - 6698c6aa51e828c3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #2 (Swift.Bool, Swift.Optional&lt;__C.NSDictionary&gt;, Swift.Optional&lt;__C.NSError&gt;, Swift.Optional&lt;Foundation.Data&gt;) -&gt; () in SanskarEP.CustomAlert.getGrant(Swift.String, Swift.String, Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
-                  moduleName = "SanskarEP"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vaibhav/Desktop/Sanskar/SanskarEP/SanskarEP/View/UINib/CustomAlert.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "279"
-                  endingLineNumber = "279"
-                  offsetFromSymbolStart = "352">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

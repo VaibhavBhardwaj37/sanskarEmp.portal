@@ -35,7 +35,7 @@ class LeaveNotificationAlert: UIViewController {
     
     var userInfo: [String: Any]?
     
-    //var delegate: LeaveRequestDelegate?
+    var delegate: LeaveRequestDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

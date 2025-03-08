@@ -207,6 +207,7 @@ class NewAllLeaveReqVc: UIViewController {
     }
     
     @IBAction func dateclick(_ sender: UIButton) {
+        view.endEditing(true)
         IosDatePicker().showDate(animation: .zoomIn, pickerMode: .date) { date in
                self.fromDate = date
                self.fromdate.text = Utils.dateString(date: date, format: "yyyy-MM-dd")
@@ -215,6 +216,7 @@ class NewAllLeaveReqVc: UIViewController {
     
     
     @IBAction func Enddateclick(_ sender: UIButton) {
+        view.endEditing(true)
         guard let fromDateText = self.fromdate.text, !fromDateText.isEmpty else {
             AlertController.alert(message: "Please select From Date first.")
             return
@@ -235,12 +237,14 @@ class NewAllLeaveReqVc: UIViewController {
     }
     
     @IBAction func enddateclick(_ sender: UIButton) {
+        view.endEditing(true)
         IosDatePicker().showDate(animation: .zoomIn, pickerMode: .date) { date in
             self.enddate.text = Utils.dateString(date: date, format: "yyyy-MM-dd")
         }
     }
     
     @IBAction func halfdate(_ sender: UIButton) {
+        view.endEditing(true)
         IosDatePicker().showDate(animation: .zoomIn, pickerMode: .date) { date in
             self.halfdate.text = Utils.dateString(date: date, format: "yyyy-MM-dd")
         }

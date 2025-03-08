@@ -60,5 +60,7 @@
 		<string>processing</string>
 		<string>remote-notification</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Please allow to see current location.</string>
 </dict>
 </plist>

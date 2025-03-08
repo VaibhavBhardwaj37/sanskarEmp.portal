@@ -121,6 +121,7 @@ class NotificationVc: UIViewController , CustomAlertDelegate {
             } else {
                 print(response?["error"] as Any)
             }
+            self.tableView.reloadData()
         }
     }
     
@@ -239,12 +240,32 @@ extension NotificationVc: UITableViewDelegate {
            }
     }
    
+//    func deleteData(at indexPath: IndexPath) {
+//        let index = notifyData[indexPath.row]
+//        if index.notification_type == "9"  {
+//            let requestId = index.req_id != nil ? String(index.req_id!) : ""
+//
+//            GuestAction(id: requestId, status: "2", reason: "Not Aavaible")
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//                self.notifyData.remove(at: indexPath.row)
+//                self.tableView.deleteRows(at: [indexPath], with: .fade)
+//            }
+//        } else {
+//            AlertController.alert(message: "You can not reject notifications.")
+//        }
+//    }
+    
     func deleteData(at indexPath: IndexPath) {
+        guard currentUser.Code == "H" else {
+            AlertController.alert(message: "You do not have permission to reject notifications.")
+            return
+        }
+        
         let index = notifyData[indexPath.row]
         if index.notification_type == "9"  {
             let requestId = index.req_id != nil ? String(index.req_id!) : ""
-
-            GuestAction(id: requestId, status: "2", reason: "Not Aavaible")
+            
+            GuestAction(id: requestId, status: "2", reason: "Not Available")
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 self.notifyData.remove(at: indexPath.row)
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
@@ -253,8 +274,28 @@ extension NotificationVc: UITableViewDelegate {
             AlertController.alert(message: "You can not reject notifications.")
         }
     }
+
     
+//    func editData(at indexPath: IndexPath) {
+//        let index = notifyData[indexPath.row]
+//        if index.notification_type == "9" {
+//            if let requestId = index.req_id {
+//                GuestAction(id: String(requestId), status: "1", selectid: "1")
+//                self.notifyData.remove(at: indexPath.row)
+//                self.tableView.deleteRows(at: [indexPath], with: .fade)
+//            } else {
+//                print("Error: req_id is nil")
+//            }
+//        } else {
+//            print("You can not approve notifications .")
+//        }
+//    }
     func editData(at indexPath: IndexPath) {
+        guard currentUser.Code == "H" else {
+            AlertController.alert(message: "You do not have permission to approve notifications.")
+            return
+        }
+        
         let index = notifyData[indexPath.row]
         if index.notification_type == "9" {
             if let requestId = index.req_id {
@@ -265,9 +306,10 @@ extension NotificationVc: UITableViewDelegate {
                 print("Error: req_id is nil")
             }
         } else {
-            print("You can not approve notifications .")
+            print("You can not approve notifications.")
         }
     }
+
 
 }
 extension NotificationVc: UISearchBarDelegate {

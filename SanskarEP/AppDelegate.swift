@@ -144,10 +144,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     customAlertVC.userInfo = userInfoDict
                     customAlertVC.delegate = customAlertVC as? CustomAlertDelegate
                     viewControllerToPresent = customAlertVC
+                    
                 } else if notificationType == "9" {
                     let leaveNotificationVC = CustomAlert(nibName: "CustomAlert", bundle: nil)
                     leaveNotificationVC.userInfo = userInfoDict
                     leaveNotificationVC.delegate = notificationType as? CustomAlertDelegate
+                    viewControllerToPresent = leaveNotificationVC
+                    
+                } else if notificationType == "14" {
+                    let leaveNotificationVC = LeaveNotificationAlert(nibName: "LeaveNotificationAlert", bundle: nil)
+                    leaveNotificationVC.userInfo = userInfoDict
+                    leaveNotificationVC.delegate = notificationType as? LeaveRequestDelegate
                     viewControllerToPresent = leaveNotificationVC
                 }
 
@@ -198,6 +205,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         case "8":
             soundFileName = "bell3"
         case "9":
+            soundFileName = "bell3"
+        case "14":
             soundFileName = "bell3"
         default:
             soundFileName = "bell2"

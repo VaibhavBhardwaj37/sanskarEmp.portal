@@ -12,6 +12,8 @@ class AssignListCell: UITableViewCell {
 
 @IBOutlet weak var AssignLbl: UILabel!
 @IBOutlet weak var assignbtn: UIButton!
+@IBOutlet weak var locationview: UIView!
+@IBOutlet weak var locationonclick: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()

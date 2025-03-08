@@ -414,9 +414,13 @@ extension LeaveTypeVc: UITableViewDelegate,UITableViewDataSource {
             return cell
         } else if tableView == filtertable {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "AssignListCell", for: indexPath) as? AssignListCell else {
+              
                 return UITableViewCell()
+               
             }
+            cell.locationview.isHidden = true
             cell.AssignLbl.text = filterList[indexPath.row]
+          
             return cell
         }
 

@@ -22,6 +22,8 @@ enum AttendanceStatus: Int {
             return .systemPink
         case .approve:
             return .systemYellow
+        default:
+            return UIColor(red: 187/255, green: 45/255, blue: 59/255, alpha: 1.0)
         }
     }
 
@@ -351,23 +353,23 @@ class NewHomeVC: UIViewController  {
 
     
     @IBAction func SearchBarBtn(_ sender: UIButton) {
-       //     let vc = self.storyboard?.instantiateViewController(withIdentifier: "SecondnewApprovalVc") as! SecondnewApprovalVc
-               let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
-                if #available(iOS 15.0, *) {
-                if let sheet = vc.sheetPresentationController {
-                var customDetent: UISheetPresentationController.Detent?
-                    if #available(iOS 16.0, *) {
-                    customDetent = UISheetPresentationController.Detent.custom { context in
-                        return 550
-                    }
-                    sheet.detents = [customDetent!]
-                    sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
-                        }
-                    sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-                    sheet.prefersGrabberVisible = true
-                    sheet.preferredCornerRadius = 12
-                                    }
-                                }
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ApprovalPageVc") as! ApprovalPageVc
+        //       let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
+//                if #available(iOS 15.0, *) {
+//                if let sheet = vc.sheetPresentationController {
+//                var customDetent: UISheetPresentationController.Detent?
+//                    if #available(iOS 16.0, *) {
+//                    customDetent = UISheetPresentationController.Detent.custom { context in
+//                        return 550
+//                    }
+//                    sheet.detents = [customDetent!]
+//                    sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
+//                        }
+//                    sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+//                    sheet.prefersGrabberVisible = true
+//                    sheet.preferredCornerRadius = 12
+//                                    }
+//                                }
                 present(vc, animated: true)
             
     //    let vc = self.storyboard?.instantiateViewController(withIdentifier: "BdayViewController") as! BdayViewController
@@ -402,6 +404,7 @@ class NewHomeVC: UIViewController  {
         if  let vc = self.storyboard?.instantiateViewController(withIdentifier: "NotificationVc") as? NotificationVc {
             vc.titleTxt = "Notification"
             present(vc, animated: true)
+       //    self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     

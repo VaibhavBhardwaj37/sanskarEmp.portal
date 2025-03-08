@@ -168,7 +168,7 @@ extension BookforReceptionVc: UITableViewDataSource, UITableViewDelegate {
           } else {
               cell.assignbtn.setImage(UIImage(named: "Uncheck"), for: .normal)
           }
-        
+        cell.locationview.isHidden = true
         cell.assignbtn.tag = indexPath.row
         cell.assignbtn.addTarget(self, action: #selector(checkboxTapped(_:)), for: .touchUpInside)
         return cell
