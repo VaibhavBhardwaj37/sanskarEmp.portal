@@ -84,7 +84,7 @@ class WebServiceOperation: MyWebServiceOperation {
             print(headers)
             
 
-            Alamofire.request(url, method: (serviceType == .WEB_SERVICE_TYPE_POST) ? .post : .get, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            AF.request(url, method: (serviceType == .WEB_SERVICE_TYPE_POST) ? .post : .get, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
                 guard let data = response.data, data.count > 0 else{
                     if let handler = handler {
                         DispatchQueue.main.async {
@@ -101,69 +101,54 @@ class WebServiceOperation: MyWebServiceOperation {
             }
         }
         
-        class func callMultiPart(URL url:URL,PARAM param:Dictionary<String,Any>?,MultiPartArray arrMultipart:[MultiPartDataFormatStructure]?,HANDLER handler:((_ response:Data?,_ isError:Bool)->())?) {
-            
+        class func callMultiPart(
+            URL url: URL,
+            PARAM param: Dictionary<String, Any>?,
+            MultiPartArray arrMultipart: [MultiPartDataFormatStructure]?,
+            HANDLER handler: ((_ response: Data?, _ isError: Bool) -> ())?
+        ) {
             print(param as Any)
             print(arrMultipart as Any)
             print(url as Any)
-            
+
             let headers: HTTPHeaders = [
-//                "Accesstoken": "\(Userdefault.value(forKey: "access_token") ?? "")",
                 "Content-type": "multipart/form-data"
             ]
-            
-            Alamofire.upload(multipartFormData: { (multipartFormData) in
-                
-                // Add normal param
-                if let param = param, param.count > 0 {
+
+            AF.upload(multipartFormData: { multipartFormData in
+                // Add normal parameters
+                if let param = param {
                     for (key, value) in param {
-                        multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key)
+                        if let data = "\(value)".data(using: .utf8) {
+                            multipartFormData.append(data, withName: key)
+                        }
                     }
                 }
-                if let arr = arrMultipart, arr.count > 0 {
+
+                // Add multipart data (files, images, etc.)
+                if let arr = arrMultipart {
                     for obj in arr {
-                        if let strKey = obj.strKey, let mimeType = obj.mimeType, let data = obj.data, let strName = obj.strFileName {
-                            multipartFormData.append(data, withName: strKey, fileName: strName, mimeType: mimeType.getMimeType())
+                        if let key = obj.strKey, let mimeType = obj.mimeType, let data = obj.data, let fileName = obj.strFileName {
+                            multipartFormData.append(data, withName: key, fileName: fileName, mimeType: mimeType.getMimeType())
                         }
                     }
                 }
-            }, usingThreshold: SessionManager.multipartFormDataEncodingMemoryThreshold, to: url, method: HTTPMethod.post, headers: headers) { result in
-                switch result {
-                case .success(let upload, _, _):
-                    
-                    upload.uploadProgress(closure: { (progress) in
-                        NotificationCenter.default.post(name: Notification.Name("UploadProgress"), object: (progress.fractionCompleted))
-                        print(progress.fractionCompleted as Double)
-                    })
-                    
-                    upload.responseJSON { (response) in
-                        print(response.result)
-                        if let handler = handler {
-                            DispatchQueue.main.async {
-                                handler(response.data,false)
-                                return
-                            }
-                        }
-                        
-                        if let JSON = response.result.value {
-                            print("JSON: \(JSON)")
-                        }
-                        if let handler = handler {
-                            DispatchQueue.main.async {
-                                handler(response.data,false)
-                            }
-                        }
-                    }
-                    
-                    
-                    
-                case .failure(let encodingError):
-                    print(encodingError.localizedDescription)
-                    if let handler = handler {
-                        DispatchQueue.main.async {
-                            handler(nil,true)
-                            return
-                        }
+            }, to: url, method: .post, headers: headers)
+            .uploadProgress { progress in
+                NotificationCenter.default.post(name: Notification.Name("UploadProgress"), object: progress.fractionCompleted)
+                print("Upload Progress: \(progress.fractionCompleted)")
+            }
+            .responseJSON { response in
+                print(response.result)
+                
+                DispatchQueue.main.async {
+                    switch response.result {
+                    case .success(let json):
+                        print("JSON Response: \(json)")
+                        handler?(response.data, false)
+                    case .failure(let error):
+                        print("Upload Failed: \(error.localizedDescription)")
+                        handler?(nil, true)
                     }
                 }
             }

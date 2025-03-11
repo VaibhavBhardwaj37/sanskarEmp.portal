@@ -96,206 +96,145 @@ class APIManager: NSObject {
     ///   - url: API Url
     ///   - identifire: Option identifier to handle check
     ///   - completionHandler: response handling code
-    class func apiCall(postData:NSDictionary, url: String, identifire : String = "",  completionHandler: @escaping responseHandler) {
+    class func apiCall(postData: NSDictionary, url: String, identifier: String = "", completionHandler: @escaping responseHandler) {
         let path: String = APIManager.getFullPath(path: url)
-     
+        
         NSLog("Request URL ->  \(path)")
         NSLog("Request parameter ->  \(postData.jsonStringRepresentation?.description ?? "")")
-        
         NSLog("Request Header ->  \(APIManager.setHeader().jsonStringRepresentation?.description ?? "")")
 
-        Alamofire.upload(
-            multipartFormData: { multipartFormData in
-                for (key, value) in postData {
-                    if value is NSArray{
-                        let str = APIManager.json(from:(value as AnyObject))
-                        multipartFormData.append((str as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key as! String)
-                    }
-                    else{
-                        multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key as! String)
-                    }
-                }
-            },
-            to: path,
-            headers:APIManager.setHeader(),
-            encodingCompletion: { encodingResult in
-                switch encodingResult {
-                case .success(let upload, _, _):
-                    upload.uploadProgress(closure: { (Progress) in
-                        NSLog("Upload Progress: \(Progress.fractionCompleted)")
-                    })
-                    upload.responseJSON { response in
-                      //  print("HTTP URLResponse -> \(String(describing: response.response))")
+        let headers = HTTPHeaders(APIManager.setHeader()) // ✅ Convert Dictionary to HTTPHeaders
 
-                        if response.result.value is NSDictionary
-                        {
-                            NSLog("HTTP Response Value -> \((response.result.value as! NSDictionary).jsonStringRepresentation ?? "")")
-                            
-                            completionHandler(true,response.result.value as! NSDictionary?,nil,response.data)
-                        }
-                        else{
-                            NSLog("HTTP Response Value -> \(String(describing: response.result.value))")
-                            
-                            completionHandler(true,nil,nil,response.data)
-                        }
+        AF.upload(multipartFormData: { multipartFormData in
+            for (key, value) in postData {
+                if let arrayValue = value as? NSArray {
+                    let str = APIManager.json(from: arrayValue)
+                    if let data = str?.data(using: .utf8) {
+                        multipartFormData.append(data, withName: key as! String)
                     }
-                case .failure(let encodingError):
+                } else if let stringValue = "\(value)".data(using: .utf8) {
+                    multipartFormData.append(stringValue, withName: key as! String)
+                }
+            }
+        }, to: path, headers: headers) // ✅ Removed encodingCompletion
+        .uploadProgress { progress in
+            NSLog("Upload Progress: \(progress.fractionCompleted)")
+        }
+        .responseJSON { response in
+            DispatchQueue.main.async {
+                switch response.result {
+                case .success(let value):
+                    if let jsonResponse = value as? NSDictionary {
+                        NSLog("HTTP Response Value -> \(jsonResponse.jsonStringRepresentation ?? "")")
+                        completionHandler(true, jsonResponse, nil, response.data)
+                    } else {
+                        NSLog("HTTP Response Value -> \(String(describing: value))")
+                        completionHandler(true, nil, nil, response.data)
+                    }
+                case .failure(let error):
                     Loader.hideLoader()
-                    print(encodingError)
-                    completionHandler(false,nil,encodingError as NSError?,nil)
+                    NSLog("Upload Failed: \(error.localizedDescription)")
+                    completionHandler(false, nil, error as NSError?, nil)
                 }
-            }
-        )
-    }
-    
-    class func apiWithoutHeader(postData:NSDictionary,url: String,identifire : String, completionHandler: @escaping responseHandler) {
-        let path: String = APIManager.getFullPath2(path: url)
-        
-        print("Request URL ->  \(path)")
-        print("Request parameter ->  \(postData.jsonStringRepresentation?.description ?? "")")
-        
-        
-        Alamofire.upload(
-            multipartFormData: { multipartFormData in
-                for (key, value) in postData {
-                    if value is NSArray{
-                        let str = APIManager.json(from:(value as AnyObject))
-                        multipartFormData.append((str as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key as! String)
-                    }
-                    else{
-                        multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key as! String)
-                    }
-                }
-            },
-            to: path,
-            headers:[:],
-            encodingCompletion: { encodingResult in
-                switch encodingResult {
-                case .success(let upload, _, _):
-                    upload.uploadProgress(closure: { (Progress) in
-                        print("Upload Progress: \(Progress.fractionCompleted)")
-                    })
-                    upload.responseJSON { response in
-                      //  print("HTTP URLResponse -> \(String(describing: response.response))")
-
-                        if response.result.value is NSDictionary
-                        {
-                            print("HTTP Response Value -> \((response.result.value as! NSDictionary).jsonStringRepresentation ?? "")")
-                            
-                            completionHandler(true,response.result.value as! NSDictionary?,nil,response.data)
-                        }
-                        else{
-                            print("HTTP Response Value -> \(String(describing: response.result.value))")
-                            
-                            completionHandler(true,nil,nil,response.data)
-                        }
-                    }
-                case .failure(let encodingError):
-                    Loader.hideLoader()
-                    print(encodingError)
-                    completionHandler(false,nil,encodingError as NSError?,nil)
-                }
-            }
-        )
-    }
-
-    
-    class func apiCall2(postData:NSDictionary,url: String,identifire : String, completionHandler: @escaping (_ result: Bool, _ response: NSDictionary?, _ error: NSError?, _ errorMessage: String?) -> Void) {
-        let path: String = APIManager.getFullPath(path: url)
-        
-        print(path)
-        print(postData)
-        Alamofire.upload(
-            multipartFormData: { multipartFormData in
-                for (key, value) in postData {
-                    print(key , value)
-                    if value is NSArray{
-                        let str = APIManager.json(from:(value as AnyObject))
-                        multipartFormData.append((str as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key as! String)
-                    }
-                    else{
-                        multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key as! String)
-                    }
-                }
-            },
-            to: path,
-            headers:APIManager.setHeader(),
-            encodingCompletion: { encodingResult in
-                switch encodingResult {
-                case .success(let upload, _, _):
-                    upload.uploadProgress(closure: { (Progress) in
-                        print("Upload Progress: \(Progress.fractionCompleted)")
-                    })
-                    upload.responseString { response in
-                        debugPrint(upload.responseString)
-                        if response.result.value is NSDictionary
-                        {
-                            completionHandler(true,response.result.value as! NSDictionary?,nil,"response")
-                        }
-                        else{
-                            completionHandler(true,nil,nil,"response")
-                        }
-                    }
-                case .failure(let encodingError):
-                    Loader.hideLoader()
-                    print(encodingError)
-                    completionHandler(false,nil,encodingError as NSError?,"response")
-                }
-            }
-        )
-    }
-    
-    // MARK: MULTIPART POST
-    class func apiCall1(_ postData:NSDictionary, _ url: String , _ identifire : String, completionHandler: @escaping (_ result: Bool, _ response: NSDictionary?, _ error: NSError?, _ errorMessage: String?) -> Void) {
-        let path: String = APIManager.getFullPath(path: url)
-
-        Alamofire.upload(
-            multipartFormData: { multipartFormData in
-                for (key, value) in postData {
-                    print(key , value)
-                    if value is NSArray{
-                        let str = APIManager.json(from:(value as AnyObject))
-                        multipartFormData.append((str as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key as! String)
-                    }
-                    else{
-                        multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key as! String)
-                    }
-                }
-            },
-            to: path,
-            headers: [:],
-            encodingCompletion: { encodingResult in
-                switch encodingResult {
-                case .success(let upload, _, _):
-                    upload.uploadProgress(closure: { (Progress) in
-                        print("Upload Progress: \(Progress.fractionCompleted)")
-                    })
-                    upload.responseJSON { response in
-                        debugPrint(response)
-                        completionHandler(true,response.result.value as! NSDictionary?,nil,"response")
-                    }
-                case .failure(let encodingError):
-                    Loader.hideLoader()
-                    print(encodingError)
-                    completionHandler(false,nil,encodingError as NSError?,"response")
-                }
-            }
-        )
-    }
-    //get request
-    class func getDetailFromYouTubeURL(url:String, completionHandler: @escaping (_ result: Bool, _ response: NSDictionary?, _ error: NSError?, _ errorMessage: String?) -> Void) {
-        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: [:]).responseJSON { (response) in
-            debugPrint(response)
-            
-            if let dict = response.result.value{
-                completionHandler(true, dict as? NSDictionary ,nil,"response")
-            }
-            else{
-                Loader.hideLoader()
-                completionHandler(false,nil,response.result.error as NSError?,"response")
             }
         }
     }
+
+    
+    class func apiWithoutHeader(postData: NSDictionary, url: String, identifire: String, completionHandler: @escaping responseHandler) {
+        let path: String = APIManager.getFullPath2(path: url)
+
+        print("Request URL -> \(path)")
+        print("Request parameter -> \(postData.jsonStringRepresentation?.description ?? "")")
+
+        AF.upload(
+            multipartFormData: { multipartFormData in
+                for (key, value) in postData {
+                    if let arrayValue = value as? NSArray {
+                        let jsonString = APIManager.json(from: arrayValue)
+                        if let data = jsonString?.data(using: .utf8) {
+                            multipartFormData.append(data, withName: key as! String)
+                        }
+                    } else if let stringValue = "\(value)".data(using: .utf8) {
+                        multipartFormData.append(stringValue, withName: key as! String)
+                    }
+                }
+            },
+            to: path,
+            headers: nil // ✅ Use `nil` instead of `[:]`
+        )
+        .uploadProgress { progress in
+            print("Upload Progress: \(progress.fractionCompleted)")
+        }
+        .responseJSON { response in
+            DispatchQueue.main.async {
+                switch response.result {
+                case .success(let value):
+                    if let jsonResponse = value as? NSDictionary {
+                        print("HTTP Response Value -> \(jsonResponse.jsonStringRepresentation ?? "")")
+                        completionHandler(true, jsonResponse, nil, response.data)
+                    } else {
+                        print("HTTP Response Value -> \(String(describing: value))")
+                        completionHandler(true, nil, nil, response.data)
+                    }
+                case .failure(let error):
+                    Loader.hideLoader()
+                    print("Upload Failed: \(error.localizedDescription)")
+                    completionHandler(false, nil, error as NSError?, nil)
+                }
+            }
+        }
+    }
+
+
+
+    class func apiCall2(postData: NSDictionary, url: String, identifire: String, completionHandler: @escaping (_ result: Bool, _ response: NSDictionary?, _ error: NSError?, _ errorMessage: String?) -> Void) {
+        
+        let path: String = APIManager.getFullPath(path: url)
+        
+        print("Request URL -> \(path)")
+        print("Request Parameters -> \(postData)")
+        
+        let headers = HTTPHeaders(APIManager.setHeader()) // ✅ Convert Dictionary to HTTPHeaders
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            for (key, value) in postData {
+                print("Uploading Key: \(key), Value: \(value)")
+                if let arrayValue = value as? NSArray {
+                    let jsonString = APIManager.json(from: arrayValue)
+                    if let data = jsonString?.data(using: .utf8) {
+                        multipartFormData.append(data, withName: key as! String)
+                    }
+                } else if let stringValue = "\(value)".data(using: .utf8) {
+                    multipartFormData.append(stringValue, withName: key as! String)
+                }
+            }
+        }, to: path, headers: headers) // ✅ Removed `encodingCompletion`
+        .uploadProgress { progress in
+            print("Upload Progress: \(progress.fractionCompleted)")
+        }
+        .responseString { response in
+            DispatchQueue.main.async {
+                switch response.result {
+                case .success(let responseString):
+                    print("Response: \(responseString)")
+                    if let jsonData = responseString.data(using: .utf8),
+                       let jsonResponse = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? NSDictionary {
+                        completionHandler(true, jsonResponse, nil, "Success")
+                    } else {
+                        completionHandler(true, nil, nil, "Invalid response format")
+                    }
+                case .failure(let error):
+                    Loader.hideLoader()
+                    print("Upload Failed: \(error.localizedDescription)")
+                    completionHandler(false, nil, error as NSError?, "Request failed")
+                }
+            }
+        }
+    }
+
+   
+
 }
 
 struct BodyStringEncoding: ParameterEncoding {

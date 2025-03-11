@@ -194,73 +194,52 @@ class VistorHistoryVC: UIViewController, GuestformDelegate {
     }
 
     func guestRequest() {
-        var dict = Dictionary<String,Any>()
+        var dict = Dictionary<String, Any>()
         dict["id"] = selectedId ?? ""
         dict["EmpCode"] = currentUser.EmpCode
         dict["Reason"] = retextview.text
         dict["WhomtoMeet"] = meetinglbl.text
         dict["Guest_Name"] = namelbl.text!
         dict["Date1"] = Datetime.text!
-        dict["image"] =  image.image?.resizeToWidth3(250)
+        dict["image"] = image.image?.resizeToWidth3(250)
 
-        let url =  BASEURL + "/" + kGuestApi
-        DispatchQueue.main.async(execute: {Loader.showLoader()})
-        Alamofire.upload(multipartFormData: { (multipartFormData) in
+        let url = BASEURL + "/" + kGuestApi
+        DispatchQueue.main.async { Loader.showLoader() }
+
+        AF.upload(multipartFormData: { multipartFormData in
             for (key, value) in dict {
-                if key == "image"{
-                    let milliseconds = Int64(Date().timeIntervalSince1970 * 1000.0)
-                    let milisIsStirng = "\(milliseconds)"
-                    let filename = "\(milisIsStirng).png"
-                    let imageData = (value as! UIImage).pngData() as NSData?
-                    multipartFormData.append((imageData! as Data) as Data, withName: key , fileName: filename as String, mimeType: "image/png")
-                } else {
-                    multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key )
+                if key == "image", let image = value as? UIImage, let imageData = image.pngData() {
+                    let filename = "\(Int64(Date().timeIntervalSince1970 * 1000)).png"
+                    multipartFormData.append(imageData, withName: key, fileName: filename, mimeType: "image/png")
+                } else if let stringValue = value as? String, let data = stringValue.data(using: .utf8) {
+                    multipartFormData.append(data, withName: key)
                 }
             }
-        }, usingThreshold: UInt64(), to: url, method: .post , headers: nil, encodingCompletion: { (encodingResult) in
-            switch encodingResult {
-            case .success(let upload, _, _):
-                upload.uploadProgress(closure: { (Progress) in
-                    print("Upload Progress: \(Progress.fractionCompleted)")
-                })
-                upload.responseJSON(completionHandler: { [self] (response) in
-                    debugPrint(response)
-                    switch response.result {
-                    case .success(_):
-                        DispatchQueue.main.async(execute: {Loader.hideLoader()})
-                        if let JSON = response.result.value as? NSDictionary {
-                            if JSON.value(forKey: "status") as! Bool == true {
-                                print(JSON)
-                                let data = (JSON["data"] as? [[String:Any]] ?? [[:]])
-                                print(data)
-                                AlertController.alert(message: JSON.value(forKey: "message") as! String)
-                                self.navigationController?.popViewController(animated: true)
-                                
-                            } else {
-                                AlertController.alert(message: JSON.value(forKey: "message") as! String)
-                            }
-                        }
-                        
-                        break
-                    case .failure(let encodingError):
-                        if let err = encodingError as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
-                            
-                        } else {
-                            
-                        }
+        }, to: url, method: .post, headers: nil)
+        .uploadProgress { progress in
+            print("Upload Progress: \(progress.fractionCompleted)")
+        }
+        .responseJSON { response in
+            DispatchQueue.main.async { Loader.hideLoader() }
+            switch response.result {
+            case .success(let value):
+                if let JSON = value as? NSDictionary, let status = JSON["status"] as? Bool {
+                    let message = JSON["message"] as? String ?? "Unknown response"
+                    AlertController.alert(message: message)
+                    if status {
+                        self.navigationController?.popViewController(animated: true)
                     }
-                })
-            case .failure(let encodingError):
-                if let err = encodingError as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
-                    
-                } else {
-                    
                 }
-                
+            case .failure(let error):
+                if let err = error as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
+                    print("No Internet Connection or Request Timed Out")
+                } else {
+                    print("Upload Failed: \(error.localizedDescription)")
+                }
             }
-        })
-        
+        }
     }
+
     
     func vistorApiHit() {
         var dict = Dictionary<String,Any>()

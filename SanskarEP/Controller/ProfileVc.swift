@@ -128,71 +128,49 @@ class ProfileVc: UIViewController,UIImagePickerControllerDelegate, UINavigationC
             }
         }
     }
-    
-    func newDetailApi(){
-        var dict = Dictionary<String,Any>()
-        
+    func newDetailApi() {
+        var dict = [String: Any]()
         dict["EmpCode"] = currentUser.EmpCode
-        dict["image"] = profile.image?.resizeToWidth2(250)
-      
-        let url =  BASEURL + "/" + ProUpdate
-        DispatchQueue.main.async(execute: {Loader.showLoader()})
-        Alamofire.upload(multipartFormData: { (multipartFormData) in
+
+        // Safely handle the image upload
+        if let image = profile.image?.resizeToWidth2(250), let imageData = image.pngData() {
+            dict["image"] = imageData
+        }
+
+        let url = BASEURL + "/" + ProUpdate
+        DispatchQueue.main.async { Loader.showLoader() }
+
+        AF.upload(multipartFormData: { multipartFormData in
             for (key, value) in dict {
-                if key == "image"{
-                    let milliseconds = Int64(Date().timeIntervalSince1970 * 1000.0)
-                    let milisIsStirng = "\(milliseconds)"
-                    let filename = "\(milisIsStirng).png"
-                    let imageData = (value as! UIImage).pngData() as NSData?
-                    multipartFormData.append((imageData! as Data) as Data, withName: key , fileName: filename as String, mimeType: "image/png")
-                } else {
-                    multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key )
+                if key == "image", let imageData = value as? Data {
+                    let filename = "\(Int64(Date().timeIntervalSince1970 * 1000)).png"
+                    multipartFormData.append(imageData, withName: key, fileName: filename, mimeType: "image/png")
+                } else if let stringValue = "\(value)".data(using: .utf8) {
+                    multipartFormData.append(stringValue, withName: key)
                 }
             }
-        }, usingThreshold: UInt64(), to: url, method: .post , headers: nil, encodingCompletion: { (encodingResult) in
-            switch encodingResult {
-            case .success(let upload, _, _):
-                upload.uploadProgress(closure: { (Progress) in
-                    print("Upload Progress: \(Progress.fractionCompleted)")
-                })
-                upload.responseJSON(completionHandler: { [self] (response) in
-                    debugPrint(response)
-                    switch response.result {
-                    case .success(_):
-                        DispatchQueue.main.async(execute: {Loader.hideLoader()})
-                        if let JSON = response.result.value as? NSDictionary {
-                            if JSON.value(forKey: "status") as! Bool == true {
-                                print(JSON)
-                                let data = (JSON["data"] as? [[String:Any]] ?? [[:]])
-                                print(data)
-                                AlertController.alert(message: JSON.value(forKey: "message") as! String)
-                                self.navigationController?.popViewController(animated: true)
-                                
-                            } else {
-                                AlertController.alert(message: JSON.value(forKey: "message") as! String)
-                            }
-                        }
-                        
-                        break
-                    case .failure(let encodingError):
-                        if let err = encodingError as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
-                            
-                        } else {
-                            
-                        }
+        }, to: url)
+        .uploadProgress { progress in
+            print("Upload Progress: \(progress.fractionCompleted)")
+        }
+        .responseJSON { response in
+            DispatchQueue.main.async {
+                Loader.hideLoader()
+                switch response.result {
+                case .success(let value):
+                    if let JSON = value as? NSDictionary, let status = JSON["status"] as? Bool, status {
+                        print("Response JSON:", JSON)
+
+                        AlertController.alert(message: JSON["message"] as? String ?? "Success")
+                        self.navigationController?.popViewController(animated: true)
                     }
-                })
-            case .failure(let encodingError):
-                if let err = encodingError as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
-                    
-                } else {
-                    
+                case .failure(let error):
+                    print("Upload Failed: \(error.localizedDescription)")
                 }
-                
             }
-        })
-        
+        }
     }
+
     
     @IBAction func buttonaction(_ sender: UIButton) {
         let ac = UIAlertController(title: "Select Image", message: "Select Image from", preferredStyle: .actionSheet)

@@ -428,86 +428,60 @@ class TourAppVC: UIViewController,UIImagePickerControllerDelegate, UINavigationC
             }
 //
         }
-    
-    func EditTourDetail(){
-        var dict = Dictionary<String,Any>()
-        dict["Sno"] = String(updateVariable)
-        print( dict["Sno"])
-        dict["EmpCode"] = currentUser.EmpCode
-        print( dict["EmpCode"])
-        dict["Amount"] = amntTxt.text!
-        print( dict["Amount"])
-        dict["reason"] = resonTxtview.text!
-        print( dict["reason"])
-        dict["TourID"] = tourback
-    //    TourTxt.text!
-        print( dict["TourID"])
-        dict["thumbnail"] = imageView.image?.resizeToPhoto1(250)
-        print( dict["thumbnail"])
-       self.DataList.removeAll()
-        print(self.DataList)
-       
-        let url =  BASEURL + "/" + TUpdate
-        DispatchQueue.main.async(execute: {Loader.showLoader()})
-        Alamofire.upload(multipartFormData: { (multipartFormData) in
-            for (key, value) in dict {
-                if key == "thumbnail"{
-                    let milliseconds = Int64(Date().timeIntervalSince1970 * 1000.0)
-                    let milisIsStirng = "\(milliseconds)"
-                    let filename = "\(milisIsStirng).png"
-                    let imageData = (value as! UIImage).pngData() as NSData?
-                    multipartFormData.append((imageData! as Data) as Data, withName: key , fileName: filename as String, mimeType: "image/png")
-                } else {
-                    multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key )
-                }
-            }
-        }, usingThreshold: UInt64(), to: url, method: .post , headers: nil, encodingCompletion: { (encodingResult) in
-            switch encodingResult {
-            case .success(let upload, _, _):
-                upload.uploadProgress(closure: { (Progress) in
-                    print("Upload Progress: \(Progress.fractionCompleted)")
-                })
-                upload.responseJSON(completionHandler: { [self] (response) in
-                    debugPrint(response)
-                    switch response.result {
-                    case .success(_):
-                        DispatchQueue.main.async(execute: {Loader.hideLoader()})
-                        if let JSON = response.result.value as? NSDictionary {
-                            if JSON.value(forKey: "status") as! Bool == true {
-                                print(JSON)
-                              //  let data = datalist[indexPath.row]["BDay"] as? [String:Any] ?? [:]
-                                let data = (JSON["data"] as? [[String:Any]] ?? [[:]])
-                                print(data)
-                                self.DataList = data
-                                print(self.DataList)
-                                self.updateTotalAmount()
-                                    self.tableview.reloadData()
 
-                            } else {
-                                
-                            }
-                            
-                        }
-                        
-                        break
-                    case .failure(let encodingError):
-                        if let err = encodingError as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
-                            
-                        } else {
-                            
-                        }
-                    }
-                })
-            case .failure(let encodingError):
-                if let err = encodingError as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
-                    
-                } else {
-                    
+    func EditTourDetail() {
+        var dict = [String: Any]()
+        dict["Sno"] = String(updateVariable)
+        dict["EmpCode"] = currentUser.EmpCode
+        dict["Amount"] = amntTxt.text ?? ""
+        dict["reason"] = resonTxtview.text ?? ""
+        dict["TourID"] = tourback
+
+        if let image = imageView.image?.resizeToPhoto1(250), let imageData = image.pngData() {
+            dict["thumbnail"] = imageData
+        }
+
+        self.DataList.removeAll()
+
+        let url = BASEURL + "/" + TUpdate
+        DispatchQueue.main.async { Loader.showLoader() }
+
+        AF.upload(multipartFormData: { multipartFormData in
+            for (key, value) in dict {
+                if key == "thumbnail", let imageData = value as? Data {
+                    let filename = "\(Int64(Date().timeIntervalSince1970 * 1000)).png"
+                    multipartFormData.append(imageData, withName: key, fileName: filename, mimeType: "image/png")
+                } else if let stringValue = "\(value)".data(using: .utf8) {
+                    multipartFormData.append(stringValue, withName: key)
                 }
             }
-        })
-        tableview.reloadData()
+        }, to: url)
+        .uploadProgress { progress in
+            print("Upload Progress: \(progress.fractionCompleted)")
+        }
+        .responseJSON { response in
+            DispatchQueue.main.async {
+                Loader.hideLoader()
+                switch response.result {
+                case .success(let value):
+                    if let JSON = value as? NSDictionary, let status = JSON["status"] as? Bool, status {
+                        print("Response JSON:", JSON)
+
+                        if let data = JSON["data"] as? [[String: Any]] {
+                            self.DataList = data
+                            self.updateTotalAmount()
+                            self.tableview.reloadData()
+                        }
+                    } else {
+                        print("Invalid response format")
+                    }
+                case .failure(let error):
+                    print("Upload Failed: \(error.localizedDescription)")
+                }
+            }
+        }
     }
+
 //    func setData(amo: String,ing: String,tou: String, rea: String){
 //        amntTxt.text = amo
 //        TourTxt.text = location
@@ -521,100 +495,64 @@ class TourAppVC: UIViewController,UIImagePickerControllerDelegate, UINavigationC
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
-    func ApiHit(){
-        var dict = Dictionary<String,Any>()
-        
+    func ApiHit() {
+        var dict = [String: Any]()
         dict["EmpCode"] = currentUser.EmpCode
-        
-        let currentDate = Date()
+
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // Customize the format as needed
-        let dateString = dateFormatter.string(from: currentDate)
-        
-       
-        dict["Amount"] = amntTxt.text!
-        print( dict["Amount"])
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dict["date"] = dateFormatter.string(from: Date())
+
+        dict["Amount"] = amntTxt.text ?? ""
         dict["Tour_id"] = tourback
-        print( dict["Tour_id"])
-        dict["date"] = dateString
-        print( dict["date"])
-        dict["reason"] =  resonTxtview.text!
-        print( dict["reason"])
-        dict["image"] = imageView.image?.resizeToWidth1(250)
-        print(dict["image"])
-   //     self.datalist.removeAll()
-        print(self.DataList)
-        
-        let url =  BASEURL + "/" + LTourApi
-        DispatchQueue.main.async(execute: {Loader.showLoader()})
-        Alamofire.upload(multipartFormData: { (multipartFormData) in
+        dict["reason"] = resonTxtview.text ?? ""
+
+        if let image = imageView.image?.resizeToWidth1(250), let imageData = image.pngData() {
+            dict["image"] = imageData
+        }
+
+        let url = BASEURL + "/" + LTourApi
+        DispatchQueue.main.async { Loader.showLoader() }
+
+        AF.upload(multipartFormData: { multipartFormData in
             for (key, value) in dict {
-                if key == "image"{
-                    let milliseconds = Int64(Date().timeIntervalSince1970 * 1000.0)
-                    let milisIsStirng = "\(milliseconds)"
-                    let filename = "\(milisIsStirng).png"
-                    let imageData = (value as! UIImage).pngData() as NSData?
-                    multipartFormData.append((imageData! as Data) as Data, withName: key , fileName: filename as String, mimeType: "image/png")
-                } else {
-                    multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key )
+                if key == "image", let imageData = value as? Data {
+                    let filename = "\(Int64(Date().timeIntervalSince1970 * 1000)).png"
+                    multipartFormData.append(imageData, withName: key, fileName: filename, mimeType: "image/png")
+                } else if let stringValue = "\(value)".data(using: .utf8) {
+                    multipartFormData.append(stringValue, withName: key)
                 }
             }
-        }, usingThreshold: UInt64(), to: url, method: .post , headers: nil, encodingCompletion: { (encodingResult) in
-            switch encodingResult {
-            case .success(let upload, _, _):
-                upload.uploadProgress(closure: { (Progress) in
-                    print("Upload Progress: \(Progress.fractionCompleted)")
-                })
-                upload.responseJSON(completionHandler: { [self] (response) in
-                    debugPrint(response)
-                    switch response.result {
-                    case .success(_):
-                        DispatchQueue.main.async(execute: {Loader.hideLoader()})
-                        if let JSON = response.result.value as? NSDictionary {
-                            if JSON.value(forKey: "status") as! Bool == true {
-                                print(JSON)
-                                let data = (JSON["data"] as? [[String:Any]] ?? [[:]])
-                                print(data)
-                                DetailsApi()
-                                
-                                self.DataList = data
-                                print(self.DataList)
-                                for i in 0..<self.DataList.count{
-                                let season_thumbnails = self.DataList[i]["Sno"] as? Int ?? 0
-                                self.Serial.append(season_thumbnails)
-                                }
-                                print(self.Serial)
-                              //  self.updateTotalAmount()
-                                self.tableview.reloadData()
-                                AlertController.alert(message: JSON.value(forKey: "message") as! String)
-                                self.navigationController?.popViewController(animated: true)
-                                
-                            } else {
-                                AlertController.alert(message: JSON.value(forKey: "message") as! String)
-                            }
+        }, to: url)
+        .uploadProgress { progress in
+            print("Upload Progress: \(progress.fractionCompleted)")
+        }
+        .responseJSON { response in
+            DispatchQueue.main.async {
+                Loader.hideLoader()
+                switch response.result {
+                case .success(let value):
+                    if let JSON = value as? NSDictionary, let status = JSON["status"] as? Bool, status {
+                        print("Response JSON:", JSON)
+
+                        if let data = JSON["data"] as? [[String: Any]] {
+                            self.DataList = data
+                            self.Serial = data.compactMap { $0["Sno"] as? Int }
+                            print("Updated Serial Numbers:", self.Serial)
+
+                            self.DetailsApi()
+                            self.tableview.reloadData()
                         }
-                        
-                        break
-                    case .failure(let encodingError):
-                        if let err = encodingError as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
-                            
-                        } else {
-                            
-                        }
-                    }
-                })
-            case .failure(let encodingError):
-                if let err = encodingError as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
-                    
-                } else {
-                    
+                        AlertController.alert(message: JSON["message"] as? String ?? "Success")
+                        self.navigationController?.popViewController(animated: true)
+                    } 
+                case .failure(let error):
+                    print("Upload Failed: \(error.localizedDescription)")
                 }
-                
             }
-        })
-        
-        tableview.reloadData()
+        }
     }
+
     
 }
 extension UIImage {

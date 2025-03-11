@@ -166,73 +166,68 @@ class GuestVc: UIViewController,UIImagePickerControllerDelegate, UINavigationCon
 //MARK: - Send Request to server
 
 extension GuestVc {
-    
     func guestRequest() {
         var dict = [String: Any]()
         dict["EmpCode"] = currentUser.EmpCode
-        dict["Reason"] = reasonTxtView.text
+        dict["Reason"] = reasonTxtView.text ?? ""
         dict["WhomtoMeet"] = currentUser.Name
-     //   whomTxtField.text ?? ""
         dict["Guest_Name"] = nametextField.text ?? ""
         dict["Date1"] = dateTxtField.text ?? ""
-        dict["image"] = Uimage.image?.resizeToWidth3(250)
+
+        // Handle the image safely
+        if let image = Uimage.image?.resizeToWidth3(250), let imageData = image.pngData() {
+            dict["image"] = imageData
+        }
 
         let url = BASEURL + "/" + kGuestApi
         DispatchQueue.main.async { Loader.showLoader() }
 
-        Alamofire.upload(multipartFormData: { multipartFormData in
+        AF.upload(multipartFormData: { multipartFormData in
             for (key, value) in dict {
-                if key == "image", let image = value as? UIImage, let imageData = image.pngData() {
+                if key == "image", let imageData = value as? Data {
                     let filename = "\(Int64(Date().timeIntervalSince1970 * 1000)).png"
                     multipartFormData.append(imageData, withName: key, fileName: filename, mimeType: "image/png")
-                } else if let stringValue = value as? String, let data = stringValue.data(using: .utf8) {
-                    multipartFormData.append(data, withName: key)
+                } else if let stringValue = "\(value)".data(using: .utf8) {
+                    multipartFormData.append(stringValue, withName: key)
                 }
             }
-        }, to: url, method: .post, headers: nil) { encodingResult in
-            switch encodingResult {
-            case .success(let upload, _, _):
-                upload.uploadProgress { progress in
-                    print("Upload Progress: \(progress.fractionCompleted)")
-                }
-                upload.responseJSON { response in
-                    DispatchQueue.main.async { Loader.hideLoader() }
+        }, to: url)
+        .uploadProgress { progress in
+            print("Upload Progress: \(progress.fractionCompleted)")
+        }
+        .responseJSON { response in
+            DispatchQueue.main.async { Loader.hideLoader() }
 
-                    switch response.result {
-                    case .success(let value):
-                        if let jsonResponse = value as? [String: Any] {
-                            let status = jsonResponse["status"] as? Bool ?? false
-                            let message = jsonResponse["message"] as? String ?? "Unknown error"
-                            
-                            if status {
-                                DispatchQueue.main.async {
-                                    self.delegate?.didCompleteAction(with: message)
-                                    self.showToast(message: message)
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                                        self.dismiss(animated: true)
-                                    }
-                                }
-                            } else {
-                                AlertController.alert(message: message)
+            switch response.result {
+            case .success(let value):
+                if let jsonResponse = value as? [String: Any], let status = jsonResponse["status"] as? Bool {
+                    let message = jsonResponse["message"] as? String ?? "Unknown error"
+
+                    if status {
+                        DispatchQueue.main.async {
+                            self.delegate?.didCompleteAction(with: message)
+                            self.showToast(message: message)
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                self.dismiss(animated: true)
                             }
-                        } else {
-                            AlertController.alert(message: "Invalid response format")
                         }
-
-                    case .failure(let error):
-                        if let urlError = error as? URLError, urlError.code == .notConnectedToInternet || urlError.code == .timedOut {
-                            print("Network error: \(urlError.localizedDescription)")
-                        } else {
-                            print("Upload failed: \(error.localizedDescription)")
-                        }
+                    } else {
+                        AlertController.alert(message: message)
                     }
+                } else {
+                    AlertController.alert(message: "Invalid response format")
                 }
 
-            case .failure(let encodingError):
-                print("Encoding failed: \(encodingError.localizedDescription)")
+            case .failure(let error):
+                if let urlError = error as? URLError, urlError.code == .notConnectedToInternet || urlError.code == .timedOut {
+                    print("Network error: \(urlError.localizedDescription)")
+                } else {
+                    print("Upload failed: \(error.localizedDescription)")
+                }
             }
         }
     }
+
 
     
     func removeData() {

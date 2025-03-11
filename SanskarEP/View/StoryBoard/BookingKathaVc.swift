@@ -446,122 +446,79 @@ class BookingKathaVc: UIViewController,UIImagePickerControllerDelegate, UINaviga
         }
     }
 
-    
     func BookKathaApi() {
-        var dict = Dictionary<String, Any>()
+        var dict = [String: Any]()
         dict["EmpCode"] = currentUser.EmpCode
         dict["name"] = selectedname
-        if selectedid != nil {
+        
+        if let selectedid = selectedid {
             dict["guru_ID"] = selectedid
-        }
-        else {
+        } else {
             dict["guru_ID"] = "0"
-            dict["name"] = nametxt.text
-            
-            
+            dict["name"] = nametxt.text ?? ""
         }
-       
+
         dict["channel"] = type
-        dict["amount"] = amounttxt.text
+        dict["amount"] = amounttxt.text ?? ""
         dict["gst"] = gstStatus
         dict["gst_percentage"] = "18"
-        dict["venue"] = venuetxt.text
-        dict["katha_to_date"] = todate.text
-        dict["katha_from_date"] = fromdate.text
-
-        if selectedKathaCategoryID == 4 {
-            if let selectedImage = selectedImage {
-                // Handle image: Convert to data
-                if let imageData = selectedImage.pngData() {
-                    dict["file"] = imageData
-                }
-            } else if let selectedPDFURL = selectedPDFURL {
-                // Handle PDF: Include file URL directly9899079944
-                dict["file"] = selectedPDFURL
-            } else if let selectedExcelURL = selectedExcelURL {
-                // Handle Excel: Include file URL directly
-                dict["file"] = selectedExcelURL
-            } else {
-                // No file selected
-                return
-            }
-        }
-
-        dict["katha_category_id"] = String(describing: selectedKathaCategoryID ?? 0)
-        
+        dict["venue"] = venuetxt.text ?? ""
+        dict["katha_to_date"] = todate.text ?? ""
+        dict["katha_from_date"] = fromdate.text ?? ""
+        dict["katha_category_id"] = String(selectedKathaCategoryID ?? 0)
         dict["katha_slot"] = selectedKathaSlot
-        
-        
+
         if selectedKathaSlottime == "Custom" {
-          
-            // Include start_time and end_time in the request
-            dict["start_time"] = startT.text
-            dict["end_time"] = EndT.text
+            dict["start_time"] = startT.text ?? ""
+            dict["end_time"] = EndT.text ?? ""
         }
 
-        let url =  BASEURL + "/" + kathabookingApi
-        DispatchQueue.main.async(execute: {Loader.showLoader()})
-        Alamofire.upload(multipartFormData: { (multipartFormData) in
+        let url = BASEURL + "/" + kathabookingApi
+        DispatchQueue.main.async { Loader.showLoader() }
+
+        AF.upload(multipartFormData: { multipartFormData in
             for (key, value) in dict {
                 if key == "file" {
-                    if let selectedPDFURL = value as? URL {
-                        // Handle PDF: Include file URL directly
-                        multipartFormData.append(selectedPDFURL, withName: "file")
-                    } else if let selectedExcelURL = value as? URL {
-                        // Handle Excel: Include file URL directly
-                        multipartFormData.append(selectedExcelURL, withName: "file")
+                    if let fileURL = value as? URL {
+                        do {
+                            let fileData = try Data(contentsOf: fileURL)
+                            let mimeType = fileURL.pathExtension.lowercased() == "pdf" ? "application/pdf" : "application/vnd.ms-excel"
+                            let fileName = fileURL.lastPathComponent
+                            multipartFormData.append(fileData, withName: "file", fileName: fileName, mimeType: mimeType)
+                        } catch {
+                            print("Failed to load file data: \(error.localizedDescription)")
+                            return
+                        }
                     } else if let imageData = value as? Data {
-                        // Handle image: Convert to data
                         multipartFormData.append(imageData, withName: "file", fileName: "image.png", mimeType: "image/png")
                     }
-                } else {
-                    if let data = "\(value)".data(using: .utf8) {
-                        // Append other parameters
-                        multipartFormData.append(data, withName: key)
-                    }
+                } else if let stringValue = "\(value)".data(using: .utf8) {
+                    multipartFormData.append(stringValue, withName: key)
                 }
             }
-        }, to: url, method: .post, headers: nil) { (encodingResult) in
-            switch encodingResult {
-            case .success(let upload, _, _):
-                upload.uploadProgress(closure: { (Progress) in
-                    print("Upload Progress: \(Progress.fractionCompleted)")
-                })
-                upload.responseJSON(completionHandler: { [self] (response) in
-                    debugPrint(response)
-                    switch response.result {
-                    case .success(_):
-                        DispatchQueue.main.async(execute: {Loader.hideLoader()})
-                        if let JSON = response.result.value as? NSDictionary {
-                            if JSON.value(forKey: "status") as! Bool == true {
-                                print(JSON)
-                                let data = (JSON["data"] as? [[String:Any]] ?? [[:]])
-                                print(data)
-                                AlertController.alert(message: JSON.value(forKey: "message") as! String)
-                                removeData()
-                                self.navigationController?.popViewController(animated: true)
-                            } else {
-                                AlertController.alert(message: JSON.value(forKey: "message") as! String)
-                            }
-                        }
-                        break
-                    case .failure(let encodingError):
-                        if let err = encodingError as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
-                            // Handle internet connection error
-                        } else {
-                            // Handle other encoding errors
-                        }
-                    }
-                })
-            case .failure(let encodingError):
-                if let err = encodingError as? URLError, err.code == .notConnectedToInternet || err.code == .timedOut {
-                    // Handle internet connection error
-                } else {
-                    // Handle other encoding errors
+        }, to: url)
+        .uploadProgress { progress in
+            print("Upload Progress: \(progress.fractionCompleted)")
+        }
+        .responseJSON { response in
+            DispatchQueue.main.async {
+                Loader.hideLoader()
+                switch response.result {
+                case .success(let value):
+                    if let JSON = value as? NSDictionary, let status = JSON["status"] as? Bool, status {
+                        print("Response JSON:", JSON)
+                        
+                        AlertController.alert(message: JSON["message"] as? String ?? "Success")
+                        self.removeData()
+                        self.navigationController?.popViewController(animated: true)
+                    } 
+                case .failure(let error):
+                    print("Upload Failed: \(error.localizedDescription)")
                 }
             }
         }
     }
+
 
     @IBAction func GSTSelectBtn(_ sender: UIButton) {
 
