@@ -189,16 +189,15 @@ extension KVKCalendarView {
         case .authorized:
             completion(true)
         default:
-            //           temporary disabled
-            //            if #available(iOS 17.0, *) {
-            //                store.requestFullAccessToEvents { (access, error) in
-            //                    proxyCompletion(access: access, status: status, error: error)
-            //                }
-            //            } else {
-            store.requestAccess(to: .event) { (access, error) in
-                proxyCompletion(access: access, status: status, error: error)
+            if #available(iOS 17.0, *) {
+                store.requestFullAccessToEvents { (access, error) in
+                    proxyCompletion(access: access, status: status, error: error)
+                }
+            } else {
+                store.requestAccess(to: .event) { (access, error) in
+                    proxyCompletion(access: access, status: status, error: error)
+                }
             }
-            //            }
         }
     }
     
@@ -331,6 +330,11 @@ extension KVKCalendarView: DisplayDelegate {
         delegate?.didSelectMore(date, frame: frame)
     }
     
+    public func willAddNewEvent(_ event: Event, _ date: Date?) -> Event? {
+        guard let delegate else { return event }
+        return delegate.willAddNewEvent(event, date)
+    }
+
     public func didAddNewEvent(_ event: Event, _ date: Date?) {
         delegate?.didAddNewEvent(event, date)
     }

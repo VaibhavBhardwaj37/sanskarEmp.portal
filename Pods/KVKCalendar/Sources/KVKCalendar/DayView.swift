@@ -9,7 +9,7 @@
 
 import UIKit
 
-final class DayView: UIView {
+public final class DayView: UIView {
     
     private var parameters: Parameters
     private let tagEventViewer = -10
@@ -29,7 +29,7 @@ final class DayView: UIView {
                                                                   type: .day,
                                                                   style: Style()))
     
-    var timelinePage = TimelinePageView(maxLimit: 0, pages: [], frame: .zero)
+    public var timelinePage = TimelinePageView(maxLimit: 0, pages: [], frame: .zero)
     
     private var topBackgroundView = UIView()
     private var isAvailableEventViewer: Bool {
@@ -57,6 +57,7 @@ final class DayView: UIView {
     }
     
     func reloadData(_ events: [Event]) {
+        scrollableWeekView.reloadCustomCornerHeaderViewIfNeeded()
         parameters.data.recurringEvents = events.filter { $0.recurringType != .none }
         parameters.data.events = parameters.data.filterEvents(events, date: parameters.data.date)
         timelinePage.timelineView?.create(dates: [parameters.data.date],
@@ -129,6 +130,17 @@ extension DayView: TimelineDelegate {
         delegate?.didChangeEvent(event, start: startDate, end: endDate)
     }
     
+    func willAddNewEvent(_ event: Event, minute: Int, hour: Int, point: CGPoint) -> Event? {
+        var components = DateComponents()
+        components.year = parameters.data.date.kvkYear
+        components.month = parameters.data.date.kvkMonth
+        components.day = parameters.data.date.kvkDay
+        components.hour = hour
+        components.minute = minute
+        let date = style.calendar.date(from: components)
+        return delegate?.willAddNewEvent(event, date)
+    }
+    
     func didAddNewEvent(_ event: Event, minute: Int, hour: Int, point: CGPoint) {
         var components = DateComponents()
         components.year = parameters.data.date.kvkYear
@@ -158,7 +170,6 @@ extension DayView: TimelineDelegate {
         endComponents.hour = hour + hourOffset
         endComponents.minute = minute + minuteOffset
         let endDate = style.calendar.date(from: endComponents)
-        
         delegate?.didChangeEvent(event, start: startDate, end: endDate)
     }
     
@@ -190,6 +201,8 @@ extension DayView: CalendarSettingProtocol {
         } else {
             timelineFrame.size.height = frame.height
         }
+        
+        timelineFrame.size.height -= style.timeline.offsetTop
         
         if isAvailableEventViewer {
             if let defaultWidth = style.timeline.widthEventViewer {
@@ -315,6 +328,8 @@ extension DayView: CalendarSettingProtocol {
             timelineFrame.origin.y = scrollableWeekView.frame.height
             timelineFrame.size.height -= scrollableWeekView.frame.height
         }
+        
+        timelineFrame.origin.y += style.timeline.offsetTop
         
         if isAvailableEventViewer {
             if UIApplication.shared.orientation.isPortrait {

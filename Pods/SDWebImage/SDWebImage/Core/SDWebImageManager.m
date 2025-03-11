@@ -510,6 +510,17 @@ static id<SDImageLoader> _defaultImageLoader;
             // Case that transformer on thumbnail, which this time need full pixel image
             UIImage *transformedImage = [transformer transformedImageWithImage:cacheImage forKey:key];
             if (transformedImage) {
+                // We need keep some metadata from the full size image when needed
+                // Because most of our transformer does not care about these information
+                // So we add a **post-process** logic here, not a good design :(
+                BOOL preserveImageMetadata = YES;
+                if ([transformer respondsToSelector:@selector(preserveImageMetadata)]) {
+                    preserveImageMetadata = transformer.preserveImageMetadata;
+                }
+                if (preserveImageMetadata) {
+                    SDImageCopyAssociatedObject(cacheImage, transformedImage);
+                }
+                // Mark the transformed
                 transformedImage.sd_isTransformed = YES;
                 [self callStoreOriginCacheProcessForOperation:operation url:url options:options context:context originalImage:originalImage cacheImage:transformedImage originalData:originalData cacheData:nil cacheType:cacheType finished:finished completed:completedBlock];
             } else {
