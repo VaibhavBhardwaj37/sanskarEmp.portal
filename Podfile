@@ -6,7 +6,7 @@ target 'SanskarEP' do
   use_frameworks!
 
   # Pods for SanskarEP
-pod 'Alamofire', '~> 4.7'
+pod 'Alamofire'
 pod 'SDWebImage'
 pod 'IQKeyboardManagerSwift'
 pod 'iOSDropDown'
@@ -17,7 +17,7 @@ pod 'Firebase/Analytics'
 pod 'Firebase/Messaging'
 pod 'Firebase/Auth'
 pod 'KVKCalendar'
-pod 'Charts'
+pod 'DGCharts', '~> 5.1'
 pod 'FSCalendar'
 pod 'MarqueeLabel'
 pod 'DropDown'
