@@ -106,6 +106,7 @@
 		80B7F3202D8D651400A19938 /* PunchHistoryOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B7F31F2D8D64F800A19938 /* PunchHistoryOut.swift */; };
 		80B7F3282D8D9ADC00A19938 /* PunchHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B7F3272D8D9ADC00A19938 /* PunchHistoryTableViewCell.swift */; };
 		80B7F32A2D8E7FB500A19938 /* PunchHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B7F3292D8E7FB500A19938 /* PunchHistoryModel.swift */; };
+		80B7F32C2D8ED54B00A19938 /* PunchHistoryDaysS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B7F32B2D8ED54B00A19938 /* PunchHistoryDaysS.swift */; };
 		80DCF6D42D6499E800475988 /* LeaveNotificationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DCF6D22D6499E800475988 /* LeaveNotificationAlert.swift */; };
 		80DCF6D52D6499E800475988 /* LeaveNotificationAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80DCF6D32D6499E800475988 /* LeaveNotificationAlert.xib */; };
 		80FDC8492D6C6ACF00F703C4 /* NotificationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FDC8482D6C6ACF00F703C4 /* NotificationMode.swift */; };
@@ -446,6 +447,7 @@
 		80B7F31F2D8D64F800A19938 /* PunchHistoryOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchHistoryOut.swift; sourceTree = "<group>"; };
 		80B7F3272D8D9ADC00A19938 /* PunchHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		80B7F3292D8E7FB500A19938 /* PunchHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchHistoryModel.swift; sourceTree = "<group>"; };
+		80B7F32B2D8ED54B00A19938 /* PunchHistoryDaysS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchHistoryDaysS.swift; sourceTree = "<group>"; };
 		80DCF6D22D6499E800475988 /* LeaveNotificationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveNotificationAlert.swift; sourceTree = "<group>"; };
 		80DCF6D32D6499E800475988 /* LeaveNotificationAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeaveNotificationAlert.xib; sourceTree = "<group>"; };
 		80FDC8482D6C6ACF00F703C4 /* NotificationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationMode.swift; sourceTree = "<group>"; };
@@ -815,6 +817,7 @@
 			isa = PBXGroup;
 			children = (
 				077E863C278BEF32002BF76B /* Main.storyboard */,
+				80B7F32B2D8ED54B00A19938 /* PunchHistoryDaysS.swift */,
 				80B7F31F2D8D64F800A19938 /* PunchHistoryOut.swift */,
 				80B7F3272D8D9ADC00A19938 /* PunchHistoryTableViewCell.swift */,
 				D5F252752D572AFE00C321DC /* newapproCell.swift */,
@@ -1625,6 +1628,7 @@
 				D5D9BE372C2A890D00FF9CF0 /* NewRequestVc.swift in Sources */,
 				D52CD0122B0B32BF009985DB /* RejectedTourVC.swift in Sources */,
 				D5B6A3942D1005B400B0763E /* QcMetaCell.swift in Sources */,
+				80B7F32C2D8ED54B00A19938 /* PunchHistoryDaysS.swift in Sources */,
 				D5E73E042D2E69B400A441DD /* GetLeaveRequestList.swift in Sources */,
 				077E4B52278D83AA008F837F /* HomeModel.swift in Sources */,
 				D5D372512B1082C00003334F /* statusTableViewCell.swift in Sources */,
