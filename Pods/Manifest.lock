@@ -173,6 +173,7 @@ PODS:
   - SDWebImage (5.21.0):
     - SDWebImage/Core (= 5.21.0)
   - SDWebImage/Core (5.21.0)
+  - TagListView (1.4.1)
 
 DEPENDENCIES:
   - Alamofire
@@ -187,6 +188,7 @@ DEPENDENCIES:
   - KVKCalendar
   - MarqueeLabel
   - SDWebImage
+  - TagListView
 
 SPEC REPOS:
   trunk:
@@ -223,6 +225,7 @@ SPEC REPOS:
     - PromisesObjC
     - RecaptchaInterop
     - SDWebImage
+    - TagListView
 
 SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
@@ -258,7 +261,8 @@ SPEC CHECKSUMS:
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
   SDWebImage: f84b0feeb08d2d11e6a9b843cb06d75ebf5b8868
+  TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
 
-PODFILE CHECKSUM: 3fe4407cd21242215bd57d83e94277b255871ae3
+PODFILE CHECKSUM: 1fbcbd635d07ee19f1d77e9ea67ceea17ec0de03
 
 COCOAPODS: 1.16.2

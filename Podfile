@@ -21,7 +21,7 @@ pod 'DGCharts', '~> 5.1'
 pod 'FSCalendar'
 pod 'MarqueeLabel'
 pod 'DropDown'
-
+pod 'TagListView'
   target 'SanskarEPTests' do
     inherit! :search_paths
     # Pods for testing

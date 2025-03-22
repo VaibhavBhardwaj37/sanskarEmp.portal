@@ -284,6 +284,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>TagListView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>iOSDropDown.xcscheme</key>
 		<dict>
 			<key>isShown</key>
