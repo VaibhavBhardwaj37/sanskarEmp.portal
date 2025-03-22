@@ -312,11 +312,11 @@ class LeaveTypeVc: UIViewController {
         } else {
             selectedRows.insert(rowIndex)
         }
-        if selectedRows.count == approveM.count {
-            selectbtn.setTitle("Deselect", for: .normal)
-        } else {
-            selectbtn.setTitle("Select", for: .normal)
-        }
+//        if selectedRows.count == approveM.count {
+//            selectbtn.setTitle("Deselect", for: .normal)
+//        } else {
+//            selectbtn.setTitle("Select", for: .normal)
+//        }
         tableview.reloadData()
     }
     @objc

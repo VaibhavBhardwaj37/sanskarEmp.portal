@@ -353,7 +353,8 @@ class NewHomeVC: UIViewController  {
 
     
     @IBAction func SearchBarBtn(_ sender: UIButton) {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ApprovalPageVc") as! ApprovalPageVc
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "PunchHistoryOut") as! PunchHistoryOut
+        
         //       let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
 //                if #available(iOS 15.0, *) {
 //                if let sheet = vc.sheetPresentationController {
@@ -448,7 +449,7 @@ class NewHomeVC: UIViewController  {
             }
         } else {
             DispatchQueue.main.async {
-                self.emptimelbl.text = "N/A"
+                self.emptimelbl.text = "Absent"
             }
         }
     }
@@ -762,6 +763,8 @@ class NewHomeVC: UIViewController  {
                print("Request ID is missing")
            }
         detailview.isHidden = true
+        EventApi()
+        self.tableview.reloadData()
     }
     
     @IBAction func rejectbtn(_ sender: UIButton) {
@@ -771,6 +774,8 @@ class NewHomeVC: UIViewController  {
                print("Request ID is missing")
            }
         detailview.isHidden = true
+        EventApi()
+        self.tableview.reloadData()
     }
     func getGrant(_ id: [String], _ reply: String) {
         var dict = Dictionary<String, Any>()
@@ -836,7 +841,11 @@ class NewHomeVC: UIViewController  {
                 self.deplbl.text = " Dep"
                 self.depart.text = selectedData["Dept"] as? String ?? ""
                 
+                
+                
+                
                 let rowdata = selectedData["status"] as? String ?? ""
+          
                 if rowdata == "R" {
                     self.newStatuslbl.text = "Pending"
                     self.newStatuslbl.textColor = UIColor.red

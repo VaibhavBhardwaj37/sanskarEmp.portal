@@ -82,6 +82,36 @@
             endingLineNumber = "277"
             landmarkName = "getGrant(_:_:_:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "844FCD2F-E209-46BC-97E1-D39B3192822B - 2821a860fd841f77"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Bool, Swift.Optional&lt;__C.NSDictionary&gt;, Swift.Optional&lt;__C.NSError&gt;, Swift.Optional&lt;Foundation.Data&gt;) -&gt; () in SanskarEP.CustomAlert.getGrant(Swift.String, Swift.String, Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "SanskarEP.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vaibhav/Desktop/SanskarEP/SanskarEP/View/UINib/CustomAlert.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "277"
+                  endingLineNumber = "277">
+               </Location>
+               <Location
+                  uuid = "844FCD2F-E209-46BC-97E1-D39B3192822B - 2821a860fd841f77"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Bool, Swift.Optional&lt;__C.NSDictionary&gt;, Swift.Optional&lt;__C.NSError&gt;, Swift.Optional&lt;Foundation.Data&gt;) -&gt; () in SanskarEP.CustomAlert.getGrant(Swift.String, Swift.String, Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "SanskarEP.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vaibhav/Desktop/SanskarEP/SanskarEP/View/UINib/CustomAlert.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "277"
+                  endingLineNumber = "277">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

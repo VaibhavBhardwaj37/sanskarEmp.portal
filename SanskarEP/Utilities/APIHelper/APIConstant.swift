@@ -8,7 +8,8 @@
 import Foundation
 
 //var BASEURL              = "https://sap.sanskargroup.in"
-var BASEURL                = "https://emp.sanskargroup.in"
+// var BASEURL                = "https://emp.sanskargroup.in"
+var BASEURL                = "https://emp.sanskargroup.in/empDev"
 //var BASEURL              = "https://sap.sanskargroup.in/employee_dev/index.php"
 var BASEURL1               = "https://sap.sanskargroup.in/totalbhakti_portal"
 let getLogin               = "api_panel/login_app"
@@ -108,6 +109,9 @@ let GuestTime               = "api_panel/guest_in"
 let guestFloor              = "api_panel/get_floor"
 let guestAction             = "api_panel/emp_action_guest"
 let logOutApi               = "api_panel/logout"
+let SelfAttendance          = "api_panel/selfPunch"
+
+
 // inventory api
 let submitedlistapi        = "api_panel/get_inventory_detail"
 let requestdetailapi       = "api_panel/get_generate_challan_list"

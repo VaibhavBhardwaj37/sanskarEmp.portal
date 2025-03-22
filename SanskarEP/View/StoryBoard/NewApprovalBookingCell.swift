@@ -39,8 +39,7 @@ class NewApprovalBookingCell: UITableViewCell {
         Dateview.layer.cornerRadius = 6
         Locationview.layer.cornerRadius = 6
         SantView.layer.cornerRadius = 6
-        Approvebtn.layer.cornerRadius = 6
-        rejectbtn.layer.cornerRadius = 6
+       
       
     }
 
