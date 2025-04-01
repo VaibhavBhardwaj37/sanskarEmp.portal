@@ -5,8 +5,9 @@ class PunchHistoryTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var inTimeLabel: UILabel!
     @IBOutlet weak var outTimeLabel: UILabel!
-    @IBOutlet weak var locationLabel: UILabel!
-
+    @IBOutlet weak var locationLabel: UIButton!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
      //   addBorderToUIView()
@@ -14,7 +15,12 @@ class PunchHistoryTableViewCell: UITableViewCell {
         dateLabel.textAlignment = .center
         inTimeLabel.textAlignment = .center
         outTimeLabel.textAlignment = .center
-        locationLabel.textAlignment = .center
+        
+        locationLabel.contentHorizontalAlignment = .center
+        locationLabel.titleLabel?.textAlignment = .center
+        locationLabel.titleLabel?.numberOfLines = 2
+        locationLabel.titleLabel?.lineBreakMode = .byWordWrapping
+        
     }
 //    private func addBorderToUIView() {
 //        dateLabel.layer.borderColor = UIColor.black.cgColor

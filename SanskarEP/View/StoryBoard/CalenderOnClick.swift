@@ -28,10 +28,17 @@ class CalenderOnClick: UIViewController {
     @IBOutlet weak var PrivacyPolicyContanierview: UIView!
     @IBOutlet weak var TerminateContanierview: UIView!
     @IBOutlet weak var cancelContanierview: UIView!
+    @IBOutlet weak var SelfContanierview: UIView!
+    @IBOutlet weak var PunchHistoryContanierview: UIView!
+    
+    
     
     var leavecontainerviewdata = CalendersheetVC.self
     var aprove: Bool = false
     var ReqType  = [[String:Any]]()
+    
+    var selectedRequestType: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
      //   requestTypeView.isHidden = true
@@ -87,36 +94,102 @@ class CalenderOnClick: UIViewController {
        }
     
     func showContainerView(for name: String) {
-           hideAllContainerViews()
-           let viewMapping: [String: UIView] = [
-               "Approval": ApprovalContainerview,
-               "Leave": leaveContainerview,
-               "Booking": BookingContainerview,
-               "Inventory": InventoryContainerview,
-               "Request": RequestContainerview,
-               "Tour": TourContainerview,
-               "Reports": ReportContainerview,
-               "Guest": GuestContainerview,
-               "Advance": AdvanceContainerview,
-               "Stationary": StationaryContainerview,
-               "Health": HealthContainerview,
-               "Pay Slip": PayslipContainerview,
-               "Other": OtherContainerview,
-               "Privacy Policy": PrivacyPolicyContanierview,
-               "Delete Account": TerminateContanierview,
-               "Leave cancellation" : cancelContanierview
-           ]
-           if let selectedView = viewMapping[name] {
-               selectedView.isHidden = false  
-           }
-       }
+        hideAllContainerViews()
+        
+        let viewMapping: [String: UIView] = [
+            "Approval": ApprovalContainerview,
+            "Leave": leaveContainerview,
+            "Booking": BookingContainerview,
+            "Inventory": InventoryContainerview,
+            "Request": RequestContainerview,
+            "Tour": TourContainerview,
+            "Reports": ReportContainerview,
+            "Guest": GuestContainerview,
+            "Advance": AdvanceContainerview,
+            "Stationary": StationaryContainerview,
+            "Health": HealthContainerview,
+            "Pay Slip": PayslipContainerview,
+            "Other": OtherContainerview,
+            "Privacy Policy": PrivacyPolicyContanierview,
+            "Delete Account": TerminateContanierview,
+            "Leave cancellation": cancelContanierview,
+            "Self Punch": SelfContanierview,
+            "Punch History": PunchHistoryContanierview
+        ]
+//        if name == "Self Punch" {
+//                if let vc = storyboard?.instantiateViewController(withIdentifier: "ApprovalPageVc") {
+//                    if #available(iOS 15.0, *) {
+//                        if let sheet = vc.sheetPresentationController {
+//                            var customDetent: UISheetPresentationController.Detent?
+//                            if #available(iOS 16.0, *) {
+//                                customDetent = UISheetPresentationController.Detent.custom { context in
+//                                    return 700
+//                                }
+//                                sheet.detents = [customDetent!]
+//                                sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
+//                            }
+//                            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+//                            sheet.prefersGrabberVisible = true
+//                            sheet.preferredCornerRadius = 12
+//                        }
+//                    }
+//                    present(vc, animated: true)
+//                    return
+//                }
+//            return
+//        }
+//        if name == "Punch History" {
+//            if let vc = storyboard?.instantiateViewController(withIdentifier: "PunchHistoryOut") {
+//                if #available(iOS 15.0, *) {
+//                    if let sheet = vc.sheetPresentationController {
+//                        var customDetent: UISheetPresentationController.Detent?
+//                        if #available(iOS 16.0, *) {
+//                            customDetent = UISheetPresentationController.Detent.custom { context in
+//                                return 700
+//                                
+//                            }
+//                            sheet.detents = [customDetent!]
+//                            sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
+//                        }
+//                        sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+//                        sheet.prefersGrabberVisible = true
+//                        sheet.preferredCornerRadius = 12
+//                    }
+//                }
+//                present(vc, animated: true)
+//                return
+//            }
+//        }
+        
+        if let selectedView = viewMapping[name] {
+            selectedView.isHidden = false
+        }
+    }
+
+    
+    func updateSheetHeight() {
+        guard let vc = self.presentedViewController as? CalenderOnClick else { return }
+        
+        if let sheet = vc.sheetPresentationController {
+            let detentHeight: CGFloat = (selectedRequestType == "Self Punch" || selectedRequestType == "Punch History") ? 700 : 575
+            if #available(iOS 16.0, *) {
+                let customDetent = UISheetPresentationController.Detent.custom { _ in
+                    return detentHeight
+                }
+                sheet.detents = [customDetent]
+            } else {
+                sheet.detents = (selectedRequestType == "Self Punch" || selectedRequestType == "Punch History") ? [.medium(), .large()] : [.medium()]
+            }
+        }
+    }
+    
     func hideAllContainerViews() {
            let allContainers = [
                leaveContainerview, BookingContainerview, TourContainerview,
                PayslipContainerview, AdvanceContainerview, StationaryContainerview,
                HealthContainerview, GuestContainerview, ReportContainerview,
                OtherContainerview, ApprovalContainerview, RequestContainerview,
-               InventoryContainerview,PrivacyPolicyContanierview,TerminateContanierview,cancelContanierview
+               InventoryContainerview,PrivacyPolicyContanierview,TerminateContanierview,cancelContanierview,SelfContanierview,PunchHistoryContanierview
            ]
            allContainers.forEach { $0?.isHidden = true }
        }
@@ -151,5 +224,6 @@ extension CalenderOnClick: UITableViewDataSource, UITableViewDelegate {
         showContainerView(for: selectedSearchResult)
         requestTypeView.isHidden = true
         requestTableview.isHidden = true
+        updateSheetHeight()
     }
 }

@@ -1,3 +1,10 @@
+
+
+protocol SelfPunchDelegate: AnyObject {
+    func PunchAction(with message: String)
+}
+
+
 import UIKit
 import AVFoundation
 import MapKit
@@ -16,9 +23,6 @@ class ApprovalPageVc: UIViewController, CLLocationManagerDelegate, AVCapturePhot
     @IBOutlet weak var punchinview: UIView!
     @IBOutlet weak var punchoutview: UIView!
     @IBOutlet weak var Mapview: MKMapView!
-    @IBOutlet weak var tabbarview: UITabBar!
-    @IBOutlet weak var historyview: UIView!
-    @IBOutlet weak var tabbartableview: UITableView!
     @IBOutlet weak var currentlocationview: UIView!
     @IBOutlet weak var currentlocationlbl: UILabel!
     
@@ -28,16 +32,9 @@ class ApprovalPageVc: UIViewController, CLLocationManagerDelegate, AVCapturePhot
     var photoOutput: AVCapturePhotoOutput!
     var capturedImage: UIImage?
 
-   
-    var tableData: [[String]] = [
-        ["Entry 1", "Entry 2"],
-        ["Entry A", "Entry B"],
-        ["Item X", "Item Y"] ,
-        ["Item X", "Item Y"],
-        ["Item X", "Item Y"]
-    ]
+    weak var delegate: SelfPunchDelegate?
 
-    var sectionHeaders: [String] = ["First Section", "Second Section", "Third Section", "test", "Tesfvsi"]
+
     var currentCameraPosition: AVCaptureDevice.Position = .front
     var capturedImageView: UIImageView!
     var currentAddress: String = ""
@@ -51,15 +48,12 @@ class ApprovalPageVc: UIViewController, CLLocationManagerDelegate, AVCapturePhot
         punchinview.layer.cornerRadius = 8
         punchoutview.layer.cornerRadius = 8
         currentlocationview.layer.cornerRadius = 8
-        historyview.isHidden = true
+      //  historyview.isHidden = true
         
         setupCapturedImageView()
-        tabbarview.delegate = self
-        tabbartableview.delegate = self
-        tabbartableview.dataSource = self
-        tabbartableview.reloadData()
-
-        tabbartableview.register(UINib(nibName: "AssignListCell", bundle: nil), forCellReuseIdentifier: "AssignListCell")
+    
+       
+       
     }
     
     func setupCapturedImageView() {
@@ -77,13 +71,10 @@ class ApprovalPageVc: UIViewController, CLLocationManagerDelegate, AVCapturePhot
         manager.startUpdatingLocation()
     }
     
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-           if item.tag == 0 {
-               historyview.isHidden = false
-           } else if item.tag == 1 {
-               historyview.isHidden = true
-           }
-       }
+
+
+
+
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
@@ -237,12 +228,12 @@ class ApprovalPageVc: UIViewController, CLLocationManagerDelegate, AVCapturePhot
         let epochTime = Int(Date().timeIntervalSince1970)
         dict["time"] = epochTime
         
-        if let image = capturedImage?.resizeTowidth(250), let imageData = image.pngData() {
-            dict["file"] = imageData
-        } else {
+        // Ensure image exists before proceeding
+        guard let image = capturedImage?.resizeTowidth(250), let imageData = image.pngData() else {
             print("No image captured")
             return
         }
+        dict["file"] = imageData
         
         let url = BASEURL + "/" + SelfAttendance
         DispatchQueue.main.async { Loader.showLoader() }
@@ -265,11 +256,19 @@ class ApprovalPageVc: UIViewController, CLLocationManagerDelegate, AVCapturePhot
             
             switch response.result {
             case .success(let value):
-                if let jsonResponse = value as? [String: Any], let status = jsonResponse["status"] as? Bool {
+                if let jsonResponse = value as? [String: Any] {
+                    let status = jsonResponse["status"] as? Bool ?? false
                     let message = jsonResponse["message"] as? String ?? "Unknown error"
                     
                     DispatchQueue.main.async {
-                        self.showAlert(title: status ? "Success" : "Success", message: message)
+                        self.delegate?.PunchAction(with: message)
+                        self.showToast(message: message)
+                        
+                        if status {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                self.dismiss(animated: true)
+                            }
+                        }
                     }
                 } else {
                     DispatchQueue.main.async {
@@ -279,12 +278,18 @@ class ApprovalPageVc: UIViewController, CLLocationManagerDelegate, AVCapturePhot
                 
             case .failure(let error):
                 DispatchQueue.main.async {
-                    let errorMessage = (error as? URLError)?.code == .notConnectedToInternet ? "No internet connection" : error.localizedDescription
+                    let errorMessage: String
+                    if let urlError = error as? URLError, urlError.code == .notConnectedToInternet {
+                        errorMessage = "No internet connection"
+                    } else {
+                        errorMessage = error.localizedDescription
+                    }
                     self.showAlert(title: "Upload Failed", message: errorMessage)
                 }
             }
         }
     }
+
     
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -294,32 +299,7 @@ class ApprovalPageVc: UIViewController, CLLocationManagerDelegate, AVCapturePhot
 
 }
 
-extension ApprovalPageVc: UITableViewDelegate, UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return tableData.count
-    }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableData[section].count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "AssignListCell", for: indexPath) as? AssignListCell else {
-            return UITableViewCell()
-        }
-     
-        cell.AssignLbl.text = tableData[indexPath.section][indexPath.row]
-        cell.locationonclick.tag = indexPath.row
-        cell.locationonclick.addTarget(self, action: #selector(messageOnClick(_:)), for: .touchUpInside)
-        return cell
-        
-    }
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionHeaders[section]
-    }
-}
 extension UIImage {
         func resizeTowidth(_ width:CGFloat)-> UIImage {
             let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: width, height: CGFloat(ceil(width/size.width * size.height)))))

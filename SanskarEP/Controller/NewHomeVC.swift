@@ -254,7 +254,7 @@ class NewHomeVC: UIViewController  {
         var customDetent: UISheetPresentationController.Detent?
             if #available(iOS 16.0, *) {
             customDetent = UISheetPresentationController.Detent.custom { context in
-                return 575
+                return 615
             }
             sheet.detents = [customDetent!]
             sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
@@ -265,7 +265,6 @@ class NewHomeVC: UIViewController  {
                             }
                         }
         self.present(vc, animated: true)
-        
     }
     
 
@@ -353,9 +352,9 @@ class NewHomeVC: UIViewController  {
 
     
     @IBAction func SearchBarBtn(_ sender: UIButton) {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "PunchHistoryOut") as! PunchHistoryOut
+     //   let vc = self.storyboard?.instantiateViewController(withIdentifier: "PunchHistoryOut") as! PunchHistoryOut
         
-        //       let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
+               let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearcHvC") as! SearcHvC
 //                if #available(iOS 15.0, *) {
 //                if let sheet = vc.sheetPresentationController {
 //                var customDetent: UISheetPresentationController.Detent?
@@ -1197,6 +1196,12 @@ extension NewHomeVC: BirthPViewControllerDelegate {
            tableview.reloadData()
        }
 }
+extension NewHomeVC: SelfPunchDelegate {
+    func PunchAction(with message: String) {
+        showToast(message: message)
+    }
+}
+
 extension NewHomeVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

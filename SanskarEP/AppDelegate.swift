@@ -136,9 +136,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                let userInfoDict = userInfo as? [String: Any],
                let notificationData = userInfoDict["data"] as? [String: Any],
                let notificationType = notificationData["notification_type"] as? String {
-
+                
                 var viewControllerToPresent: UIViewController?
-
+                
                 if notificationType == "8" {
                     let customAlertVC = CustomAlert(nibName: "CustomAlert", bundle: nil)
                     customAlertVC.userInfo = userInfoDict
@@ -151,7 +151,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     leaveNotificationVC.delegate = notificationType as? CustomAlertDelegate
                     viewControllerToPresent = leaveNotificationVC
                     
-                } else if notificationType == "14" {
+                }
+//                else if notificationType == "13" {
+//                    let leaveNotificationVC = CustomAlert(nibName: "CustomAlert", bundle: nil)
+//                    leaveNotificationVC.userInfo = userInfoDict
+//                    leaveNotificationVC.delegate = notificationType as? CustomAlertDelegate
+//                    viewControllerToPresent = leaveNotificationVC
+//                    
+//               }
+                else if notificationType == "14" {
                     let leaveNotificationVC = LeaveNotificationAlert(nibName: "LeaveNotificationAlert", bundle: nil)
                     leaveNotificationVC.userInfo = userInfoDict
                     leaveNotificationVC.delegate = notificationType as? LeaveRequestDelegate
@@ -209,7 +217,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         case "14":
             soundFileName = "bell3"
         default:
-            soundFileName = "bell2"
+            soundFileName = "bell3"
         }
 
         guard let soundURL = Bundle.main.url(forResource: soundFileName, withExtension: "mp3") else {
