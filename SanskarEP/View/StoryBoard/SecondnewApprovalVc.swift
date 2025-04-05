@@ -22,6 +22,7 @@ class SecondnewApprovalVc: UIViewController {
         collectionview.register(UINib(nibName: "ApprvlCollCell" , bundle: nil), forCellWithReuseIdentifier: "Cell")
         collectionview.delegate = self
         collectionview.dataSource = self
+        
     }
     
     

@@ -10,7 +10,6 @@ import UIKit
 class CalenderOnClick: UIViewController {
 
     @IBOutlet weak var requestTypeView: UIView!
-    @IBOutlet weak var requestTableview: UITableView!
     @IBOutlet weak var typeLbl: UILabel!
     @IBOutlet weak var leaveContainerview: UIView!
     @IBOutlet weak var BookingContainerview: UIView!
@@ -30,6 +29,7 @@ class CalenderOnClick: UIViewController {
     @IBOutlet weak var cancelContanierview: UIView!
     @IBOutlet weak var SelfContanierview: UIView!
     @IBOutlet weak var PunchHistoryContanierview: UIView!
+    @IBOutlet weak var collectionviewD: UICollectionView!
     
     
     
@@ -41,20 +41,29 @@ class CalenderOnClick: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     //   requestTypeView.isHidden = true
-    //    requestTableview.isHidden = true
         requestTypeView.layer.cornerRadius = 10
-        requestTableview.dataSource = self
-        requestTableview.delegate = self
-        hideAllContainerViews()
+        
         SideBarApi()
+
+           
+        collectionviewD.register(UINib(nibName: "MainHeaderCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
+        collectionviewD.dataSource = self
+        collectionviewD.delegate = self
+        
+        hideAllContainerViews()
+      
+        
+      
+
+       
+
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
             let location = touch.location(in: self.view)
             if !requestTypeView.frame.contains(location) {
                 requestTypeView.isHidden = true
-                requestTableview.isHidden = true
+                collectionviewD.isHidden = true
             }
         }
     }
@@ -66,6 +75,7 @@ class CalenderOnClick: UIViewController {
     func SideBarApi() {
             var dict = Dictionary<String, Any>()
             dict["EmpCode"] = currentUser.EmpCode
+            dict["id"] = ""
             DispatchQueue.main.async { Loader.showLoader() }
             APIManager.apiCall(postData: dict as NSDictionary, url: sidebarapi) { result, response, error, data in
                 DispatchQueue.main.async { Loader.hideLoader() }
@@ -73,7 +83,7 @@ class CalenderOnClick: UIViewController {
                    let data = JSON["data"] as? [[String: Any]] {
                     self.ReqType = data
                     DispatchQueue.main.async {
-                        self.requestTableview.reloadData()
+                        self.collectionviewD.reloadData()
                         self.showApprovalIfNeeded()
                     }
                 } else {
@@ -88,10 +98,11 @@ class CalenderOnClick: UIViewController {
     func showApprovalIfNeeded() {
            if ReqType.contains(where: { $0["name"] as? String == "Approval" }) {
                aprove = true
-             //  typeLbl.text = "Approval"
-            //   ApprovalContainerview.isHidden = false
            }
        }
+    
+    
+  
     
     func showContainerView(for name: String) {
         hideAllContainerViews()
@@ -116,50 +127,7 @@ class CalenderOnClick: UIViewController {
             "Self Punch": SelfContanierview,
             "Punch History": PunchHistoryContanierview
         ]
-//        if name == "Self Punch" {
-//                if let vc = storyboard?.instantiateViewController(withIdentifier: "ApprovalPageVc") {
-//                    if #available(iOS 15.0, *) {
-//                        if let sheet = vc.sheetPresentationController {
-//                            var customDetent: UISheetPresentationController.Detent?
-//                            if #available(iOS 16.0, *) {
-//                                customDetent = UISheetPresentationController.Detent.custom { context in
-//                                    return 700
-//                                }
-//                                sheet.detents = [customDetent!]
-//                                sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
-//                            }
-//                            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-//                            sheet.prefersGrabberVisible = true
-//                            sheet.preferredCornerRadius = 12
-//                        }
-//                    }
-//                    present(vc, animated: true)
-//                    return
-//                }
-//            return
-//        }
-//        if name == "Punch History" {
-//            if let vc = storyboard?.instantiateViewController(withIdentifier: "PunchHistoryOut") {
-//                if #available(iOS 15.0, *) {
-//                    if let sheet = vc.sheetPresentationController {
-//                        var customDetent: UISheetPresentationController.Detent?
-//                        if #available(iOS 16.0, *) {
-//                            customDetent = UISheetPresentationController.Detent.custom { context in
-//                                return 700
-//                                
-//                            }
-//                            sheet.detents = [customDetent!]
-//                            sheet.largestUndimmedDetentIdentifier = customDetent!.identifier
-//                        }
-//                        sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-//                        sheet.prefersGrabberVisible = true
-//                        sheet.preferredCornerRadius = 12
-//                    }
-//                }
-//                present(vc, animated: true)
-//                return
-//            }
-//        }
+
         
         if let selectedView = viewMapping[name] {
             selectedView.isHidden = false
@@ -195,35 +163,84 @@ class CalenderOnClick: UIViewController {
        }
     @IBAction func RequestBtnclick(_ sender: UIButton) {
         hideAllContainerViews()
-//        requestTypeView.isHidden = false
-//        requestTableview.isHidden = false
         self.requestTypeView.isHidden = !self.requestTypeView.isHidden
-        self.requestTableview.isHidden = !self.requestTableview.isHidden
+        self.collectionviewD.isHidden = !self.collectionviewD.isHidden
     }
 }
 
-extension CalenderOnClick: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ReqType.count
+extension CalenderOnClick: UICollectionViewDelegate,UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+       return ReqType.count
     }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell1 = requestTableview.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell1.textLabel?.text = ReqType[indexPath.row]["name"] as? String ?? ""
-        cell1.textLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        return cell1
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? MainHeaderCell else {
+            return UICollectionViewCell()
+        }
+
+        let item = ReqType[indexPath.row]
+        let name = item["name"] as? String ?? ""
+        let id = item["id"] as? Int ?? 0
+
+        cell.namelable.text = name
+
+       
+        switch id {
+        case 1:
+            cell.image.image = UIImage(named: "approved")
+        case 2:
+            cell.image.image = UIImage(named: "Leave")
+        case 3:
+            cell.image.image = UIImage(named: "booking 1")
+        case 4:
+            cell.image.image = UIImage(named: "Inventory")
+        case 5:
+            cell.image.image = UIImage(named: "interview")
+        case 6:
+            cell.image.image = UIImage(named: "Tour 1")
+        case 7:
+            cell.image.image = UIImage(named: "Reports")
+        case 8:
+            cell.image.image = UIImage(named: "Guest 2")
+        case 11:
+            cell.image.image = UIImage(named: "healthcare")
+        case 14:
+            cell.image.image = UIImage(named: "Privacy Policy")
+        case 24:
+            cell.image.image = UIImage(named: "biometric-attendance")
+        case 25:
+            cell.image.image = UIImage(named: "attendance")
+        default:
+            cell.image.image = UIImage(named: "default") 
+        }
+
+        return cell
     }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 55
-    }
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedSearchResult = ReqType[indexPath.row]["name"] as? String ?? ""
         typeLbl.text = selectedSearchResult
         showContainerView(for: selectedSearchResult)
         requestTypeView.isHidden = true
-        requestTableview.isHidden = true
+        collectionviewD.isHidden = true
         updateSheetHeight()
     }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let noOfCellsInRow = 2
+        let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
+        let totalSpace = flowLayout.sectionInset.left
+            + flowLayout.sectionInset.right
+            + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1))
+
+        let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
+        return CGSize(width: 120, height: 130)
+    }
+
+
+
+
+
 }

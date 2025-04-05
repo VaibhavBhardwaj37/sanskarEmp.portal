@@ -112,6 +112,8 @@ class ProfileVc: UIViewController,UIImagePickerControllerDelegate, UINavigationC
             DispatchQueue.main.async { Loader.hideLoader() }
             if let JSON = response as? NSDictionary, let status = JSON["status"] as? Bool, status == true {
                 currentUser.removeData()
+                UserDefaults.standard.removeObject(forKey: "token")
+                idenity.kDeviceToken = ""
                 DispatchQueue.main.async {
                     if #available(iOS 13.0, *) {
                         SceneDelegate.shared?.AppFlow()
