@@ -35,8 +35,8 @@ class GuestVc: UIViewController,UIImagePickerControllerDelegate, UINavigationCon
         setup()
         reasonTxtView.delegate = self
 
-            whomTxtField.text = " " + currentUser.Name
-            whomTxtField.isUserInteractionEnabled = false
+          //  whomTxtField.text = " " + currentUser.Name
+            //whomTxtField.isUserInteractionEnabled = false
          
     }
     
@@ -128,7 +128,7 @@ class GuestVc: UIViewController,UIImagePickerControllerDelegate, UINavigationCon
                return
            }
            if whomTxtField.text?.isEmpty ?? true {
-               AlertController.alert(message: "Please enter Whom to Meet")
+               AlertController.alert(message: "Please enter Address")
                return
            }
            if reasonTxtView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || reasonTxtView.text == "Reason For Meeting..." {
@@ -170,7 +170,7 @@ extension GuestVc {
         var dict = [String: Any]()
         dict["EmpCode"] = currentUser.EmpCode
         dict["Reason"] = reasonTxtView.text ?? ""
-        dict["WhomtoMeet"] = currentUser.Name
+        dict["Address"] = whomTxtField.text ?? ""
         dict["Guest_Name"] = nametextField.text ?? ""
         dict["Date1"] = dateTxtField.text ?? ""
 

@@ -15,7 +15,6 @@ class VistorHistoryVC: UIViewController, GuestformDelegate {
     @IBOutlet weak var searchUIBar: UISearchBar!
     @IBOutlet weak var searchHolder: UIView!
     @IBOutlet weak var detailview: UIView!
-    @IBOutlet weak var namelbl: UILabel!
     @IBOutlet weak var meetinglbl: UILabel!
     @IBOutlet weak var outtimelbl: UILabel!
     @IBOutlet weak var image: UIImageView!
@@ -24,6 +23,7 @@ class VistorHistoryVC: UIViewController, GuestformDelegate {
     @IBOutlet weak var submit: UIButton!
     @IBOutlet weak var Datetime: UITextField!
     @IBOutlet weak var retextview: UITextView!
+    @IBOutlet weak var namelbl: UITextField!
     
     
     var titleText: String?
@@ -54,7 +54,7 @@ class VistorHistoryVC: UIViewController, GuestformDelegate {
         detailview.isHidden = true
         submit.layer.cornerRadius = 8
         datepicker()
-        Datetime.layer.cornerRadius = 10
+        Datetime.layer.cornerRadius = 8
         Datetime.layer.borderWidth = 1.0
         Datetime.layer.borderColor = UIColor.lightGray.cgColor
         
@@ -199,8 +199,8 @@ class VistorHistoryVC: UIViewController, GuestformDelegate {
         dict["EmpCode"] = currentUser.EmpCode
         dict["Reason"] = retextview.text
         dict["WhomtoMeet"] = meetinglbl.text
-        dict["Guest_Name"] = namelbl.text!
-        dict["Date1"] = Datetime.text!
+        dict["Guest_Name"] = namelbl.text
+        dict["Date1"] = Datetime.text
         dict["image"] = image.image?.resizeToWidth3(250)
 
         let url = BASEURL + "/" + kGuestApi

@@ -103,12 +103,17 @@ class NewHomeVC: UIViewController  {
     var selectedIndexPath: IndexPath?
     var epmDetails: [EpmDetails] = []
   
+    private var alertIsShowing = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
         
         MonthwiseDetailApi()
+        
+        NetworkMonitor.shared.delegate = self
+        NetworkMonitor.shared.startMonitoring()
+       
         
         tableview.dataSource = self
         tableview.delegate = self
@@ -222,6 +227,7 @@ class NewHomeVC: UIViewController  {
             }
         }
     }
+    
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -1311,6 +1317,40 @@ extension NewHomeVC: UITableViewDelegate, UITableViewDataSource {
             return 130
         default:
             return 150
+        }
+    }
+}
+extension NewHomeVC: NetworkStatusDelegate {
+
+    func networkBecameUnavailable() {
+        DispatchQueue.main.async {
+            guard !self.alertIsShowing else { return }
+
+            self.alertIsShowing = true
+
+            let alert = UIAlertController(title: "No Internet Connection",
+                                          message: "Please turn on Wi-Fi or Mobile Data.",
+                                          preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "Go to Settings", style: .default, handler: { _ in
+                self.alertIsShowing = false
+                self.openInternetSettings()
+            }))
+
+            self.present(alert, animated: true)
+        }
+    }
+
+    func networkBecameAvailable() {
+        // Optional: You can show a success message or remove offline UI
+        print("✅ Internet is available")
+    }
+
+    func openInternetSettings() {
+        // iOS opens app settings (cannot directly open Wi-Fi/Data settings due to security)
+        if let settingsUrl = URL(string: UIApplication.openSettingsURLString),
+           UIApplication.shared.canOpenURL(settingsUrl) {
+            UIApplication.shared.open(settingsUrl)
         }
     }
 }

@@ -51,11 +51,7 @@ class CalenderOnClick: UIViewController {
         collectionviewD.delegate = self
         
         hideAllContainerViews()
-      
-        
-      
 
-       
 
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -75,7 +71,7 @@ class CalenderOnClick: UIViewController {
     func SideBarApi() {
             var dict = Dictionary<String, Any>()
             dict["EmpCode"] = currentUser.EmpCode
-            dict["id"] = ""
+       
             DispatchQueue.main.async { Loader.showLoader() }
             APIManager.apiCall(postData: dict as NSDictionary, url: sidebarapi) { result, response, error, data in
                 DispatchQueue.main.async { Loader.hideLoader() }
@@ -88,9 +84,9 @@ class CalenderOnClick: UIViewController {
                     }
                 } else {
                     if let message = response?.validatedValue("message") as? String {
-                        AlertController.alert(message: message)
+                       AlertController.alert(message: message)
                     } else {
-                        AlertController.alert(message: "An unexpected error occurred.") 
+                        AlertController.alert(message: "An unexpected error occurred.")
                     }
                 }
             }
@@ -168,7 +164,7 @@ class CalenderOnClick: UIViewController {
     }
 }
 
-extension CalenderOnClick: UICollectionViewDelegate,UICollectionViewDataSource{
+extension CalenderOnClick: UICollectionViewDelegate,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
        return ReqType.count
     }
@@ -217,8 +213,6 @@ extension CalenderOnClick: UICollectionViewDelegate,UICollectionViewDataSource{
         return cell
     }
 
-
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedSearchResult = ReqType[indexPath.row]["name"] as? String ?? ""
         typeLbl.text = selectedSearchResult
@@ -238,9 +232,5 @@ extension CalenderOnClick: UICollectionViewDelegate,UICollectionViewDataSource{
         let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
         return CGSize(width: 120, height: 130)
     }
-
-
-
-
 
 }

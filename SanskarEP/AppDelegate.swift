@@ -64,6 +64,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         IQKeyboardManager.shared.isEnabled = true
         IQKeyboardManager.shared.enableAutoToolbar = true
         
+        
+        NetworkMonitor.shared.startMonitoring()
+        
         return true
     }
     
@@ -94,8 +97,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             } else if let fcmToken = fcmToken {
                 print("FCM Token: \(fcmToken)")
                 self.fcmString = fcmToken
-                UserDefaults.standard.set(token, forKey: "token")
-                idenity.kDeviceToken = token
+                UserDefaults.standard.set(fcmToken, forKey: "token")
+                idenity.kDeviceToken = fcmToken
             }
         }
     }
@@ -216,8 +219,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             soundFileName = "bell3"
         case "14":
             soundFileName = "bell3"
-        default:
+        case "11":
             soundFileName = "bell3"
+        default:
+            soundFileName = "bell2"
         }
 
         guard let soundURL = Bundle.main.url(forResource: soundFileName, withExtension: "mp3") else {

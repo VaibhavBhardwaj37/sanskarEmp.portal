@@ -56,11 +56,9 @@
 	</dict>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>fetch</string>
-		<string>processing</string>
 		<string>remote-notification</string>
+		<string>processing</string>
+		<string>fetch</string>
 	</array>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Please allow to see current location.</string>
 </dict>
 </plist>
